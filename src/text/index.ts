@@ -1,2 +1,2 @@
 export * from './greeting';
-export * from './respondWithStudyMaterials';
+export * from './study';
