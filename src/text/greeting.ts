@@ -3,10 +3,10 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
 
-// Correcting the reply parameters key
+// Correct reply object usage with proper typing
 const replyToMessage = (ctx: Context, messageId: number, string: string) =>
   ctx.reply(string, {
-    reply_to_message_id: messageId, // Fix here: Use `reply_to_message_id` instead of `reply_parameters`
+    reply_to_message_id: messageId,  // Correct property name for replying to a specific message
   });
 
 const greeting = () => async (ctx: Context) => {
@@ -16,7 +16,6 @@ const greeting = () => async (ctx: Context) => {
   const userName = `${ctx.message?.from.first_name} ${ctx.message?.from.last_name}`;
 
   if (messageId) {
-    // Sending a reply to the original message
     await replyToMessage(ctx, messageId, `Hello, ${userName}!`);
   }
 };
