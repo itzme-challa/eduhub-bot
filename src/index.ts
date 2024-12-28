@@ -12,7 +12,7 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 const bot = new Telegraf(BOT_TOKEN);
 
 bot.command('about', about());
-bot.command('help', about());
+bot.command('help', help());
 
 bot.on('message', greeting());
 
