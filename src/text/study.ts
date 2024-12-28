@@ -63,4 +63,4 @@ const respondWithStudyMaterials = () => async (ctx: Context) => {
   }
 };
 
-export { respondWithStudyMaterials };
+export { study };
