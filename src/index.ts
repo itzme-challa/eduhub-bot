@@ -1,6 +1,7 @@
 import { Telegraf } from 'telegraf';
 
 import { about } from './commands';
+import { help } from './commands';
 import { greeting } from './text';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
@@ -11,6 +12,8 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 const bot = new Telegraf(BOT_TOKEN);
 
 bot.command('about', about());
+bot.command('help', about());
+
 bot.on('message', greeting());
 
 //prod mode (Vercel)
