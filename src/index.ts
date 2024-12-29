@@ -1,11 +1,12 @@
-import { Telegraf, Context } from 'telegraf';
-import { about } from './commands/about';  // Existing imports
-import { help } from './commands/help';
+import { Telegraf } from 'telegraf';
+
+import { about } from './commands';
+import { help } from './commands';
 import { study } from './commands/study';
 import { greeting } from './text';
+import { keywordReply } from './commands/Allen';  // Import keywordReply from Allen.ts
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
-import { keywordReply } from './Allen'; // Import the keywordReply function
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
@@ -16,9 +17,7 @@ bot.command('about', about());
 bot.command('help', help());
 bot.command('study', study());
 bot.on('message', greeting());
-
-// Use the keyword reply function from Allen.ts to detect keywords in messages
-bot.on('message', keywordReply()); // Here is where the new function is used
+bot.on('message', keywordReply());  // Add the keyword reply handler
 
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
@@ -26,5 +25,3 @@ export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
 };
 //dev mode
 ENVIRONMENT !== 'production' && development(bot);
-
-bot.launch();
