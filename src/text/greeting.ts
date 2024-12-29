@@ -23,13 +23,6 @@ const getRandomGreeting = (): string => {
   return greetings[randomIndex];
 };
 
-// Function to check if two messages share common words
-const hasCommonWords = (userMessage: string, channelMessage: string): boolean => {
-  const userWords = userMessage.toLowerCase().split(/\s+/);
-  const channelWords = channelMessage.toLowerCase().split(/\s+/);
-  return userWords.some(word => channelWords.includes(word));
-};
-
 // Main greeting function
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
@@ -55,33 +48,17 @@ const greeting = () => async (ctx: Context) => {
         await replyToMessage(ctx, messageId, `${greetingMessage}\n\n${commandListMessage}`);
       } else if (userMessage.includes('waheed') || userMessage.includes('challa') || userMessage.includes('pw')) {
         await replyToMessage(ctx, messageId, "Hello, this side effects Namaste!");
+      } else if (userMessage.includes('neet') || userMessage.includes('jee') || userMessage.includes('exam') || userMessage.includes('study')) {
+        await replyToMessage(ctx, messageId, "You're preparing for NEET or JEE? Keep it up, success is closer than you think!");
+      } else if (userMessage.includes('help') || userMessage.includes('assist') || userMessage.includes('question')) {
+        await replyToMessage(ctx, messageId, "Sure! How can I assist you today? Feel free to ask any questions.");
+      } else if (userMessage.includes('quran') || userMessage.includes('islam') || userMessage.includes('hadith')) {
+        await replyToMessage(ctx, messageId, "Looking for Quranic verses or Hadith? I can help you with that too!");
+      } else if (userMessage.includes('study material') || userMessage.includes('books') || userMessage.includes('notes')) {
+        await replyToMessage(ctx, messageId, "You can find study material for NEET, JEE, and more in my resources. Let me know what you're looking for!");
+      } else if (userMessage.includes('hello') || userMessage.includes('hi') || userMessage.includes('hey')) {
+        await replyToMessage(ctx, messageId, `Hello ${userName}, how can I help you today?`);
       } else {
-        // Simulate retrieving recent messages from a channel (this part needs to be handled with custom API calls)
-        const channelId = '@NEETJEECHANNEL';
-
-        try {
-          // Use a raw Telegram API call to get chat details (not messages directly)
-          const chatDetails = await ctx.telegram.getChat(channelId);
-
-          // Example: Just checking if it's a valid channel
-          if (chatDetails) {
-            debug('Fetched channel details:', chatDetails);
-
-            // Simulate a channel message for the sake of checking the message
-            const channelMessage = "This is a message from the channel"; // Replace this with actual logic
-
-            // Check for common words
-            if (hasCommonWords(userMessage, channelMessage)) {
-              // Forward the message from the channel to the user
-              await ctx.telegram.forwardMessage(ctx.chat?.id || '', channelId, 123); // Example message_id
-            }
-          }
-
-        } catch (err) {
-          debug('Error fetching channel messages:', err);
-          await replyToMessage(ctx, messageId, "I couldn't fetch channel messages. Please try again later.");
-        }
-
         await replyToMessage(ctx, messageId, "I don't understand. Please check the command /list");
       }
     } else {
