@@ -17,7 +17,7 @@ bot.command('about', about());
 bot.command('help', help());
 
 bot.on('message', greeting());
-bot.on('message', study());
+bot.on('text', study());
 
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
