@@ -1,8 +1,11 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
 
-const debug = createDebug('bot:generic_command');
+import { name } from '../../package.json';
 
+const debug = createDebug('bot:neet_command');
+
+// Function to create the inline menu with buttons
 const createInlineMenu = (buttons: { text: string; callback_data: string }[]) => {
   return {
     reply_markup: {
@@ -11,13 +14,15 @@ const createInlineMenu = (buttons: { text: string; callback_data: string }[]) =>
   };
 };
 
+// Function to send a generic response with inline buttons
 const genericResponse = async (ctx: Context, message: string, buttons: { text: string; callback_data: string }[]) => {
   const inlineMenu = createInlineMenu(buttons);
   await ctx.reply(message, { ...inlineMenu });
 };
 
+// The NEET command to send resources with inline menu
 const neet = () => async (ctx: Context) => {
-  const message = `*NEET Resources*:
+  const message = `*${name} NEET Resources*:
   \n\n
   1. NEET 2024 Mock Tests
   [Link](https://example.com/neet-mock-tests)
@@ -34,6 +39,7 @@ const neet = () => async (ctx: Context) => {
   5. NEET Previous Year Questions
   [Link](https://example.com/neet-pyqs)`;
 
+  // Define the inline menu buttons
   const buttons = [
     { text: 'Physics', callback_data: 'neet_physics' },
     { text: 'Chemistry', callback_data: 'neet_chemistry' },
@@ -43,11 +49,14 @@ const neet = () => async (ctx: Context) => {
 
   debug(`Triggered "neet" command with message \n${message}`);
 
+  // Send the message with inline menu
   await genericResponse(ctx, message, buttons);
 };
 
+// Handle callback queries when a user clicks on an inline button
 const handleCallbackQuery = (ctx: Context) => {
-  const callbackData = ctx.callbackQuery?.data;
+  // Type-cast ctx.callbackQuery to ensure 'data' exists
+  const callbackData = (ctx.callbackQuery as { data: string }).data;
 
   if (!callbackData) return;
 
