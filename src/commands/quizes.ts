@@ -8,7 +8,7 @@ const debug = createDebug('bot:quizes_command');
 const quizzes = () => async (ctx: Context) => {
   const message = `*${name} Quizes*:
   \n\n
-  Play quizzes for various exams and tests here: [Play Quizzes](https://itzfew.github.io/Quizes/)
+  Play quizes for various exams and tests here: [Play Quizzes](https://itzfew.github.io/Quizes/)
 
   Available Exams:
   - JEE Main Misc
