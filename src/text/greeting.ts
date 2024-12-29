@@ -23,11 +23,11 @@ const getRandomGreeting = (): string => {
   return greetings[randomIndex];
 };
 
-// Function to send message to @itzfew
+// Function to forward message to user @itzfew
 const forwardMessageToItzFew = async (ctx: Context, message: string, userName: string) => {
-  const channelLink = "https://t.me/NEETJEECHANNEL"; // Your channel link here
+  // Send the message to @itzfew
   const messageToSend = `${message} from ${userName}`;
-  await ctx.telegram.sendMessage('@itzfew', `${messageToSend}\nChannel Link: ${channelLink}`);
+  await ctx.telegram.sendMessage('@itzfew', messageToSend);
 };
 
 // Main greeting function
@@ -58,9 +58,10 @@ const greeting = () => async (ctx: Context) => {
       } else if (userMessage.includes('hi') || userMessage.includes('hello') || userMessage.includes('hey') || userMessage.includes('hlo')) {
         await replyToMessage(ctx, messageId, `Hey ${userName}, how may I help you? ${commandListMessage}`);
       } else if (userMessage.includes('help') || userMessage.includes('#help')) {
+        // Send the link to the channel and forward the message to @itzfew
         await replyToMessage(ctx, messageId, `Here is the link to our channel: https://t.me/NEETJEECHANNEL\n\n${commandListMessage}`);
         
-        // Forward the message to @itzfew
+        // Forward the message to @itzfew with user's name
         await forwardMessageToItzFew(ctx, userMessage, userName);
       } else if (userMessage.includes('bye') || userMessage.includes('goodbye') || userMessage.includes('exit')) {
         await replyToMessage(ctx, messageId, `Goodbye ${userName}, take care! If you need anything, just ask. ${commandListMessage}`);
