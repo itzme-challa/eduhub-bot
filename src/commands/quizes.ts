@@ -3,10 +3,10 @@ import createDebug from 'debug';
 
 import { name } from '../../package.json';
 
-const debug = createDebug('bot:quizzes_command');
+const debug = createDebug('bot:quizes_command');
 
 const quizzes = () => async (ctx: Context) => {
-  const message = `*${name} Quizzes*:
+  const message = `*${name} Quizes*:
   \n\n
   Play quizzes for various exams and tests here: [Play Quizzes](https://itzfew.github.io/Quizes/)
 
@@ -16,9 +16,9 @@ const quizzes = () => async (ctx: Context) => {
   - NEET
   - BITSAT`;
 
-  debug(`Triggered "quizzes" command with message \n${message}`);
+  debug(`Triggered "quizes" command with message \n${message}`);
 
   await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
 };
 
-export { quizzes };
+export { quizes };
