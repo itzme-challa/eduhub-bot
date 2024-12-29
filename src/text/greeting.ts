@@ -3,9 +3,10 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
 
-const replyToMessage = (ctx: Context, messageId: number, string: string) =>
+const replyToMessage = (ctx: Context, messageId: number, string: string, replyMarkup: any) =>
   ctx.reply(string, {
     reply_parameters: { message_id: messageId },
+    reply_markup: replyMarkup,
   });
 
 const getRandomGreeting = (): string => {
@@ -21,23 +22,30 @@ const getRandomGreeting = (): string => {
   return greetings[randomIndex];
 };
 
+const createInlineKeyboard = () => {
+  return {
+    inline_keyboard: [
+      [
+        {
+          text: "View All Commands",
+          callback_data: "/list"
+        }
+      ]
+    ]
+  };
+};
+
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
 
   const messageId = ctx.message?.message_id;
-  const userName = `${ctx.message?.from.first_name}`;
+  const userName = `${ctx.message?.from.first_name} ${ctx.message?.from.last_name}`;
 
   if (messageId) {
     const greetingMessage = getRandomGreeting().replace('{userName}', userName);
-    const commandListMessage = `
-    To interact with me, you can use the following commands:
-    /list - View all available commands
-    /help - Get help and instructions
-    /start - Start a new session
-    /info - Get more information
-    `;
+    const inlineKeyboard = createInlineKeyboard();
 
-    await replyToMessage(ctx, messageId, `${greetingMessage}\n\n${commandListMessage}`);
+    await replyToMessage(ctx, messageId, `${greetingMessage}`, inlineKeyboard);
   }
 };
 
