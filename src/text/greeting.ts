@@ -20,9 +20,6 @@ const greeting = () => async (ctx: Context) => {
         await ctx.reply(`Hey ${userName}, how may I help you?`);
       } else if (userMessage.includes('hi') || userMessage.includes('hello') || userMessage.includes('hey') || userMessage.includes('hlo')) {
         await ctx.reply(`Hey ${userName}, how may I help you?`);
-      } else if (userMessage.includes('help') || userMessage.includes('#help')) {
-        // Forward the message containing help to @itzfew
-        await ctx.telegram.sendMessage('@itzfew', `${userName} sent a message: ${userMessage}`);
       } else if (userMessage.includes('bye') || userMessage.includes('goodbye') || userMessage.includes('exit')) {
         await ctx.reply(`Goodbye ${userName}, take care!`);
       } else if (userMessage.includes('thank') || userMessage.includes('thanks')) {
