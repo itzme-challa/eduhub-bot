@@ -5,37 +5,21 @@ import { name } from '../../package.json';
 
 const debug = createDebug('bot:list_command');
 
+// Function to send a message with a list of available commands
 const list = () => async (ctx: Context) => {
-  const message = `*${name} Available Resources List*:
+  const message = `*${name} Available Commands*:
   \n\n
-  1. Study Materials for NEET
-  [Link](https://example.com/neet-materials)
-
-  2. Study Materials for JEE
-  [Link](https://example.com/jee-materials)
-
-  3. Practice Tests for NEET
-  [Link](https://example.com/neet-practice-tests)
-
-  4. Practice Tests for JEE
-  [Link](https://example.com/jee-practice-tests)
-
-  5. NCERT Solutions for NEET and JEE
-  [Link](https://example.com/ncert-solutions)`;
+  1. /help - Get information about bot commands
+  2. /about - Learn more about this bot
+  3. /groups - Get a list of study groups
+  4. /neet - Access resources for NEET
+  5. /jee - Access resources for JEE
+  6. /study - Get study materials for various subjects`;
 
   debug(`Triggered "list" command with message \n${message}`);
 
-  const inlineMenu = {
-    reply_markup: {
-      inline_keyboard: [
-        [{ text: 'NEET Resources', callback_data: 'list_neet' }],
-        [{ text: 'JEE Resources', callback_data: 'list_jee' }],
-        [{ text: 'NCERT Solutions', callback_data: 'list_ncert' }],
-      ],
-    },
-  };
-
-  await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown', ...inlineMenu });
+  // Send the message with the list of available commands
+  await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
 };
 
 export { list };
