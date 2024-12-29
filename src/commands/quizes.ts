@@ -15,15 +15,7 @@ const quizes = () => async (ctx: Context) => {
   - JEE Main Misc
   - JEE Main
   - NEET
-  - BITSAT
-  
-  **Join Test Series** from the following links:
-  1. Akash Test Series - [Link](https://test-series.pages.dev)
-  2. Allen Test Series - [Link](https://test-series.pages.dev)
-  3. PW Test Series - [Link](https://test-series.pages.dev)
-  4. Modules and More - [Link](https://test-series.pages.dev)
-
-  **NEET Study Groups**: Use the command: \`/groups\`
+  - BITSAT 
   
   **To list all available commands**, use: \`/list\`
   `;
