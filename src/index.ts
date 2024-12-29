@@ -8,7 +8,6 @@ import { jee } from './commands/jee';
 import { quizes } from './commands/quizes';
 import { groups } from './commands/groups';
 import { list } from './commands/list';
-import { keywords } from './commands/keywords';
 
 import { greeting } from './text';
 import { VercelRequest, VercelResponse } from '@vercel/node';
@@ -28,7 +27,6 @@ bot.command('quizes', quizes());
 bot.command('groups', groups());
 bot.command('list', list());
 bot.on('message', greeting());
-bot.on('text', (ctx) => keywords(ctx)); // Adjusted keywords middleware
 
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
