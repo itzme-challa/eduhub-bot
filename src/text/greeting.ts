@@ -1,5 +1,6 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
+import { Markup } from 'telegraf';
 
 const debug = createDebug('bot:greeting_text');
 
@@ -21,6 +22,13 @@ const getRandomGreeting = (): string => {
   ];
   const randomIndex = Math.floor(Math.random() * greetings.length);
   return greetings[randomIndex];
+};
+
+// Function to check if two messages share common words
+const hasCommonWords = (userMessage: string, channelMessage: string): boolean => {
+  const userWords = userMessage.toLowerCase().split(/\s+/);
+  const channelWords = channelMessage.toLowerCase().split(/\s+/);
+  return userWords.some(word => channelWords.includes(word));
 };
 
 // Main greeting function
@@ -49,6 +57,18 @@ const greeting = () => async (ctx: Context) => {
       } else if (userMessage.includes('waheed') || userMessage.includes('challa') || userMessage.includes('pw')) {
         await replyToMessage(ctx, messageId, "Hello, this side effects Namaste!");
       } else {
+        // Retrieve recent messages from the channel
+        const channelId = '@NEETJEECHANNEL';
+        const channelMessages = await ctx.telegram.getChatHistory(channelId, { limit: 5 }); // Fetch the last 5 messages from the channel
+
+        for (const message of channelMessages) {
+          if (hasCommonWords(userMessage, message.text || '')) {
+            // Forward the message from the channel to the user
+            await ctx.telegram.forwardMessage(ctx.chat.id, channelId, message.message_id);
+            break;
+          }
+        }
+
         await replyToMessage(ctx, messageId, "I don't understand. Please check the command /list");
       }
     } else {
