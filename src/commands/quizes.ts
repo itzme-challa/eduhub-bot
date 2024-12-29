@@ -11,20 +11,10 @@ const quizzes = () => async (ctx: Context) => {
   Play quizzes for various exams and tests here: [Play Quizzes](https://itzfew.github.io/Quizes/)
 
   Available Exams:
-  - JEE Main 2024 Misc Papers
-  - JEE Main 2024 (Online)
-  - JEE Main 2023 (Online)
-  - JEE Main 2022 (Online)
-  - JEE Main 2021 (Online)
-  - JEE Main 2020 (Online)
-  - JEE Main 2019 (Online)
-  - JEE Main 2018 (Online)
-  - JEE Main 2017 (Online)
-  - JEE Main 2016 (Online)
-  - JEE Main 2015 (Offline)
-  - AIEEE 2012 - 2003
-  - JEE Advanced (2023, 2022, 2021, 2020, 2019)
-  - AIEEE 2011 - 2004`;
+  - JEE Main Misc
+  - JEE Main
+  - NEET
+  - BITSAT`;
 
   debug(`Triggered "quizzes" command with message \n${message}`);
 
