@@ -1,29 +1,20 @@
-import { Telegraf } from 'telegraf';
+import { Context } from 'telegraf';
 
-// Replace 'YOUR_BOT_TOKEN' with your actual bot token from Telegram
-const bot = new Telegraf('BOT_TOKEN');
+/**
+ * Handles messages containing trigger words and sends a specific reply.
+ */
+export const study = () => async (ctx: Context) => {
+  // List of trigger words
+  const triggerWords = ['pw', 'Akash', 'Allen', 'pdf', 'study material'];
 
-// List of trigger words
-const triggerWords = ['pw', 'Akash', 'Allen', 'pdf', 'study material'];
+  // Reply message to send when a trigger word is detected
+  const replyMessage = 'Here is itzfew from Kashmir';
 
-// Message to send when a trigger word is detected
-const replyMessage = 'Here is itzfew from Kashmir';
+  // Extract the message text and convert to lowercase for case-insensitive comparison
+  const messageText = ctx.message.text?.toLowerCase() || '';
 
-// Listen to messages
-bot.on('text', (ctx) => {
-  const messageText = ctx.message.text.toLowerCase();
-
-  // Check if the message contains any trigger words
-  if (triggerWords.some(word => messageText.includes(word.toLowerCase()))) {
-    ctx.reply(replyMessage);
+  // Check if the message contains any trigger word
+  if (triggerWords.some((word) => messageText.includes(word.toLowerCase()))) {
+    await ctx.reply(replyMessage);
   }
-});
-
-// Start the bot
-bot.launch()
-  .then(() => console.log('Bot is running'))
-  .catch((error) => console.error('Error launching bot:', error));
-
-// Graceful stop handling
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+};
