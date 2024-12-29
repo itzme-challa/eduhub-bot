@@ -23,16 +23,18 @@ bot.command('about', about());
 bot.command('help', help());
 bot.command('study', study());
 bot.command('neet', neet());
-bot.command('jee', jee ());
+bot.command('jee', jee());
 bot.command('quizes', quizes());
 bot.command('groups', groups());
 bot.command('list', list());
 bot.on('message', greeting());
-bot.on('text', keywords);
+bot.on('text', (ctx) => keywords(ctx)); // Adjusted keywords middleware
 
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
   await production(req, res, bot);
 };
 //dev mode
-ENVIRONMENT !== 'production' && development(bot);
+if (ENVIRONMENT !== 'production') {
+  development(bot);
+}
