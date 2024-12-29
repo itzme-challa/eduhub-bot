@@ -29,26 +29,31 @@ const greeting = () => async (ctx: Context) => {
 
   const messageId = ctx.message?.message_id;
   const userName = `${ctx.message?.from.first_name}`;
-  const userMessage = ctx.message?.text?.toLowerCase(); // Safely access text property
+  
+  // Ensure message is a text message before accessing the 'text' property
+  const userMessage = ctx.message?.text?.toLowerCase();  // This will be 'undefined' for non-text messages
 
   if (messageId) {
-    if (userMessage === '/start') {
-      // Reply to /start command
-      const greetingMessage = getRandomGreeting().replace('{userName}', userName);
-      const commandListMessage = `
-      To interact with me, you can use the following commands:
-      /list - View all available commands
-      /help - Get help and instructions
-      /start - Start a new session
-      /about - Get information about me 
-      `;
-      await replyToMessage(ctx, messageId, `${greetingMessage}\n\n${commandListMessage}`);
-    } else if (userMessage?.includes('waheed') || userMessage?.includes('challa') || userMessage?.includes('pw')) {
-      // Special keyword response
-      await replyToMessage(ctx, messageId, "Hello, this side effects Namaste!");
+    if (userMessage) {
+      // Process text messages only
+      if (userMessage === '/start') {
+        const greetingMessage = getRandomGreeting().replace('{userName}', userName);
+        const commandListMessage = `
+        To interact with me, you can use the following commands:
+        /list - View all available commands
+        /help - Get help and instructions
+        /start - Start a new session
+        /about - Get information about me 
+        `;
+        await replyToMessage(ctx, messageId, `${greetingMessage}\n\n${commandListMessage}`);
+      } else if (userMessage.includes('waheed') || userMessage.includes('challa') || userMessage.includes('pw')) {
+        await replyToMessage(ctx, messageId, "Hello, this side effects Namaste!");
+      } else {
+        await replyToMessage(ctx, messageId, "I don't understand. Please check the command /list");
+      }
     } else {
-      // Reply to any other messages
-      await replyToMessage(ctx, messageId, "I don't understand. Please check the command /list");
+      // Handle non-text messages (e.g., media)
+      await replyToMessage(ctx, messageId, "I can only respond to text messages. Please send a text command.");
     }
   }
 };
