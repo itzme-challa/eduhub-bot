@@ -4,7 +4,7 @@ import { about } from './commands';
 import { help } from './commands';
 import { study } from './commands/study';
 import { neet } from './commands/neet';
-import { quizzes } from './commands/quizzes';
+import { quizzes } from './commands/quizes';
 import { groups } from './commands/groups';
 import { list } from './commands/list';
 
@@ -22,7 +22,7 @@ bot.command('about', about());
 bot.command('help', help());
 bot.command('study', study());
 bot.command('neet', neet());
-bot.command('quizzes', quizzes());
+bot.command('quizzes', quizes());
 bot.command('groups', groups());
 bot.command('list', list());
 bot.on('message', greeting());
