@@ -6,10 +6,10 @@ import { name } from '../../package.json'; // Assuming 'name' is already importe
 const debug = createDebug('bot:quizes_command');
 
 const quizes = () => async (ctx: Context) => {
-  const message = `*${name} Quizzes*:
+  const message = `*${name} Quizes*:
   
-  Play quizzes for various exams and tests here:
-  [Play Quizzes](https://itzfew.github.io/Quizes/)
+  Play quizes for various exams and tests here:
+  [Play Quizes](https://itzfew.github.io/Quizes/)
 
   **Available Exams**:
   - JEE Main Misc
