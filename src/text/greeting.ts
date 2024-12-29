@@ -30,8 +30,8 @@ const greeting = () => async (ctx: Context) => {
   const messageId = ctx.message?.message_id;
   const userName = `${ctx.message?.from.first_name}`;
 
-  // Ensure the message is a text message before accessing 'text' property
-  const userMessage = ctx.message?.text ? ctx.message.text.toLowerCase() : null;
+  // Get the message text or handle non-text messages
+  const userMessage = ctx.message && 'text' in ctx.message ? ctx.message.text.toLowerCase() : null;
 
   if (messageId) {
     if (userMessage) {
