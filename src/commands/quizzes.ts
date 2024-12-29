@@ -8,34 +8,27 @@ const debug = createDebug('bot:quizzes_command');
 const quizzes = () => async (ctx: Context) => {
   const message = `*${name} Quizzes*:
   \n\n
-  1. General Knowledge Quiz
-  [Link](https://example.com/gk-quiz)
+  Play quizzes for various exams and tests here: [Play Quizzes](https://itzfew.github.io/Quizes/)
 
-  2. Science Quiz
-  [Link](https://example.com/science-quiz)
-
-  3. Math Quiz
-  [Link](https://example.com/math-quiz)
-
-  4. History Quiz
-  [Link](https://example.com/history-quiz)
-
-  5. Geography Quiz
-  [Link](https://example.com/geography-quiz)`;
+  Available Exams:
+  - JEE Main 2024 Misc Papers
+  - JEE Main 2024 (Online)
+  - JEE Main 2023 (Online)
+  - JEE Main 2022 (Online)
+  - JEE Main 2021 (Online)
+  - JEE Main 2020 (Online)
+  - JEE Main 2019 (Online)
+  - JEE Main 2018 (Online)
+  - JEE Main 2017 (Online)
+  - JEE Main 2016 (Online)
+  - JEE Main 2015 (Offline)
+  - AIEEE 2012 - 2003
+  - JEE Advanced (2023, 2022, 2021, 2020, 2019)
+  - AIEEE 2011 - 2004`;
 
   debug(`Triggered "quizzes" command with message \n${message}`);
 
-  const inlineMenu = {
-    reply_markup: {
-      inline_keyboard: [
-        [{ text: 'General Knowledge', callback_data: 'quiz_gk' }],
-        [{ text: 'Science', callback_data: 'quiz_science' }],
-        [{ text: 'Math', callback_data: 'quiz_math' }],
-      ],
-    },
-  };
-
-  await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown', ...inlineMenu });
+  await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
 };
 
 export { quizzes };
