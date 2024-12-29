@@ -9,7 +9,7 @@ const neet = () => async (ctx: Context) => {
   const message = `*${name} NEET Resources*:
   
   \n\n
-  **For NEET quizzes**, use the command: \`/quizzes\`
+  **For NEET quizzes**, use the command: \`/quizes\`
   
   **Join Test Series** from the following links:
   1. Akash Test Series - [Link](https://test-series.pages.dev)
