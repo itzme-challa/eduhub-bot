@@ -2,7 +2,7 @@ import { Telegraf } from 'telegraf';
 
 import { about } from './commands';
 import { help } from './commands';
-import { help } from './study';
+import { study } from './study';
 import { greeting } from './text';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
