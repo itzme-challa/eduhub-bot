@@ -10,7 +10,8 @@ const containsKeyword = (message: string): boolean => {
 
 // This is the handler function for detecting keywords in messages
 export const keywordReply = () => async (ctx: Context) => {
-  const messageText = ctx.message.text || '';
+  // Ensure that ctx.message and ctx.message.text exist
+  const messageText = ctx.message?.text || '';
 
   // Check if the message contains any of the keywords
   if (containsKeyword(messageText)) {
