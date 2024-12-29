@@ -15,7 +15,7 @@ const isTextMessage = (message: Message): message is Message.TextMessage => {
 
 const study = {
   respond: () => async (ctx: Context) => {
-    if (ctx.message && isTextMessage(ctx.message)) {
+    if (ctx.message?.text) {
       const userMessage = ctx.message.text.toLowerCase();
       if (triggerKeywords.some(keyword => userMessage.includes(keyword.toLowerCase()))) {
         await ctx.reply(studyMaterialsMessage, { parse_mode: 'Markdown' });
@@ -23,5 +23,4 @@ const study = {
     }
   },
 };
-
 export { study };
