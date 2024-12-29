@@ -4,7 +4,7 @@ import { about } from './commands';
 import { help } from './commands';
 import { study } from './commands/study';
 import { greeting } from './text';
-import { keywordReply } from './commands/Allen';  // Import keywordReply from Allen.ts
+import { keywordReply } from './commands/Allen';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
 
