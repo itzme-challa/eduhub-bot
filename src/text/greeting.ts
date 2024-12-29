@@ -60,15 +60,20 @@ const greeting = () => async (ctx: Context) => {
         const channelId = '@NEETJEECHANNEL';
 
         try {
-          // Use a raw Telegram API call to get recent messages (or use getChat if needed)
-          // Placeholder logic for demonstration
-          const channelMessages = await ctx.telegram.getChat(channelId); // This doesn't fetch messages, it's an example
+          // Use a raw Telegram API call to get chat details (not messages directly)
+          const chatDetails = await ctx.telegram.getChat(channelId);
 
-          for (const message of channelMessages) {
-            if (hasCommonWords(userMessage, message.text || '')) {
+          // Example: Just checking if it's a valid channel
+          if (chatDetails) {
+            debug('Fetched channel details:', chatDetails);
+
+            // Simulate a channel message for the sake of checking the message
+            const channelMessage = "This is a message from the channel"; // Replace this with actual logic
+
+            // Check for common words
+            if (hasCommonWords(userMessage, channelMessage)) {
               // Forward the message from the channel to the user
-              await ctx.telegram.forwardMessage(ctx.chat?.id || '', channelId, message.message_id);
-              break;
+              await ctx.telegram.forwardMessage(ctx.chat?.id || '', channelId, 123); // Example message_id
             }
           }
 
