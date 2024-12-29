@@ -10,10 +10,11 @@ export const keywordReply = () => async (ctx: Context) => {
 
   // Check if the message is a text message
   if (isTextMessage(message)) {
-    const messageText = message.text;
+    const messageText = message.text.toLowerCase(); // Convert to lowercase for case-insensitive matching
 
     // Check for the keywords in the message text
-    if (/(Akash|Allen|pw|pdf|study)/i.test(messageText)) {
+    const keywords = ['akash', 'allen', 'pw', 'pdf', 'study'];
+    if (keywords.some(keyword => messageText.includes(keyword))) {
       await ctx.reply("Hello dear, I am here to try");
     }
   } else {
