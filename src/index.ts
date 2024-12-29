@@ -3,7 +3,7 @@ import { Telegraf } from 'telegraf';
 import { about } from './commands';
 import { help } from './commands';
 import { greeting } from './text';
-import { study } from './study';
+import { study } from './text';
 
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
