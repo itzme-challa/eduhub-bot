@@ -3,13 +3,6 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
 
-// Function to forward message to user @itzfew
-const forwardMessageToItzFew = async (ctx: Context, message: string, userName: string) => {
-  // Send the message to @itzfew
-  const messageToSend = `${message} from ${userName}`;
-  await ctx.telegram.sendMessage('@itzfew', messageToSend);
-};
-
 // Main greeting function
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
@@ -28,8 +21,8 @@ const greeting = () => async (ctx: Context) => {
       } else if (userMessage.includes('hi') || userMessage.includes('hello') || userMessage.includes('hey') || userMessage.includes('hlo')) {
         await ctx.reply(`Hey ${userName}, how may I help you?`);
       } else if (userMessage.includes('help') || userMessage.includes('#help')) {
-        // Forward the message to @itzfew with the user's name
-        await forwardMessageToItzFew(ctx, userMessage, userName);
+        // Forward the message containing help to @itzfew
+        await ctx.telegram.sendMessage('@itzfew', `${userName} sent a message: ${userMessage}`);
       } else if (userMessage.includes('bye') || userMessage.includes('goodbye') || userMessage.includes('exit')) {
         await ctx.reply(`Goodbye ${userName}, take care!`);
       } else if (userMessage.includes('thank') || userMessage.includes('thanks')) {
