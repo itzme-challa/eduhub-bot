@@ -5,10 +5,10 @@ import { name } from '../../package.json';
 
 const debug = createDebug('bot:quizes_command');
 
-const quizzes = () => async (ctx: Context) => {
+const quizes = () => async (ctx: Context) => {
   const message = `*${name} Quizes*:
   \n\n
-  Play quizes for various exams and tests here: [Play Quizzes](https://itzfew.github.io/Quizes/)
+  Play quizes for various exams and tests here: [Play Quizes](https://itzfew.github.io/Quizes/)
 
   Available Exams:
   - JEE Main Misc
@@ -18,7 +18,8 @@ const quizzes = () => async (ctx: Context) => {
 
   debug(`Triggered "quizes" command with message \n${message}`);
 
-  await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
+  // Corrected to use only 'replyWithMarkdownV2'
+  await ctx.replyWithMarkdownV2(message);
 };
 
 export { quizes };
