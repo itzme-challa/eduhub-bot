@@ -33,38 +33,37 @@ const greeting = () => async (ctx: Context) => {
   // Get the message text or handle non-text messages
   const userMessage = ctx.message && 'text' in ctx.message ? ctx.message.text.toLowerCase() : null;
 
+  const commandListMessage = `
+    Available commands:
+    /about - Get information about me
+    /neet - NEET preparation resources
+    /jee - JEE preparation resources
+    /groups - Join study groups
+    /list - View all available commands
+  `;
+
   if (messageId) {
     if (userMessage) {
       // Process text messages only
       if (userMessage === '/start') {
         const greetingMessage = getRandomGreeting().replace('{userName}', userName);
-        const commandListMessage = `
-        To interact with me, you can use the following commands:
-        /list - View all available commands
-        /help - Get help and instructions
-        /start - Start a new session
-        /about - Get information about me 
-        /neet - NEET preparation resources
-        /jee - JEE preparation resources
-        /groups - Join study groups
-        `;
         await replyToMessage(ctx, messageId, `${greetingMessage}\n\n${commandListMessage}`);
       } else if (userMessage.includes('hi') || userMessage.includes('hello') || userMessage.includes('hey') || userMessage.includes('hlo')) {
-        await replyToMessage(ctx, messageId, `Hey ${userName}, how may I help you? You can try commands like /about, /neet, /jee, /groups, or /list.`);
+        await replyToMessage(ctx, messageId, `Hey ${userName}, how may I help you? ${commandListMessage}`);
       } else if (userMessage.includes('help') || userMessage.includes('assist') || userMessage.includes('question')) {
-        await replyToMessage(ctx, messageId, "Sure! How can I assist you today? Feel free to ask any questions.");
+        await replyToMessage(ctx, messageId, `Sure! How can I assist you today? Feel free to ask any questions. ${commandListMessage}`);
       } else if (userMessage.includes('bye') || userMessage.includes('goodbye') || userMessage.includes('exit')) {
-        await replyToMessage(ctx, messageId, `Goodbye ${userName}, take care! If you need anything, just ask.`);
+        await replyToMessage(ctx, messageId, `Goodbye ${userName}, take care! If you need anything, just ask. ${commandListMessage}`);
       } else if (userMessage.includes('thank') || userMessage.includes('thanks')) {
-        await replyToMessage(ctx, messageId, `You're welcome, ${userName}! Let me know if you need further assistance.`);
+        await replyToMessage(ctx, messageId, `You're welcome, ${userName}! Let me know if you need further assistance. ${commandListMessage}`);
       } else if (userMessage.includes('how are you') || userMessage.includes('how are you doing')) {
-        await replyToMessage(ctx, messageId, `I'm doing great, ${userName}! How can I assist you today?`);
+        await replyToMessage(ctx, messageId, `I'm doing great, ${userName}! How can I assist you today? ${commandListMessage}`);
       } else {
-        await replyToMessage(ctx, messageId, "I don't understand. Please check the command /list for available options.");
+        await replyToMessage(ctx, messageId, `I don't understand. Please check the command /list for available options. ${commandListMessage}`);
       }
     } else {
       // Handle non-text messages (e.g., media)
-      await replyToMessage(ctx, messageId, "I can only respond to text messages. Please send a text command.");
+      await replyToMessage(ctx, messageId, `I can only respond to text messages. Please send a text command. ${commandListMessage}`);
     }
   }
 };
