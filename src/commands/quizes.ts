@@ -8,8 +8,8 @@ const debug = createDebug('bot:quizes_command');
 const quizes = () => async (ctx: Context) => {
   const message = `*${name} Quizes*:
   
-  Play quizes for various exams and tests here:
-  [Play Quizes](https://itzfew.github.io/Quizes/)
+  Play quizzes for various exams and tests here:
+  [Play Quizzes](https://itzfew.github.io/Quizes/)
 
   **Available Exams**:
   - JEE Main Misc
@@ -19,6 +19,7 @@ const quizes = () => async (ctx: Context) => {
 
   debug(`Triggered "quizes" command with message: \n${message}`);
 
+  // Ensure the message uses proper MarkdownV2 format and send it
   await ctx.replyWithMarkdownV2(message);
 };
 
