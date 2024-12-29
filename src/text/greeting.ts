@@ -6,7 +6,7 @@ const debug = createDebug('bot:greeting_text');
 // Function to reply with the given message
 const replyToMessage = (ctx: Context, messageId: number, string: string) =>
   ctx.reply(string, {
-    reply_to_message_id: messageId,  // Corrected to use 'reply_to_message_id'
+    reply_to_message_id: messageId,  // Correct usage of reply_to_message_id
   });
 
 const greeting = () => async (ctx: Context) => {
