@@ -25,8 +25,6 @@ bot.command('neet', neet());
 bot.command('quizzes', quizzes());
 bot.command('groups', groups());
 bot.command('list', list());
-
-bot.on('callback_query', handleCallbackQuery);
 bot.on('message', greeting());
 bot.on('message', keywordReply());  // Add the keyword reply handler
 
