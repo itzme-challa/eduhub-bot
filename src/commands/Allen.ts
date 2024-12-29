@@ -2,7 +2,7 @@ import { Context } from 'telegraf';
 
 // Function to check for keywords in the message text
 export const keywordReply = () => async (ctx: Context) => {
-  // Check if the message contains text
+  // Check if the message contains a text property
   const messageText = ctx.message?.text;
 
   // If the message contains text and matches any of the keywords, send a reply
