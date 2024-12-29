@@ -29,30 +29,4 @@ const neet = () => async (ctx: Context) => {
   await genericResponse(ctx, message);
 };
 
-// Handle callback queries for user interaction
-const handleCallbackQuery = (ctx: Context) => {
-  // Type-cast ctx.callbackQuery to ensure 'data' exists
-  const callbackData = (ctx.callbackQuery as { data: string }).data;
-
-  if (!callbackData) return;
-
-  switch (callbackData) {
-    case 'neet_physics':
-      ctx.reply('You selected NEET Physics! Here are the resources.');
-      break;
-    case 'neet_chemistry':
-      ctx.reply('You selected NEET Chemistry! Here are the resources.');
-      break;
-    case 'neet_biology':
-      ctx.reply('You selected NEET Biology! Here are the resources.');
-      break;
-    case 'neet_mock_tests':
-      ctx.reply('Here are the NEET Mock Tests resources.');
-      break;
-    default:
-      ctx.reply('Invalid selection.');
-      break;
-  }
-};
-
-export { neet, handleCallbackQuery };
+export { neet };
