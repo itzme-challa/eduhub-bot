@@ -9,7 +9,7 @@ const jee = () => async (ctx: Context) => {
   const message = `*${name} JEE Resources*:
   
   \n\n
-  **For JEE quizzes**, use the command: \`/quizzes\`
+  **For JEE quizzes**, use the command: `/quizzes`
   
   **Join Test Series** from the following links:
   1. Akash Test Series - [Link](https://test-series.pages.dev)
@@ -17,9 +17,9 @@ const jee = () => async (ctx: Context) => {
   3. PW Test Series - [Link](https://test-series.pages.dev)
   4. Modules and More - [Link](https://test-series.pages.dev)
 
-  **JEE Study Groups**: Use the command: \`/groups\`
+  **JEE Study Groups**: Use the command: `/groups`
   
-  **To list all available commands**, use: \`/list\`
+  **To list all available commands**, use: `/list`
   `;
 
   debug(`Triggered "jee" command with message \n${message}`);
