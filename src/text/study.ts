@@ -53,7 +53,7 @@ const studyMaterialsMessage = `
 
 const triggerKeywords = ['Akash', 'Allen', 'Test', 'pw', 'Physics Wallah', 'pdf', 'study material'];
 
-const respondWithStudyMaterials = () => async (ctx: Context) => {
+const study = () => async (ctx: Context) => {
   const userMessage = ctx.message.text || '';
   const lowerCaseMessage = userMessage.toLowerCase();
 
