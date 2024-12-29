@@ -2,6 +2,7 @@ import { Telegraf } from 'telegraf';
 
 import { about } from './commands';
 import { help } from './commands';
+import { help } from './study';
 import { greeting } from './text';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
@@ -13,7 +14,7 @@ const bot = new Telegraf(BOT_TOKEN);
 
 bot.command('about', about());
 bot.command('help', help());
-
+bot.command('study', study());
 bot.on('message', greeting());
 
 
