@@ -6,7 +6,7 @@ import createDebug from 'debug';
 const debug = createDebug('bot');
 
 // Your bot token from BotFather on Telegram
-const bot = new Telegraf('<YOUR_BOT_TOKEN>');
+const bot = new Telegraf('7537158508:AAFvBdCtUUMNdQJY2X_n4TAsFEDVSJV7Cw0');
 
 // Define your channel username
 const CHANNEL_USERNAME = '@NEETJEECHANNEL';
