@@ -9,7 +9,7 @@ const debug = createDebug('bot');
 const bot = new Telegraf('<YOUR_BOT_TOKEN>');
 
 // Define your channel username
-const CHANNEL_USERNAME = '@your_channel_username';
+const CHANNEL_USERNAME = '@NEETJEECHANNEL';
 
 // This function checks if the user message contains a keyword
 const containsKeyword = (message: string, keyword: string): boolean => {
