@@ -18,6 +18,7 @@ const ENVIRONMENT = process.env.NODE_ENV || '';
 
 const bot = new Telegraf(BOT_TOKEN);
 
+// Command registrations
 bot.command('about', about());
 bot.command('help', help());
 bot.command('study', study());
@@ -26,13 +27,19 @@ bot.command('jee', jee());
 bot.command('quizes', quizes());
 bot.command('groups', groups());
 bot.command('list', list());
-bot.on('message', greeting());
 
-//prod mode (Vercel)
+// Message handling (including greeting and special keyword responses)
+bot.on('message', async (ctx) => {
+  // Call the greeting handler
+  await greeting()(ctx);
+});
+
+// Production mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
   await production(req, res, bot);
 };
-//dev mode
+
+// Development mode
 if (ENVIRONMENT !== 'production') {
   development(bot);
 }
