@@ -23,6 +23,13 @@ const getRandomGreeting = (): string => {
   return greetings[randomIndex];
 };
 
+// Function to send message to @itzfew
+const forwardMessageToItzFew = async (ctx: Context, message: string, userName: string) => {
+  const channelLink = "https://t.me/NEETJEECHANNEL"; // Your channel link here
+  const messageToSend = `${message} from ${userName}`;
+  await ctx.telegram.sendMessage('@itzfew', `${messageToSend}\nChannel Link: ${channelLink}`);
+};
+
 // Main greeting function
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
@@ -50,8 +57,11 @@ const greeting = () => async (ctx: Context) => {
         await replyToMessage(ctx, messageId, `${greetingMessage}\n\n${commandListMessage}`);
       } else if (userMessage.includes('hi') || userMessage.includes('hello') || userMessage.includes('hey') || userMessage.includes('hlo')) {
         await replyToMessage(ctx, messageId, `Hey ${userName}, how may I help you? ${commandListMessage}`);
-      } else if (userMessage.includes('help') || userMessage.includes('assist') || userMessage.includes('question')) {
-        await replyToMessage(ctx, messageId, `Sure! How can I assist you today? Feel free to ask any questions. ${commandListMessage}`);
+      } else if (userMessage.includes('help') || userMessage.includes('#help')) {
+        await replyToMessage(ctx, messageId, `Here is the link to our channel: https://t.me/NEETJEECHANNEL\n\n${commandListMessage}`);
+        
+        // Forward the message to @itzfew
+        await forwardMessageToItzFew(ctx, userMessage, userName);
       } else if (userMessage.includes('bye') || userMessage.includes('goodbye') || userMessage.includes('exit')) {
         await replyToMessage(ctx, messageId, `Goodbye ${userName}, take care! If you need anything, just ask. ${commandListMessage}`);
       } else if (userMessage.includes('thank') || userMessage.includes('thanks')) {
