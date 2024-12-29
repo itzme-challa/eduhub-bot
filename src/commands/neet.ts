@@ -16,10 +16,10 @@ const neet = () => async (ctx: Context) => {
   \n\n
   1. For NEET quizzes, use the command: /quizzes
   2. Join Test Series from the following providers:
-     - [Akash Test Series](https://test-series.pages.dev/)
-     - [Allen Test Series](https://test-series.pages.dev/)
-     - [PW Test Series](https://test-series.pages.dev/)
-     - [Modules and More](https://test-series.pages.dev/)
+    - Akash Test Series: [Link](https://test-series.pages.dev/)
+    - Allen Test Series: [Link](https://test-series.pages.dev/)
+    - PW Test Series: [Link](https://test-series.pages.dev/)
+    - Modules and More: [Link](https://test-series.pages.dev/)
   3. Join NEET study groups: /groups
   4. To list all available commands, use: /list`;
 
