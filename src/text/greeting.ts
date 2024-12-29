@@ -44,22 +44,23 @@ const greeting = () => async (ctx: Context) => {
         /help - Get help and instructions
         /start - Start a new session
         /about - Get information about me 
+        /neet - NEET preparation resources
+        /jee - JEE preparation resources
+        /groups - Join study groups
         `;
         await replyToMessage(ctx, messageId, `${greetingMessage}\n\n${commandListMessage}`);
-      } else if (userMessage.includes('waheed') || userMessage.includes('challa') || userMessage.includes('pw')) {
-        await replyToMessage(ctx, messageId, "Hello, this side effects Namaste!");
-      } else if (userMessage.includes('neet') || userMessage.includes('jee') || userMessage.includes('exam') || userMessage.includes('study')) {
-        await replyToMessage(ctx, messageId, "You're preparing for NEET or JEE? Keep it up, success is closer than you think!");
+      } else if (userMessage.includes('hi') || userMessage.includes('hello') || userMessage.includes('hey') || userMessage.includes('hlo')) {
+        await replyToMessage(ctx, messageId, `Hey ${userName}, how may I help you? You can try commands like /about, /neet, /jee, /groups, or /list.`);
       } else if (userMessage.includes('help') || userMessage.includes('assist') || userMessage.includes('question')) {
         await replyToMessage(ctx, messageId, "Sure! How can I assist you today? Feel free to ask any questions.");
-      } else if (userMessage.includes('quran') || userMessage.includes('islam') || userMessage.includes('hadith')) {
-        await replyToMessage(ctx, messageId, "Looking for Quranic verses or Hadith? I can help you with that too!");
-      } else if (userMessage.includes('study material') || userMessage.includes('books') || userMessage.includes('notes')) {
-        await replyToMessage(ctx, messageId, "You can find study material for NEET, JEE, and more in my resources. Let me know what you're looking for!");
-      } else if (userMessage.includes('hello') || userMessage.includes('hi') || userMessage.includes('hey')) {
-        await replyToMessage(ctx, messageId, `Hello ${userName}, how can I help you today?`);
+      } else if (userMessage.includes('bye') || userMessage.includes('goodbye') || userMessage.includes('exit')) {
+        await replyToMessage(ctx, messageId, `Goodbye ${userName}, take care! If you need anything, just ask.`);
+      } else if (userMessage.includes('thank') || userMessage.includes('thanks')) {
+        await replyToMessage(ctx, messageId, `You're welcome, ${userName}! Let me know if you need further assistance.`);
+      } else if (userMessage.includes('how are you') || userMessage.includes('how are you doing')) {
+        await replyToMessage(ctx, messageId, `I'm doing great, ${userName}! How can I assist you today?`);
       } else {
-        await replyToMessage(ctx, messageId, "I don't understand. Please check the command /list");
+        await replyToMessage(ctx, messageId, "I don't understand. Please check the command /list for available options.");
       }
     } else {
       // Handle non-text messages (e.g., media)
