@@ -54,7 +54,7 @@ const startCountdown = (minutes: number, ctx: Context) => {
       clearInterval(interval);
       ctx.reply('Countdown finished!');
     }
-  }, 60000); // Send an update every minute (60000 ms)
+  }, 1000); // Send an update every second (1000 ms) for a precise countdown
 };
 
 // Main greeting function
