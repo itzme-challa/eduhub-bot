@@ -1,6 +1,6 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
-import axios from 'axios'; // To make API calls for timezone
+import axios from 'axios'; // Ensure axios is installed
 
 const debug = createDebug('bot:greeting_text');
 
