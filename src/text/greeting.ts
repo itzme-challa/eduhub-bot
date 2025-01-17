@@ -1,7 +1,14 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
 
+// Declare debug instance just once
 const debug = createDebug('bot:greeting_text');
+
+// Main greeting function
+const greeting = () => async (ctx: Context) => {
+  debug('Triggered "greeting" text command');
+
+  // Rest of your code
 
 // Sample question object based on the provided JSON
 const questionData = [
