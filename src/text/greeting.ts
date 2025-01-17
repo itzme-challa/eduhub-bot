@@ -12,28 +12,28 @@ const quizData =[
         "title": "jee-main-misc",
         "papers": [
             {
-                "exam": "jee-main",
+                "exam": "jee-main-misc",
                 "examGroup": "jee",
                 "metaId": "emb-ait1",
                 "title": "JEE Main 2024 Misc Paper 1",
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main-misc",
                 "examGroup": "jee",
                 "metaId": "emb-ait2",
                 "title": "JEE Main 2024 Misc Paper 2",
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main-misc",
                 "examGroup": "jee",
                 "metaId": "emb-ait3",
                 "title": "JEE Main 2024 Misc Paper 3",
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main-misc",
                 "examGroup": "jee",
                 "metaId": "emb-ait4",
                 "title": "JEE Main 2024 Misc Paper 4",
@@ -45,7 +45,7 @@ const quizData =[
         "title": "jee-main",
         "papers": [
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -56,7 +56,7 @@ const quizData =[
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -67,7 +67,7 @@ const quizData =[
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -78,7 +78,7 @@ const quizData =[
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -89,49 +89,49 @@ const quizData =[
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "1cd11aa3-6217-54ef-bf4b-4438e2fda38c",
                 "title": "JEE Main 2024 (Online) 30th January Evening Shift",
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "2ea34c8a-2176-54fd-8a94-67c74bc80f4e",
                 "title": "JEE Main 2024 (Online) 30th January Morning Shift",
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "307e0097-c53d-56f5-a3a8-d0ec666c3540",
                 "title": "JEE Main 2024 (Online) 29th January Evening Shift",
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "fa0e21e6-7d3b-51a8-859b-10ecf50d9b75",
                 "title": "JEE Main 2024 (Online) 29th January Morning Shift",
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "2b5a57d6-27c1-5578-9009-02be012bb832",
                 "title": "JEE Main 2024 (Online) 27th January Evening Shift",
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "d64b61df-01da-581c-8b88-af23cb610edc",
                 "title": "JEE Main 2024 (Online) 27th January Morning Shift",
                 "year": 2024
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -142,7 +142,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -153,7 +153,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -164,7 +164,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -175,7 +175,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -186,7 +186,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -197,7 +197,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -208,7 +208,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -219,7 +219,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -230,7 +230,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -241,7 +241,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -252,7 +252,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -263,7 +263,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -274,7 +274,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -285,7 +285,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -296,7 +296,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -307,7 +307,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -318,7 +318,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -329,7 +329,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -340,14 +340,14 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "d1e21085-2808-52df-ab8b-630934b76170",
                 "title": "JEE Main 2023 (Online) 29th January Morning Shift",
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -358,7 +358,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -369,7 +369,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -380,7 +380,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "languages": [
                     "en",
@@ -391,7 +391,7 @@ const quizData =[
                 "year": 2023
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "1588d960-afa9-5d1d-9ccd-e20422d6bb8c",
                 "title": "JEE Main 2022 (Online) 29th July Evening Shift",
@@ -403,7 +403,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "b3817898-5247-5b43-8fcb-0578ee143481",
                 "title": "JEE Main 2022 (Online) 29th July Morning Shift",
@@ -415,7 +415,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "8787d575-281f-513f-85fa-973379bdf07e",
                 "title": "JEE Main 2022 (Online) 28th July Evening Shift",
@@ -427,7 +427,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "922acd97-f770-56c9-b8c8-c8a31be71599",
                 "title": "JEE Main 2022 (Online) 28th July Morning Shift",
@@ -439,7 +439,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "71fa1725-1418-50d7-b69d-5e30058022bd",
                 "title": "JEE Main 2022 (Online) 27th July Evening Shift",
@@ -451,7 +451,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "737bc454-981b-5f7e-8f8a-55269aa5527f",
                 "title": "JEE Main 2022 (Online) 27th July Morning Shift",
@@ -463,7 +463,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "07545fbb-a1dd-589d-b360-1c41282f0a55",
                 "title": "JEE Main 2022 (Online) 26th July Evening Shift",
@@ -474,7 +474,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "3d262d90-4bcd-5de0-a06f-cba5e073b88b",
                 "title": "JEE Main 2022 (Online) 26th July Morning Shift",
@@ -485,7 +485,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "8d27577d-fb76-53d2-b7ba-f17d7accd9b7",
                 "title": "JEE Main 2022 (Online) 25th July Evening Shift",
@@ -496,7 +496,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "94db8154-cd3e-5551-9850-c58f7feff354",
                 "title": "JEE Main 2022 (Online) 25th July Morning Shift",
@@ -507,14 +507,14 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "e9b08a45-e32f-505c-831a-870a4cf8dd40",
                 "title": "JEE Main 2022 (Online) 30th June Morning Shift",
                 "year": 2022
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "866f4ab8-85b0-5d68-92c6-98969b1084d2",
                 "title": "JEE Main 2022 (Online) 29th June Evening Shift",
@@ -525,7 +525,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main1",
                 "examGroup": "jee",
                 "metaId": "45a6d9f0-ae63-5345-b01f-c9bfdd05d05e",
                 "title": "JEE Main 2022 (Online) 29th June Morning Shift",
@@ -536,7 +536,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "e548943e-2e9d-5284-811f-03a369f9df00",
                 "title": "JEE Main 2022 (Online) 28th June Evening Shift",
@@ -547,7 +547,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "eec17d19-cb08-5018-bf34-f2ef27cfc92f",
                 "title": "JEE Main 2022 (Online) 28th June Morning Shift",
@@ -558,7 +558,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "75f42733-5c49-5817-912b-13b0a3aabe3d",
                 "title": "JEE Main 2022 (Online) 27th June Evening Shift",
@@ -569,7 +569,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "4922102f-f2e8-5a4c-90ca-824d90af9c96",
                 "title": "JEE Main 2022 (Online) 27th June Morning Shift",
@@ -580,7 +580,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "b2d8e90c-522a-514b-960a-55e3d0d20def",
                 "title": "JEE Main 2022 (Online) 26th June Evening Shift",
@@ -591,7 +591,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "64fe97e8-5f68-58ec-9785-96e42fd0abe4",
                 "title": "JEE Main 2022 (Online) 26th June Morning Shift",
@@ -603,7 +603,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "d7a93cc9-bd5f-5cd3-bfaf-a405b1c2e76f",
                 "title": "JEE Main 2022 (Online) 25th June Evening Shift",
@@ -615,7 +615,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "8c568b64-5c08-5655-998c-8c3b32baab20",
                 "title": "JEE Main 2022 (Online) 25th June Morning Shift",
@@ -627,7 +627,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "b62cab52-8f68-557d-98f1-c0080675c6e9",
                 "title": "JEE Main 2022 (Online) 24th June Evening Shift",
@@ -639,7 +639,7 @@ const quizData =[
                 ]
             },
             {
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "metaId": "3194fa1b-a37d-5b12-8959-f70a25a0555d",
                 "title": "JEE Main 2022 (Online) 24th June Morning Shift",
@@ -652,175 +652,175 @@ const quizData =[
             },
             {
                 "metaId": "eda8bf69-34ca-5fb1-9eb4-ca8c115d5473",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 1st September Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "87a4acb2-1ee0-5e2c-898a-c7bbcc5f39a8",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 31st August Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "33126c70-1f09-564b-8928-d316bf3f15f3",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 31st August Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "740d2f62-bb70-574b-84ac-334e1d5ccfec",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 27th August Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "740985b6-b19d-53f0-b21e-7a8c619518dc",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 27th August Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "5eae82cf-69e4-554e-a9d9-0fc81e34b9a6",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 26th August Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "5b6df9c4-41f7-570e-b618-0e014dc29e71",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 26th August Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "882d7b0b-b394-5a12-8391-efefee4f2676",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 27th July Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "7cae717a-67a4-57ba-aacf-d2ccdbdbc1b2",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 27th July Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "10521f31-1c30-509e-811f-5cd9ccc7068a",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 25th July Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "c23db52c-3266-5b7b-8205-ae2d7785580f",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 25th July Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "dcba11eb-58b0-5f8a-af84-5434ce197f78",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 22th July Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "df064781-6af0-51fc-a2cf-ee28c7879605",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 20th July Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "e4d7d22d-9228-5850-8bfe-2b1a5bb6f0e1",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 20th July Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "54563b4f-908e-52f7-8813-333ade2ec997",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 18th March Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "37c12830-9d24-519e-b25f-1fdd87934b37",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 18th March Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "047bb28e-abca-5f62-b216-123abc50f338",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 17th March Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "54dbf8f5-a523-56c0-88bc-fd9fc7bc8ee0",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 17th March Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "c1cbcfc9-d07c-5466-b0f0-5e929bbf09c3",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 16th March Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "3d435f6d-a965-52fa-8fa8-d7a7443d529c",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 16th March Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "c99de933-f2f1-55c2-95ba-a787626e5e9f",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 26th February Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "b97d3374-8387-51a6-906b-fe94cb34e9ab",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 26th February Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "9d9c01f0-69ad-5a15-8a43-1e4703739456",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 25th February Evening Shift",
                 "year": 2021
             },
             {
                 "metaId": "69a4e85a-464c-5b19-91a7-4fa368efe55d",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 25th February Morning Shift",
                 "year": 2021
             },
             {
                 "metaId": "5bd7f327-b26e-5951-bc42-64f722556562",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 24th February Evening Shift",
                 "year": 2021,
@@ -831,7 +831,7 @@ const quizData =[
             },
             {
                 "metaId": "bf5de6ba-33b7-5a8d-99d1-cd7f53ce8b34",
-                "exam": "jee-main",
+                "exam": "jee-main2",
                 "examGroup": "jee",
                 "title": "JEE Main 2021 (Online) 24th February Morning Shift",
                 "year": 2021,
@@ -842,217 +842,217 @@ const quizData =[
             },
             {
                 "metaId": "045e403b-8c82-5f75-9657-fbced70c314e",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 6th September Evening Slot",
                 "year": 2020
             },
             {
                 "metaId": "7e815f52-6383-5f54-8232-d1d1e3817a8c",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 6th September Morning Slot",
                 "year": 2020
             },
             {
                 "metaId": "0a9b75a4-e5db-56bd-a400-7890deba3b25",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 5th September Evening Slot",
                 "year": 2020
             },
             {
                 "metaId": "114950c0-2f3e-5456-8326-c060a8316ac2",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 5th September Morning Slot",
                 "year": 2020
             },
             {
                 "metaId": "eb5ca258-dc02-5681-831e-d85f586c33cb",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 4th September Evening Slot",
                 "year": 2020
             },
             {
                 "metaId": "35325825-f157-54c3-86a8-f2f5aa995865",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 4th September Morning Slot",
                 "year": 2020
             },
             {
                 "metaId": "1b85f914-10a0-578b-bfcd-a16b755d4be5",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 3rd September Evening Slot",
                 "year": 2020
             },
             {
                 "metaId": "bbf67c4f-5ac0-534b-a68d-95d5b8125d99",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 3rd September Morning Slot",
                 "year": 2020
             },
             {
                 "metaId": "6aa07dea-5bc6-5812-b925-cc0257b9c637",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 2nd September Evening Slot",
                 "year": 2020
             },
             {
                 "metaId": "4933bfcb-984d-523b-af45-3e9942470d10",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 2nd September Morning Slot",
                 "year": 2020
             },
             {
                 "metaId": "1db4c4e2-ff06-5478-a323-128f7e8978ec",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 9th January Evening Slot",
                 "year": 2020
             },
             {
                 "metaId": "4b43c2d9-b69c-51b0-ace7-894cfcbefe85",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 9th January Morning Slot",
                 "year": 2020
             },
             {
                 "metaId": "60a8c2dd-be85-5706-b13a-86ebc369659b",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 8th January Evening Slot",
                 "year": 2020
             },
             {
                 "metaId": "c823e73f-1810-54dc-a060-2c9913ec2ce8",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 8th January Morning Slot",
                 "year": 2020
             },
             {
                 "metaId": "846bfdc9-7d10-58f8-be7c-2024909615ae",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 7th January Evening Slot",
                 "year": 2020
             },
             {
                 "metaId": "c90d82f6-44bf-5eae-b089-b61b2ec55356",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2020 (Online) 7th January Morning Slot",
                 "year": 2020
             },
             {
                 "metaId": "904541cd-6182-515e-80e8-fe513baacbd3",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 12th April Evening Slot",
                 "year": 2019
             },
             {
                 "metaId": "6c579596-f3fb-51cb-9cd8-7699452b6311",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 12th April Morning Slot",
                 "year": 2019
             },
             {
                 "metaId": "9367e860-d0aa-57e3-805a-e7020dee4ad0",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 10th April Evening Slot",
                 "year": 2019
             },
             {
                 "metaId": "96ce72f8-d09c-561d-ad6c-8d708c469953",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 10th April Morning Slot",
                 "year": 2019
             },
             {
                 "metaId": "afea45f1-e086-5cb2-b331-c8f242bdadb0",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 9th April Evening Slot",
                 "year": 2019
             },
             {
                 "metaId": "b021ad2a-0f42-5c77-a9cb-035f6603d102",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 9th April Morning Slot",
                 "year": 2019
             },
             {
                 "metaId": "928df3da-9a71-5dc8-ad5f-6fec4f281a54",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 8th April Evening Slot",
                 "year": 2019
             },
             {
                 "metaId": "df84f097-aaf3-5735-8c23-ee7ad0322a6b",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 8th April Morning Slot",
                 "year": 2019
             },
             {
                 "metaId": "bd85a73c-f338-51da-8236-77cad3658524",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 12th January Evening Slot",
                 "year": 2019
             },
             {
                 "metaId": "0e51d14d-6390-5165-a007-46e676d027ff",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 12th January Morning Slot",
                 "year": 2019
             },
             {
                 "metaId": "82510a35-9cf3-5832-bc50-11ed96f21d64",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 11th January Evening Slot",
                 "year": 2019
             },
             {
                 "metaId": "d55b5069-21fd-5790-b39b-eb78bf54683f",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 11th January Morning Slot",
                 "year": 2019
             },
             {
                 "metaId": "655185d8-0979-5339-a76e-cd3b78d5b046",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 10th January Evening Slot",
                 "year": 2019
             },
             {
                 "metaId": "60c2e233-a623-5ec0-a41d-d583f5abaa05",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 10th January Morning Slot",
                 "year": 2019
             },
             {
                 "metaId": "be3f7668-b002-51c8-b9b5-9c1430a7665a",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 9th January Evening Slot",
                 "year": 2019,
@@ -1063,7 +1063,7 @@ const quizData =[
             },
             {
                 "metaId": "cfcdcfe4-75d2-5f87-a35c-81903ab3669f",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2019 (Online) 9th January Morning Slot",
                 "year": 2019,
@@ -1074,7 +1074,7 @@ const quizData =[
             },
             {
                 "metaId": "454b9d80-053a-5927-8aac-e7f9634881ef",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2018 (Online) 16th April Morning Slot",
                 "year": 2018,
@@ -1085,14 +1085,14 @@ const quizData =[
             },
             {
                 "metaId": "105337fa-3659-59e7-95d2-6de69443ecf7",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2018 (Offline)",
                 "year": 2018
             },
             {
                 "metaId": "4162312a-81a2-5e05-b125-ca9f56950eac",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2018 (Online) 15th April Evening Slot",
                 "year": 2018,
@@ -1103,7 +1103,7 @@ const quizData =[
             },
             {
                 "metaId": "d8de1b9e-1bd1-57e5-b5a8-355748134aa8",
-                "exam": "jee-main",
+                "exam": "jee-main3",
                 "examGroup": "jee",
                 "title": "JEE Main 2018 (Online) 15th April Morning Slot",
                 "year": 2018,
@@ -1114,14 +1114,14 @@ const quizData =[
             },
             {
                 "metaId": "de89a0f9-dd5c-52ef-8a2e-c9700c6228b9",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "JEE Main 2017 (Online) 9th April Morning Slot",
                 "year": 2017
             },
             {
                 "metaId": "37b74c99-a406-598f-b1f2-1661133e18e0",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "JEE Main 2017 (Online) 8th April Morning Slot",
                 "year": 2017,
@@ -1132,7 +1132,7 @@ const quizData =[
             },
             {
                 "metaId": "38b58b63-6211-512c-906e-f17f372b9c55",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "JEE Main 2017 (Offline)",
                 "year": 2017,
@@ -1143,7 +1143,7 @@ const quizData =[
             },
             {
                 "metaId": "42bd8498-defd-5c7a-a1b9-d5aa73c192f0",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "JEE Main 2016 (Online) 10th April Morning Slot",
                 "year": 2016,
@@ -1154,7 +1154,7 @@ const quizData =[
             },
             {
                 "metaId": "a90fe8ad-e181-57c5-8058-d5c1c01e984d",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "JEE Main 2016 (Online) 9th April Morning Slot",
                 "year": 2016,
@@ -1165,7 +1165,7 @@ const quizData =[
             },
             {
                 "metaId": "88d81891-14ed-570d-8b82-83c72105756f",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "JEE Main 2016 (Offline)",
                 "year": 2016,
@@ -1176,7 +1176,7 @@ const quizData =[
             },
             {
                 "metaId": "2fa6afc7-b208-58e7-b730-579afc81714b",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "JEE Main 2015 (Offline)",
                 "year": 2015,
@@ -1187,91 +1187,91 @@ const quizData =[
             },
             {
                 "metaId": "9925c81b-2ed9-5c55-9150-27e86138d21d",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "JEE Main 2014 (Offline)",
                 "year": 2014
             },
             {
                 "metaId": "0a6c36a0-d70f-569a-850e-eeab1b65af78",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "JEE Main 2013 (Offline)",
                 "year": 2013
             },
             {
                 "metaId": "ce7620a1-69ce-5473-af74-b50a0187510b",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2012",
                 "year": 2012
             },
             {
                 "metaId": "47fbd3fc-fafe-5132-9ea3-e9ecfbd6fd6d",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2011",
                 "year": 2011
             },
             {
                 "metaId": "d07cdcf0-9b96-540b-b021-f2d93f6c1101",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2010",
                 "year": 2010
             },
             {
                 "metaId": "d621e092-035a-5b53-97dd-ba8171f30ac0",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2009",
                 "year": 2009
             },
             {
                 "metaId": "e578f907-1929-5772-9308-eab68c419dd4",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2008",
                 "year": 2008
             },
             {
                 "metaId": "d4a8dea0-8e75-546b-8e37-b47143e31816",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2007",
                 "year": 2007
             },
             {
                 "metaId": "937c4fef-de3f-55dc-a274-3736ecc6ff60",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2006",
                 "year": 2006
             },
             {
                 "metaId": "70930f33-12c0-504d-a11a-922b9441920e",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2005",
                 "year": 2005
             },
             {
                 "metaId": "9436b82c-9e76-5724-b7d2-d70d17109d53",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2004",
                 "year": 2004
             },
             {
                 "metaId": "c09a0ac4-12c5-5c97-bc98-2a5e28f68d34",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "title": "AIEEE 2003",
                 "year": 2003
             },
             {
                 "metaId": "3bf79812-5219-571d-805f-6874066c18b5",
-                "exam": "jee-main",
+                "exam": "jee-main4",
                 "examGroup": "jee",
                 "name": "AIEEE 2002",
                 "year": 2002,
