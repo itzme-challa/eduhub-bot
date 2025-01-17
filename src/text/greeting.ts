@@ -240,6 +240,12 @@ const quizData = [
                 "title": "JEE Main 2023 (Online) 8th April Morning Shift",
                 "year": 2023
             },
+            ]
+        "yearwise": null
+    },
+    {
+        "title": "jee-advanced",
+        "papers": [
             {
                 "exam": "jee-main2",
                 "examGroup": "jee",
