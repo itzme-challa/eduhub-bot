@@ -27,8 +27,21 @@ const greeting = () => async (ctx: Context) => {
   if (userMessage) {
     const userName = ctx.from?.first_name || 'Dear User';  // Retrieve user's first name
 
-    // Check if the user input is a valid number (e.g., 1, 2, etc.)
-    if (/^\d+$/.test(userMessage)) {
+    // If the user sends /start, show available quizzes
+    if (userMessage === '/start') {
+      let quizList = 'Please select the quiz you want to play:\n\n';
+      quizData.forEach((quiz, index) => {
+        quizList += `${index + 1}. ${quiz.title}\n`;  // Display quizzes as 1, 2, 3, etc.
+      });
+
+      quizList += '\nPlease reply with the number of the quiz you want to play (e.g., 1, 2, etc.).';
+
+      // Send the list of available quizzes
+      await ctx.reply(quizList);
+    }
+
+    // If the user inputs a valid number, generate the quiz link and send it
+    else if (/^\d+$/.test(userMessage)) {
       const quizNumber = parseInt(userMessage, 10);
 
       // Check if the input number is valid and within the range of available quizzes
