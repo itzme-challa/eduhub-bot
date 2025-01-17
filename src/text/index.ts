@@ -1,2 +1,2 @@
-export * from './countdownTimer';
+export * from './greeting';
 
