@@ -83,7 +83,7 @@ const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
 
   const messageId = ctx.message?.message_id;
-  const userName = `${ctx.message?.from.first_name}`;
+  const userName = `${ctx.message?.from?.first_name}`;  // Optional chaining to avoid errors if ctx.from is undefined
 
   const userMessage = ctx.message && 'text' in ctx.message ? ctx.message.text.toLowerCase() : null;
 
@@ -127,5 +127,6 @@ const greeting = () => async (ctx: Context) => {
     }
   }
 };
+
 
 export { greeting };
