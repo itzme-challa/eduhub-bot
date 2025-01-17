@@ -28,7 +28,7 @@ bot.command('quizes', quizes());
 bot.command('groups', groups());
 bot.command('list', list());
 bot.on('message', greeting());
-bot.on('message', countdown());
+bot.command('countdown', countdown());
 bot.on('message', keywordReply());  // Add the keyword reply handler
 
 //prod mode (Vercel)
