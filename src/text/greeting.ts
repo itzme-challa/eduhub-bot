@@ -42,19 +42,22 @@ const evaluateMathExpression = (expression: string): string => {
 };
 
 // Function to start the countdown
-const startCountdown = (minutes: number, ctx: Context) => {
+const startCountdown = async (minutes: number, ctx: Context) => {
   let remainingTime = minutes * 60; // Convert minutes to seconds
+  let countdownMessage = await ctx.reply(`Starting countdown for ${minutes} minute(s)...`);
+
   const interval = setInterval(() => {
     if (remainingTime > 0) {
       const minutesLeft = Math.floor(remainingTime / 60);
       const secondsLeft = remainingTime % 60;
-      ctx.reply(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`);
+      // Update the message every second
+      ctx.editMessageText(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`);
       remainingTime--;
     } else {
       clearInterval(interval);
-      ctx.reply('Countdown finished!');
+      ctx.editMessageText('Countdown finished!');
     }
-  }, 1000); // Send an update every second (1000 ms) for a precise countdown
+  }, 1000); // Send an update every second (1000 ms)
 };
 
 // Main greeting function
