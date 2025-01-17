@@ -47,6 +47,21 @@ const greeting = () => async (ctx: Context) => {
         const currentDate = new Date();
         const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
         await ctx.reply(`Today's date is ${formattedDate}, ${userName}!`);
+      } else if (userMessage.includes('weather')) {
+        // Weather request (fake API or mock data)
+        const location = 'New York'; // Replace with dynamic location handling
+        const weatherMessage = `The weather in ${location} is sunny with a high of 25°C and a low of 18°C.`;
+        await ctx.reply(weatherMessage);
+      } else if (userMessage.includes('joke') || userMessage.includes('tell me a joke')) {
+        const jokes = [
+          "Why don't skeletons fight each other? They don't have the guts.",
+          "What do you call fake spaghetti? An impasta!",
+          "Why did the scarecrow win an award? Because he was outstanding in his field!",
+        ];
+        const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+        await ctx.reply(randomJoke);
+      } else if (userMessage.includes('good vibes')) {
+        await ctx.reply(`Sending you positive vibes, ${userName}! Stay awesome! ✨`);
       } else {
         await ctx.reply(`I don't understand. Please check the command /list for available options.`);
       }
