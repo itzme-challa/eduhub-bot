@@ -10,7 +10,6 @@ const baseUrl = 'https://quizes.pages.dev/play?title=';
 const quizData = [
   {
     title: 'jee-main-misc',
-    examGroup: 'jee',
     papers: [
       {
         exam: 'jee-main',
@@ -25,40 +24,11 @@ const quizData = [
         metaId: 'emb-ait2',
         title: 'JEE Main 2024 Misc Paper 2',
         year: 2024
-      },
-      {
-        exam: 'jee-main',
-        examGroup: 'jee',
-        metaId: 'emb-ait3',
-        title: 'JEE Main 2024 Misc Paper 3',
-        year: 2024
-      },
-      {
-        exam: 'jee-main',
-        examGroup: 'jee',
-        metaId: 'emb-ait4',
-        title: 'JEE Main 2024 Misc Paper 4',
-        year: 2024
-      },
-      {
-        exam: 'jee-main',
-        examGroup: 'jee',
-        metaId: 'emb-ait5',
-        title: 'JEE Main 2024 Misc Paper 5',
-        year: 2024
-      },
-      {
-        exam: 'jee-main',
-        examGroup: 'jee',
-        metaId: 'emb-ait6',
-        title: 'JEE Main 2024 Misc Paper 6',
-        year: 2024
       }
     ]
   },
   {
     title: 'neet-misc',
-    examGroup: 'medical',
     papers: [
       {
         exam: 'neet',
@@ -79,8 +49,6 @@ const quizData = [
   // Add more quiz objects following this format
 ];
 
-const ITEMS_PER_PAGE = 5;  // Number of items per page
-
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
 
@@ -88,72 +56,67 @@ const greeting = () => async (ctx: Context) => {
 
   if (userMessage) {
     const userName = ctx.from?.first_name || 'Dear User';  // Retrieve user's first name
-    const session = ctx.session || {};
 
-    // Step 1: If the user sends /start, show available exam groups
+    // If the user sends /start, prompt them to select an exam group
     if (userMessage === '/start') {
-      session.page = 1;  // Reset pagination to the first page
-      session.selectionType = 'group'; // We're showing exam groups first
-      session.selectionIndex = 0; // Starting with the first quiz group
+      const examGroups = Array.from(new Set(quizData.map(quiz => quiz.papers[0].examGroup)));  // Extract unique exam groups
+      let examGroupList = 'Please select an exam group:\n\n';
 
-      let examGroupList = 'Please select the exam group you want to explore:\n\n';
-      quizData.slice(session.page - 1, session.page * ITEMS_PER_PAGE).forEach((quiz, index) => {
-        examGroupList += `${index + 1}. ${quiz.examGroup.toUpperCase()}\n`;
+      examGroups.forEach((group, index) => {
+        examGroupList += `${index + 1}. ${group}\n`;  // Display available exam groups
       });
 
-      examGroupList += '\nPlease reply with the number of the exam group you want to explore (e.g., 1, 2, etc.).';
+      examGroupList += '\nPlease reply with the number of the exam group you want to choose (e.g., 1, 2, etc.).';
 
-      // Include pagination controls
-      if (quizData.length > ITEMS_PER_PAGE) {
-        examGroupList += '\n\nType "Next" to see more exam groups.';
-      }
-
+      // Send the exam group list
       await ctx.reply(examGroupList);
     }
 
-    // Step 2: If user selects an exam group, show list of exams for that group
-    else if (/^\d+$/.test(userMessage) && session.selectionType === 'group') {
-      const groupIndex = parseInt(userMessage, 10) - 1;
-      if (groupIndex >= 0 && groupIndex < quizData.length) {
-        const selectedExamGroup = quizData[groupIndex];
-        session.selectedExamGroup = selectedExamGroup;
+    // If the user selects an exam group
+    else if (/^\d+$/.test(userMessage)) {
+      const examGroupNumber = parseInt(userMessage, 10);
+      const examGroups = Array.from(new Set(quizData.map(quiz => quiz.papers[0].examGroup)));
 
-        session.selectionType = 'exam'; // Now we're showing exams under the selected group
-        session.selectionIndex = groupIndex; // Track the selected group
+      if (examGroupNumber > 0 && examGroupNumber <= examGroups.length) {
+        const selectedGroup = examGroups[examGroupNumber - 1];  // Get selected exam group
 
-        let examList = `You have selected the ${selectedExamGroup.examGroup.toUpperCase()} exam group. Please choose an exam:\n\n`;
+        // Find quizzes related to the selected exam group
+        const quizzesInGroup = quizData.filter(quiz => quiz.papers[0].examGroup === selectedGroup);
 
-        selectedExamGroup.papers.slice(0, ITEMS_PER_PAGE).forEach((paper, paperIndex) => {
-          examList += `${groupIndex + 1}.${paperIndex + 1}. ${paper.title} (${paper.year})\n`;
+        let quizList = `You selected the ${selectedGroup} exam group. Here are the available quizzes:\n\n`;
+        quizzesInGroup.forEach((quiz, index) => {
+          quizList += `${index + 1}. ${quiz.title.replace('-', ' ').toUpperCase()}\n`;  // Display quiz titles
+          quiz.papers.forEach((paper, paperIndex) => {
+            quizList += `  ${index + 1}.${paperIndex + 1}. ${paper.title} (${paper.year})\n`; // Display papers under each quiz
+          });
         });
 
-        examList += '\nPlease reply with the number of the exam you want to explore (e.g., 1, 1.1, etc.).';
+        quizList += '\nPlease reply with the number of the quiz you want to play (e.g., 1, 1.1, etc.).';
 
-        // Include pagination controls for exam
-        if (selectedExamGroup.papers.length > ITEMS_PER_PAGE) {
-          examList += '\n\nType "Next" to see more exams.';
-        }
-
-        await ctx.reply(examList);
+        // Send the list of quizzes for the selected exam group
+        await ctx.reply(quizList);
       } else {
+        // If the exam group number is not valid
         await ctx.reply('Invalid option. Please choose a valid exam group number (e.g., 1, 2, etc.).');
       }
     }
 
-    // Step 3: If user selects an exam, show list of exam papers
-    else if (/^\d+(\.\d+)?$/.test(userMessage) && session.selectionType === 'exam') {
+    // If the user selects a quiz/paper
+    else if (/^\d+(\.\d+)?$/.test(userMessage)) {
       const parts = userMessage.split('.');
-      const groupIndex = parseInt(parts[0], 10) - 1;
-      const paperIndex = parts[1] ? parseInt(parts[1], 10) - 1 : null;
+      const quizNumber = parseInt(parts[0], 10);
+      const paperNumber = parts[1] ? parseInt(parts[1], 10) - 1 : null; // If there's a sub-quiz, get it
 
-      if (groupIndex >= 0 && groupIndex < quizData.length) {
-        const selectedExamGroup = quizData[groupIndex];
+      // Check if the input number is valid and within the range of available quizzes
+      if (quizNumber > 0 && quizNumber <= quizData.length) {
+        const quiz = quizData[quizNumber - 1]; // Get the quiz data based on the user's input
 
-        if (paperIndex !== null && paperIndex >= 0 && paperIndex < selectedExamGroup.papers.length) {
-          const selectedPaper = selectedExamGroup.papers[paperIndex];
-          const quizLink = `${baseUrl}${encodeURIComponent(selectedPaper.title)}&metaId=${selectedPaper.metaId}`;
+        if (paperNumber !== null && paperNumber >= 0 && paperNumber < quiz.papers.length) {
+          const paper = quiz.papers[paperNumber];
+          const quizLink = `${baseUrl}${encodeURIComponent(paper.title)}&metaId=${paper.metaId}`;
 
-          await ctx.reply(`Hey ${userName}, play the following quiz: [${selectedPaper.title} - ${selectedPaper.year}](${quizLink})`);
+          // Send a clickable message with the quiz link
+          await ctx.reply(`Hey ${userName}, play the following quiz: [${paper.title} - ${paper.year}](${quizLink})`);
 
           // Send the bot share button using reply with inline keyboard
           await ctx.reply('Share the bot with your friends:', {
@@ -169,50 +132,16 @@ const greeting = () => async (ctx: Context) => {
             },
           });
         } else {
+          // If the paper input number is not valid
           await ctx.reply('Invalid option. Please choose a valid paper number (e.g., 1, 1.1, etc.).');
         }
       } else {
-        await ctx.reply('Invalid option. Please choose a valid exam group number (e.g., 1, 2, etc.).');
+        // If the input number is not valid
+        await ctx.reply('Invalid option. Please choose a valid quiz number (e.g., 1, 1.1, etc.).');
       }
-    }
-
-    // Handle "Next" pagination command for both groups and exams
-    else if (userMessage === 'next') {
-      if (session.selectionType === 'group') {
-        session.page += 1;
-        const startIndex = (session.page - 1) * ITEMS_PER_PAGE;
-        const endIndex = session.page * ITEMS_PER_PAGE;
-        let examGroupList = 'Please select the exam group you want to explore:\n\n';
-
-        quizData.slice(startIndex, endIndex).forEach((quiz, index) => {
-          examGroupList += `${startIndex + index + 1}. ${quiz.examGroup.toUpperCase()}\n`;
-        });
-
-        if (endIndex < quizData.length) {
-          examGroupList += '\n\nType "Next" to see more exam groups.';
-        }
-
-        await ctx.reply(examGroupList);
-      } else if (session.selectionType === 'exam' && session.selectedExamGroup) {
-        const selectedExamGroup = session.selectedExamGroup;
-        const startIndex = (session.page - 1) * ITEMS_PER_PAGE;
-        const endIndex = session.page * ITEMS_PER_PAGE;
-        let examList = `You have selected the ${selectedExamGroup.examGroup.toUpperCase()} exam group. Please choose an exam:\n\n`;
-
-        selectedExamGroup.papers.slice(startIndex, endIndex).forEach((paper, paperIndex) => {
-          examList += `${startIndex + paperIndex + 1}. ${paper.title} (${paper.year})\n`;
-        });
-
-        if (endIndex < selectedExamGroup.papers.length) {
-          examList += '\n\nType "Next" to see more exams.';
-        }
-
-        await ctx.reply(examList);
-      }
-    }
-
-    else {
-      await ctx.reply('Please enter a valid number (e.g., 1, 1.1, etc.) to get the quiz link or type "Next" to continue.');
+    } else {
+      // Handle case when the user input is not a valid number
+      await ctx.reply('Please enter a valid number (e.g., 1, 1.1, etc.) to get the quiz link.');
     }
   }
 };
