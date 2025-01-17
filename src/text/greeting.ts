@@ -41,20 +41,41 @@ const evaluateMathExpression = (expression: string): string => {
   }
 };
 
-// Function to start the countdown
+// Function to start the countdown and save the countdown status
 const startCountdown = (minutes: number, ctx: Context) => {
   let remainingTime = minutes * 60; // Convert minutes to seconds
+  
+  // Cache storage (e.g., a simple in-memory object for now, replace with actual cache or database)
+  const countdownCache: any = {};
+
+  countdownCache[ctx.from.id] = { remainingTime, startTime: new Date() };
+
+  // Send an initial message
+  ctx.reply(`Starting countdown for ${minutes} minute(s)...`);
+
   const interval = setInterval(() => {
     if (remainingTime > 0) {
       const minutesLeft = Math.floor(remainingTime / 60);
       const secondsLeft = remainingTime % 60;
       ctx.reply(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`);
       remainingTime--;
+      
+      // Update the countdown in the cache (or a database if needed)
+      countdownCache[ctx.from.id].remainingTime = remainingTime;
     } else {
       clearInterval(interval);
       ctx.reply('Countdown finished!');
+      
+      // Optionally remove the user’s countdown info from cache when done
+      delete countdownCache[ctx.from.id];
+      
+      // Save the countdown as finished in the cache or database
+      countdownCache[ctx.from.id].finished = true;
     }
   }, 60000); // Send an update every minute (60000 ms)
+
+  // Return the cache status (optional, for debugging or persistence)
+  return countdownCache;
 };
 
 // Main greeting function
