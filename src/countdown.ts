@@ -3,57 +3,47 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:countdown');
 
-// Helper function to parse the countdown duration
-const parseDuration = (input: string): number | null => {
-  const durationMatch = input.match(/(\d+)\s*(seconds?|minutes?|hours?|days?)/i);
-  if (!durationMatch) return null;
-
-  const value = parseInt(durationMatch[1], 10);
-  const unit = durationMatch[2].toLowerCase();
-
-  switch (unit) {
-    case 'second':
-    case 'seconds':
-      return value * 1000;
-    case 'minute':
-    case 'minutes':
-      return value * 60 * 1000;
-    case 'hour':
-    case 'hours':
-      return value * 60 * 60 * 1000;
-    case 'day':
-    case 'days':
-      return value * 24 * 60 * 60 * 1000;
-    default:
-      return null;
+// Helper function to calculate the remaining time for a countdown
+const calculateCountdown = (targetDate: string): string => {
+  const target = new Date(targetDate);
+  const current = new Date();
+  const timeDifference = target.getTime() - current.getTime();
+  
+  if (timeDifference <= 0) {
+    return `The target date has already passed!`;
   }
+
+  const days = Math.floor(timeDifference / (1000 * 3600 * 24));
+  const hours = Math.floor((timeDifference % (1000 * 3600 * 24)) / (1000 * 3600));
+  const minutes = Math.floor((timeDifference % (1000 * 3600)) / (1000 * 60));
+  const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+  return `Time remaining: ${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds.`;
 };
 
 // Main countdown function
 const countdown = () => async (ctx: Context) => {
-  debug('Triggered "countdown" command');
+  debug('Triggered "countdown" text command');
 
   const messageId = ctx.message?.message_id;
   const userName = `${ctx.message?.from.first_name}`;
+
   const userMessage = ctx.message && 'text' in ctx.message ? ctx.message.text.toLowerCase() : null;
 
   if (messageId) {
     if (userMessage) {
-      // Check if the message contains a countdown command
-      if (userMessage.startsWith('/countdown')) {
-        const durationString = userMessage.replace('/countdown', '').trim();
-        const duration = parseDuration(durationString);
-
-        if (duration && duration > 0) {
-          await ctx.reply(`Starting a countdown for ${durationString}, ${userName}. I'll notify you when it's over!`);
-          setTimeout(async () => {
-            await ctx.reply(`Time's up, ${userName}! Your countdown of ${durationString} is complete.`);
-          }, duration);
+      if (userMessage === '/start') {
+        await ctx.reply(`Hey ${userName}, how may I help you?`);
+      } else if (userMessage.includes('countdown') || userMessage.includes('timer')) {
+        const targetDate = userMessage.split(' ')[1]; // Assuming the target date is given after the command, e.g., /countdown 2025-01-01
+        if (targetDate) {
+          const countdownResult = calculateCountdown(targetDate);
+          await ctx.reply(countdownResult);
         } else {
-          await ctx.reply(`Please provide a valid duration. Example: /countdown 5 minutes`);
+          await ctx.reply(`Please provide a target date in the format YYYY-MM-DD.`);
         }
       } else {
-        await ctx.reply(`I don't understand this command. Use /countdown followed by the duration (e.g., "5 minutes").`);
+        await ctx.reply(`I don't understand. Please check the command /list for available options.`);
       }
     } else {
       await ctx.reply(`I can only respond to text messages. Please send a text command.`);
