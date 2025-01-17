@@ -85,14 +85,14 @@ const greeting = () => async (ctx: Context) => {
 
         let quizList = `You selected the ${selectedExam} exam. Here are the available quizzes:\n\n`;
         quizzesInExam.forEach((quiz, quizIndex) => {
-          quizList += `${quizIndex + 1}. ${quiz.title.replace('-', ' ').toUpperCase()}\n`;  // Display quiz titles
+          quizList += `${quizIndex + 1 + examNumber - 1}. ${quiz.title.replace('-', ' ').toUpperCase()}\n`;  // Display quiz titles with corrected numbering
           quiz.papers.forEach((paper, paperIndex) => {
-            const paperNumber = `${quizIndex + 1}.${paperIndex + 1}`;  // Create the correct numbering for the paper
+            const paperNumber = `${quizIndex + 1 + examNumber - 1}.${paperIndex + 1}`;  // Correct paper numbering
             quizList += `  ${paperNumber}. ${paper.title} (${paper.year})\n`; // Display papers under each quiz
           });
         });
 
-        quizList += '\nPlease reply with the number of the quiz you want to play (e.g., 1, 1.1, etc.).';
+        quizList += '\nPlease reply with the number of the quiz you want to play (e.g., 2.1, 2.2, etc.).';
 
         // Send the list of quizzes for the selected exam
         await ctx.reply(quizList);
