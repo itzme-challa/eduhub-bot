@@ -34,8 +34,24 @@ const greeting = () => async (ctx: Context) => {
           return;
       }
 
-      // Send a clickable message with the quiz link
-      await ctx.reply(`Hey ${userName}, play the following quiz: [${quizTitle}](${quizLink})`);
+      // Send a visually structured and designed message
+      const message = `
+🌟 **Hello ${userName},** 🌟
+
+Here’s a quiz specially for you! 🎓
+
+🔹 **Quiz:** [${quizTitle}](${quizLink})
+
+🔹 **Ready to play?** Click the link above and test your knowledge!
+
+📢 **Don't forget to share the bot with your friends and invite them to join the fun!** 
+
+👇 Tap the button below to share the bot! 👇
+`;
+
+      await ctx.reply(message, {
+        parse_mode: 'MarkdownV2',
+      });
 
       // Send the bot share button using reply with inline keyboard
       await ctx.reply('Share the bot with your friends:', {
