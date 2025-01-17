@@ -23,6 +23,17 @@ const calculateRemainingDays = (targetDate: string): number => {
   return remainingDays;
 };
 
+// Countdown function to return the remaining days for NEET or any target
+const countdown = (targetDate: string) => {
+  const remainingDays = calculateRemainingDays(targetDate);
+
+  if (remainingDays > 0) {
+    return `⏳ **Days Remaining**: ${remainingDays} days`;
+  } else {
+    return 'The exam date has already passed.';
+  }
+};
+
 // Main greeting function
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
@@ -49,20 +60,16 @@ const greeting = () => async (ctx: Context) => {
       } else if (userMessage.includes('quiz') || userMessage.includes('quizes') || userMessage.includes('question')) {
         await ctx.reply(`/quizes`);
       } else if (userMessage.includes('examneet')) {
-        // Calculate days remaining for the NEET exam
+        // Use the countdown function to calculate days remaining for the NEET exam
         const targetDate = '2025-05-04'; // Target date for NEET exam
-        const remainingDays = calculateRemainingDays(targetDate);
-        
-        if (remainingDays > 0) {
-          await ctx.reply(`🌟 **Days Left for NEET Exam** 🌟
+        const countdownMessage = countdown(targetDate);
+
+        await ctx.reply(`🌟 **Days Left for NEET Exam** 🌟
 
 🗓️ **Target Date**: May 4, 2025
-⏳ **Days Remaining**: ${remainingDays} days
+${countdownMessage}
 
 Keep going strong, you got this! 💪`);
-        } else {
-          await ctx.reply('The NEET exam date has already passed.');
-        }
       } else {
         await ctx.reply(`I don't understand. Please check the command /list for available options.`);
       }
@@ -72,4 +79,4 @@ Keep going strong, you got this! 💪`);
   }
 };
 
-export { countdown };
+export { greeting, countdown }; // Export both greeting and countdown functions
