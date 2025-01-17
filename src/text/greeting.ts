@@ -1,6 +1,5 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
-import axios from 'axios'; // Ensure axios is installed
 
 const debug = createDebug('bot:greeting_text');
 
@@ -43,36 +42,13 @@ const greeting = () => async (ctx: Context) => {
         await ctx.reply(`Sure, ${userName}! What can I help you with today? You can check /list for options.`);
       } else if (userMessage.includes('how to') || userMessage.includes('can you teach')) {
         await ctx.reply(`I'd be happy to help you learn, ${userName}! What would you like to learn about?`);
-      } else if (userMessage.includes('time')) {
-        // Ask for location
-        await ctx.reply(`Please share your location to get the accurate time. You can click the location button below.`);
-        await ctx.reply('Share your location:', {
-          reply_markup: {
-            keyboard: [
-              [{ text: 'Send Location', request_location: true }]
-            ],
-            one_time_keyboard: true
-          }
-        });
       } else if (userMessage.includes('date')) {
-        const currentDate = new Date().toLocaleDateString();
-        await ctx.reply(`Today's date is ${currentDate}, ${userName}!`);
+        // Format date as dd/mm/yyyy
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+        await ctx.reply(`Today's date is ${formattedDate}, ${userName}!`);
       } else {
         await ctx.reply(`I don't understand. Please check the command /list for available options.`);
-      }
-    } else if (ctx.message?.location) {
-      // User sent their location, get the time for that location
-      const location = ctx.message.location;
-      const { latitude, longitude } = location;
-
-      try {
-        // Fetch the time based on the user's location using a timezone API
-        const response = await axios.get(`http://worldtimeapi.org/api/timezone/Etc/GMT?lat=${latitude}&lng=${longitude}`);
-        const currentTime = response.data.datetime;
-
-        await ctx.reply(`The current time in your location is: ${currentTime}`);
-      } catch (error) {
-        await ctx.reply('Sorry, I couldn\'t fetch the time for your location.');
       }
     } else {
       // Handle non-text messages (e.g., media)
