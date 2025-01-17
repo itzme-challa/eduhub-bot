@@ -1,4 +1,4 @@
-import { Context } from 'telegraf';
+ import { Context } from 'telegraf';
 import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
@@ -9,18 +9,20 @@ const getCurrentDate = (): string => {
   return `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
 };
 
-// Helper function to calculate remaining days to a target date
-const calculateRemainingDays = (targetDate: string): number => {
-  const target = new Date(targetDate);
-  const current = new Date();
-  const timeDifference = target.getTime() - current.getTime();
-
-  if (timeDifference <= 0) {
-    return 0; // Target date has already passed
+// Helper function to evaluate math expressions
+const evaluateMathExpression = (expression: string): string => {
+  try {
+    const sanitizedExpression = expression
+      .replace(/plus|add|addition|\+/gi, '+')
+      .replace(/minus|subtract|subtracted by|-/gi, '-')
+      .replace(/times|multiply|multiplication|×|\*/gi, '*')
+      .replace(/divide by|divide|÷|\/|divided by/gi, '/');
+    const cleanExpression = sanitizedExpression.replace(/[^0-9+\-*/().]/g, '');
+    const result = eval(cleanExpression);
+    return `The result of "${expression.trim()}" is ${result}.`;
+  } catch {
+    return "I couldn't calculate that. Please provide a valid mathematical expression.";
   }
-
-  const remainingDays = Math.floor(timeDifference / (1000 * 3600 * 24));
-  return remainingDays;
 };
 
 // Main greeting function
@@ -29,6 +31,7 @@ const greeting = () => async (ctx: Context) => {
 
   const messageId = ctx.message?.message_id;
   const userName = `${ctx.message?.from.first_name}`;
+
   const userMessage = ctx.message && 'text' in ctx.message ? ctx.message.text.toLowerCase() : null;
 
   if (messageId) {
@@ -48,21 +51,9 @@ const greeting = () => async (ctx: Context) => {
         await ctx.reply(`Today's date is ${currentDate}, ${userName}!`);
       } else if (userMessage.includes('quiz') || userMessage.includes('quizes') || userMessage.includes('question')) {
         await ctx.reply(`/quizes`);
-      } else if (userMessage.includes('examneet')) {
-        // Calculate days remaining for the NEET exam
-        const targetDate = '2025-05-04'; // Target date for NEET exam
-        const remainingDays = calculateRemainingDays(targetDate);
-        
-        if (remainingDays > 0) {
-          await ctx.reply(`🌟 **Days Left for NEET Exam** 🌟
-
-🗓️ **Target Date**: May 4, 2025
-⏳ **Days Remaining**: ${remainingDays} days
-
-Keep going strong, you got this! 💪`);
-        } else {
-          await ctx.reply('The NEET exam date has already passed.');
-        }
+      } else if (/\d+(\s*plus\s*|\s*\+\s*|\s*add\s*|\s*addition\s*|\s*minus\s*|\s*\-\s*|\s*subtract\s*|\s*subtracted by\s*|\s*times\s*|\s*multiply\s*|\s*\*\s*|\s*×\s*|\s*divide\s*|\s*÷\s*|\s*\/\s*|\s*divided by\s*)\d+/i.test(userMessage)) {
+        const result = evaluateMathExpression(userMessage);
+        await ctx.reply(result);
       } else {
         await ctx.reply(`I don't understand. Please check the command /list for available options.`);
       }
