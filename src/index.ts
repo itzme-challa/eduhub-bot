@@ -8,7 +8,6 @@ import { jee } from './commands/jee';
 import { quizes } from './commands/quizes';
 import { groups } from './commands/groups';
 import { list } from './commands/list';
-import { countdown } from './text';
 import { greeting } from './text';
 import { keywordReply } from './commands/Allen';
 import { VercelRequest, VercelResponse } from '@vercel/node';
@@ -28,7 +27,6 @@ bot.command('quizes', quizes());
 bot.command('groups', groups());
 bot.command('list', list());
 bot.on('message', greeting());
-bot.command('countdown', countdown());
 bot.on('message', keywordReply());  // Add the keyword reply handler
 
 //prod mode (Vercel)
