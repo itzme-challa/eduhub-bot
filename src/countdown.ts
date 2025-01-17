@@ -14,7 +14,7 @@ const calculateDaysRemaining = (targetDate: string): string => {
   }
 
   const daysLeft = Math.floor(timeDifference / (1000 * 3600 * 24)); // Calculate days remaining
-  return daysLeft;
+  return daysLeft.toString(); // Convert the number to a string
 };
 
 // Main countdown function
