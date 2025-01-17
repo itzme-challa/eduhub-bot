@@ -1,5 +1,6 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
+import axios from 'axios'; // To make API calls for timezone
 
 const debug = createDebug('bot:greeting_text');
 
@@ -43,13 +44,35 @@ const greeting = () => async (ctx: Context) => {
       } else if (userMessage.includes('how to') || userMessage.includes('can you teach')) {
         await ctx.reply(`I'd be happy to help you learn, ${userName}! What would you like to learn about?`);
       } else if (userMessage.includes('time')) {
-        const currentTime = new Date().toLocaleTimeString();
-        await ctx.reply(`The current time is ${currentTime}, ${userName}!`);
+        // Ask for location
+        await ctx.reply(`Please share your location to get the accurate time. You can click the location button below.`);
+        await ctx.reply('Share your location:', {
+          reply_markup: {
+            keyboard: [
+              [{ text: 'Send Location', request_location: true }]
+            ],
+            one_time_keyboard: true
+          }
+        });
       } else if (userMessage.includes('date')) {
         const currentDate = new Date().toLocaleDateString();
         await ctx.reply(`Today's date is ${currentDate}, ${userName}!`);
       } else {
         await ctx.reply(`I don't understand. Please check the command /list for available options.`);
+      }
+    } else if (ctx.message?.location) {
+      // User sent their location, get the time for that location
+      const location = ctx.message.location;
+      const { latitude, longitude } = location;
+
+      try {
+        // Fetch the time based on the user's location using a timezone API
+        const response = await axios.get(`http://worldtimeapi.org/api/timezone/Etc/GMT?lat=${latitude}&lng=${longitude}`);
+        const currentTime = response.data.datetime;
+
+        await ctx.reply(`The current time in your location is: ${currentTime}`);
+      } catch (error) {
+        await ctx.reply('Sorry, I couldn\'t fetch the time for your location.');
       }
     } else {
       // Handle non-text messages (e.g., media)
