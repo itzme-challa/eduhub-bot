@@ -3,57 +3,50 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
 
-// Global variable to track countdown
-let countdownInterval: NodeJS.Timeout | null = null;
-let countdownRunning = false;
-
-// Function to start the countdown automatically after user input
-const startAutoCountdown = (minutes: number, ctx: Context) => {
-  let remainingTime = minutes * 60; // Convert minutes to seconds
-  
-  if (countdownRunning) {
-    // Prevent starting another countdown if one is already running
-    return;
-  }
-
-  countdownRunning = true;
-
-  // Start the countdown and send updates every second
-  countdownInterval = setInterval(() => {
-    const minutesLeft = Math.floor(remainingTime / 60);
-    const secondsLeft = remainingTime % 60;
-    
-    // Send time update
-    ctx.reply(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`);
-
-    remainingTime--;
-
-    // If time is up, stop the countdown and notify the user
-    if (remainingTime < 0) {
-      clearInterval(countdownInterval!);
-      countdownRunning = false;
-      ctx.reply('Countdown finished!');
-    }
-  }, 1000); // Update every second
-};
-
-// Main greeting function
+// Function to handle user input and send respective quiz links
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
-  
-  const userMessage = ctx.message && 'text' in ctx.message ? ctx.message.text.toLowerCase() : null;
 
+  const userMessage = ctx.message && 'text' in ctx.message ? ctx.message.text.toLowerCase() : null;
+  
   if (userMessage) {
-    if (/\/countdown\s+\d+/i.test(userMessage)) {
-      const minutes = parseInt(userMessage.split(' ')[1], 10);
-      if (minutes > 0) {
-        await ctx.reply(`Starting countdown for ${minutes} minute(s)...`);
-        startAutoCountdown(minutes, ctx);  // Start countdown automatically
-      } else {
-        await ctx.reply("Please specify a valid number of minutes.");
+    const userName = ctx.from?.first_name || 'Dear User';  // Retrieve user's first name
+
+    // Checking if the user input matches 1, 2, or other numbers
+    if (/^\d+$/.test(userMessage)) {
+      const quizNumber = parseInt(userMessage, 10);
+      let quizLink = '';
+      let quizTitle = '';
+
+      // Determine the quiz link and title based on the input number
+      switch (quizNumber) {
+        case 1:
+          quizLink = 'https://quizes.pages.dev/play?title=NEET%202023%20Manipur&metaId=3c48616f-298a-5f69-91d2-bcd59444c455';
+          quizTitle = 'NEET 2023 Manipur';
+          break;
+        case 2:
+          quizLink = 'https://quizes.pages.dev/play?title=NEET%202023&metaId=cbfbed57-d7d8-5a07-9957-478e4cb62f17';
+          quizTitle = 'NEET 2023';
+          break;
+        // Add more cases for other numbers if needed
+        default:
+          await ctx.reply('Invalid option. Please choose 1, 2, etc.');
+          return;
       }
+
+      // Send a clickable message with the quiz link
+      await ctx.reply(`Hey ${userName}, play the following quiz: [${quizTitle}](${quizLink})`);
+
+      // Send the bot share button
+      await ctx.replyWithInlineKeyboard(
+        [[{
+          text: 'Share with friends',
+          url: 'https://t.me/IndianChatgpt_bot'
+        }]],
+        { reply_markup: { inline_keyboard: [[{ text: 'Share the bot @IndianChatgpt_bot', url: 'https://t.me/IndianChatgpt_bot' }]] } }
+      );
     } else {
-      await ctx.reply(`Please use the command /countdown <minutes> to start the countdown.`);
+      await ctx.reply('Please enter a valid number (e.g., 1, 2, etc.) to get the quiz link.');
     }
   }
 };
