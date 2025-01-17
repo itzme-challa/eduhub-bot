@@ -48,36 +48,34 @@ const startCountdown = (minutes: number, ctx: Context) => {
   // Cache storage (e.g., a simple in-memory object for now, replace with actual cache or database)
   const countdownCache: any = {};
 
-  if (ctx.from) {
-    countdownCache[ctx.from.id] = { remainingTime, startTime: new Date() };
+  countdownCache[ctx.from.id] = { remainingTime, startTime: new Date() };
 
-    // Send an initial message
-    ctx.reply(`Starting countdown for ${minutes} minute(s)...`);
+  // Send an initial message
+  ctx.reply(`Starting countdown for ${minutes} minute(s)...`);
 
-    const interval = setInterval(() => {
-      if (remainingTime > 0) {
-        const minutesLeft = Math.floor(remainingTime / 60);
-        const secondsLeft = remainingTime % 60;
-        ctx.reply(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`);
-        remainingTime--;
-        
-        // Update the countdown in the cache (or a database if needed)
-        countdownCache[ctx.from.id].remainingTime = remainingTime;
-      } else {
-        clearInterval(interval);
-        ctx.reply('Countdown finished!');
-        
-        // Optionally remove the user’s countdown info from cache when done
-        delete countdownCache[ctx.from.id];
-        
-        // Save the countdown as finished in the cache or database
-        countdownCache[ctx.from.id].finished = true;
-      }
-    }, 1000); // Send an update every second (1000 ms)
+  const interval = setInterval(() => {
+    if (remainingTime > 0) {
+      const minutesLeft = Math.floor(remainingTime / 60);
+      const secondsLeft = remainingTime % 60;
+      ctx.reply(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`);
+      remainingTime--;
+      
+      // Update the countdown in the cache (or a database if needed)
+      countdownCache[ctx.from.id].remainingTime = remainingTime;
+    } else {
+      clearInterval(interval);
+      ctx.reply('Countdown finished!');
+      
+      // Optionally remove the user’s countdown info from cache when done
+      delete countdownCache[ctx.from.id];
+      
+      // Save the countdown as finished in the cache or database
+      countdownCache[ctx.from.id].finished = true;
+    }
+  }, 60000); // Send an update every minute (60000 ms)
 
-    // Return the cache status (optional, for debugging or persistence)
-    return countdownCache;
-  }
+  // Return the cache status (optional, for debugging or persistence)
+  return countdownCache;
 };
 
 // Main greeting function
@@ -85,8 +83,8 @@ const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
 
   const messageId = ctx.message?.message_id;
-  const userName = ctx.from ? `${ctx.from.first_name}` : 'User';  // Safe check for ctx.from
-  
+  const userName = `${ctx.message?.from.first_name}`;
+
   const userMessage = ctx.message && 'text' in ctx.message ? ctx.message.text.toLowerCase() : null;
 
   if (messageId) {
