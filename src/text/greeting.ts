@@ -26,6 +26,22 @@ const greeting = () => async (ctx: Context) => {
         await ctx.reply(`You're welcome, ${userName}! Let me know if you need further assistance.`);
       } else if (userMessage.includes('how are you') || userMessage.includes('how are you doing')) {
         await ctx.reply(`I'm doing great, ${userName}! How can I assist you today?`);
+      } else if (userMessage.includes('what is your name') || userMessage.includes('who are you')) {
+        await ctx.reply(`I am your assistant, ${userName}! How can I assist you today?`);
+      } else if (userMessage.includes('good morning') || userMessage.includes('morning')) {
+        await ctx.reply(`Good morning, ${userName}! How can I help you today?`);
+      } else if (userMessage.includes('good afternoon') || userMessage.includes('afternoon')) {
+        await ctx.reply(`Good afternoon, ${userName}! How can I help you today?`);
+      } else if (userMessage.includes('good evening') || userMessage.includes('evening')) {
+        await ctx.reply(`Good evening, ${userName}! How can I help you today?`);
+      } else if (userMessage.includes('good night') || userMessage.includes('night')) {
+        await ctx.reply(`Good night, ${userName}! Sleep well and reach out whenever you need help.`);
+      } else if (userMessage.includes('what\'s up') || userMessage.includes('wassup') || userMessage.includes('sup')) {
+        await ctx.reply(`Hey ${userName}, what's up? How can I assist you?`);
+      } else if (userMessage.includes('help') || userMessage.includes('assistance')) {
+        await ctx.reply(`Sure, ${userName}! What can I help you with today? You can check /list for options.`);
+      } else if (userMessage.includes('how to') || userMessage.includes('can you teach')) {
+        await ctx.reply(`I'd be happy to help you learn, ${userName}! What would you like to learn about?`);
       } else {
         await ctx.reply(`I don't understand. Please check the command /list for available options.`);
       }
@@ -36,4 +52,4 @@ const greeting = () => async (ctx: Context) => {
   }
 };
 
-export { greeting }; if user tells 1.. then get question from json and send him... 
+export { greeting };
