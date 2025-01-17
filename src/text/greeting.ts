@@ -41,7 +41,7 @@ const evaluateMathExpression = (expression: string): string => {
   }
 };
 
-// Function to start the countdown
+// Function to start the countdown automatically
 const startCountdown = (minutes: number, ctx: Context) => {
   let remainingTime = minutes * 60; // Convert minutes to seconds
   const interval = setInterval(() => {
@@ -87,15 +87,6 @@ const greeting = () => async (ctx: Context) => {
         await ctx.reply(daysUntilNeetExam);
       } else if (userMessage.includes('quiz') || userMessage.includes('quizes') || userMessage.includes('question')) {
         await ctx.reply(`/quizes`);
-      } else if (/\/countdown\s+\d+/i.test(userMessage)) {
-        // Extract the number of minutes from the message
-        const minutes = parseInt(userMessage.split(' ')[1], 10);
-        if (minutes > 0) {
-          await ctx.reply(`Starting countdown for ${minutes} minute(s)...`);
-          startCountdown(minutes, ctx);
-        } else {
-          await ctx.reply("Please specify a valid number of minutes.");
-        }
       } else if (/\d+(\s*plus\s*|\s*\+\s*|\s*add\s*|\s*addition\s*|\s*minus\s*|\s*\-\s*|\s*subtract\s*|\s*subtracted by\s*|\s*times\s*|\s*multiply\s*|\s*\*\s*|\s*×\s*|\s*divide\s*|\s*÷\s*|\s*\/\s*|\s*divided by\s*)\d+/i.test(userMessage)) {
         const result = evaluateMathExpression(userMessage);
         await ctx.reply(result);
@@ -108,4 +99,12 @@ const greeting = () => async (ctx: Context) => {
   }
 };
 
-export { greeting };
+// Automatic countdown trigger
+const startAutoCountdown = (minutes: number, ctx: Context) => {
+  // Start countdown automatically after bot is initialized
+  setTimeout(() => {
+    startCountdown(minutes, ctx); // Starts the countdown without needing user input
+  }, 5000); // Starts after 5 seconds (you can adjust this delay)
+};
+
+export { greeting, startAutoCountdown };
