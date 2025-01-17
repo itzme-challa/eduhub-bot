@@ -47,21 +47,44 @@ const greeting = () => async (ctx: Context) => {
         const currentDate = new Date();
         const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
         await ctx.reply(`Today's date is ${formattedDate}, ${userName}!`);
-      } else if (userMessage.includes('weather')) {
-        // Weather request (fake API or mock data)
-        const location = 'New York'; // Replace with dynamic location handling
-        const weatherMessage = `The weather in ${location} is sunny with a high of 25°C and a low of 18°C.`;
-        await ctx.reply(weatherMessage);
-      } else if (userMessage.includes('joke') || userMessage.includes('tell me a joke')) {
-        const jokes = [
-          "Why don't skeletons fight each other? They don't have the guts.",
-          "What do you call fake spaghetti? An impasta!",
-          "Why did the scarecrow win an award? Because he was outstanding in his field!",
+      } else if (userMessage === '/quote') {
+        // Daily Quotes feature
+        const quotes = [
+          "The only way to do great work is to love what you do. – Steve Jobs",
+          "The journey of a thousand miles begins with one step. – Lao Tzu",
+          "Success is not the key to happiness. Happiness is the key to success. – Albert Schweitzer",
         ];
-        const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
-        await ctx.reply(randomJoke);
-      } else if (userMessage.includes('good vibes')) {
-        await ctx.reply(`Sending you positive vibes, ${userName}! Stay awesome! ✨`);
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        await ctx.reply(`Here's your quote for the day: "${randomQuote}"`);
+      } else if (userMessage === '/poll') {
+        // Polls/Surveys Feature
+        const pollQuestion = "What is your favorite programming language?";
+        const options = ["JavaScript", "Python", "C++", "Java"];
+
+        await ctx.reply(pollQuestion, {
+          reply_markup: {
+            inline_keyboard: options.map((option) => [{ text: option, callback_data: option }]),
+          },
+        });
+      } else if (userMessage === '/trivia') {
+        // Trivia Feature
+        const triviaQuestions = [
+          { question: "What is the capital of France?", answer: "paris" },
+          { question: "Who wrote 'Romeo and Juliet'?", answer: "shakespeare" },
+        ];
+
+        const randomQuestion = triviaQuestions[Math.floor(Math.random() * triviaQuestions.length)];
+        await ctx.reply(`${randomQuestion.question} (Type your answer)`);
+
+        // Check answer when received
+        ctx.on('text', async (messageCtx: Context) => {
+          const userAnswer = messageCtx.message?.text.toLowerCase();
+          if (userAnswer === randomQuestion.answer) {
+            await messageCtx.reply("Correct! Well done!");
+          } else {
+            await messageCtx.reply("Oops! That's not correct. Try again!");
+          }
+        });
       } else {
         await ctx.reply(`I don't understand. Please check the command /list for available options.`);
       }
