@@ -41,29 +41,19 @@ const evaluateMathExpression = (expression: string): string => {
   }
 };
 
-// Function to start the countdown and update every second
-const startCountdown = async (minutes: number, ctx: Context) => {
+// Function to start the countdown
+const startCountdown = (minutes: number, ctx: Context) => {
   let remainingTime = minutes * 60; // Convert minutes to seconds
-  let countdownMessage: any; // To store the message ID for deleting previous messages
-
-  const interval = setInterval(async () => {
-    if (remainingTime > 0) {
-      const minutesLeft = Math.floor(remainingTime / 60);
-      const secondsLeft = remainingTime % 60;
-      
-      // Delete the previous countdown message if it exists
-      if (countdownMessage) {
-        await ctx.deleteMessage(countdownMessage.message_id);
-      }
-      
-      // Send the updated countdown message
-      countdownMessage = await ctx.reply(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`);
-
-      remainingTime--;
-    } else {
+  const interval = setInterval(() => {
+    const minutesLeft = Math.floor(remainingTime / 60);
+    const secondsLeft = remainingTime % 60;
+    ctx.reply(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`);
+    remainingTime--;
+    
+    // Stop the countdown when the time reaches 0
+    if (remainingTime <= 0) {
       clearInterval(interval);
-      // Send final message when countdown finishes
-      await ctx.reply('Countdown finished!');
+      ctx.reply('Countdown finished!');
     }
   }, 1000); // Send an update every second (1000 ms) for a precise countdown
 };
