@@ -8,7 +8,7 @@ import { jee } from './commands/jee';
 import { quizes } from './commands/quizes';
 import { groups } from './commands/groups';
 import { list } from './commands/list';
-import { countdown } from './countdown';
+import { countdown } from './text';
 import { greeting } from './text';
 import { keywordReply } from './commands/Allen';
 import { VercelRequest, VercelResponse } from '@vercel/node';
