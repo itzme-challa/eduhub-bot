@@ -6,7 +6,7 @@ const debug = createDebug('bot:greeting_text');
 // Base URL for quizzes
 const baseUrl = 'https://quizes.pages.dev/play?title=';
 
-// Array of quiz data with the specified format
+// Array of quiz data with specified format
 const quizData = [
   {
     examGroup: 'jee',  // Exam group, such as 'jee', 'neet', etc.
@@ -48,7 +48,6 @@ const quizData = [
       }
     ]
   }
-  // Add more quiz objects following this format
 ];
 
 const greeting = () => async (ctx: Context) => {
@@ -73,7 +72,7 @@ const greeting = () => async (ctx: Context) => {
       await ctx.reply(examGroupList);
     }
 
-    // Step 2: User selects an exam group (e.g., 1 for NEET, 2 for JEE)
+    // Step 2: User selects an exam group (e.g., 1 for JEE, 2 for NEET)
     else if (/^\d+$/.test(userMessage)) {
       const examGroupNumber = parseInt(userMessage, 10);
       const examGroups = quizData.map(quiz => quiz.examGroup);
@@ -98,7 +97,7 @@ const greeting = () => async (ctx: Context) => {
       }
     }
 
-    // Step 3: User selects an exam (e.g., 1 for NEET 2024)
+    // Step 3: User selects an exam (e.g., 1 for JEE Main)
     else if (/^\d+$/.test(userMessage)) {
       const selectedExamNumber = parseInt(userMessage, 10);
       const selectedExamGroup = quizData.find(group => group.exams.some(exam => exam.metaId === userMessage)); // Find selected exam group
@@ -108,7 +107,7 @@ const greeting = () => async (ctx: Context) => {
         let quizList = `You selected the exam: ${selectedExamGroup.examGroup.toUpperCase()} - Here are the available quizzes:\n\n`;
 
         // Display quiz titles for selected exam
-        quizList += `${selectedExam.title} (${selectedExam.year})\n`;
+        quizList += `1. ${selectedExam.title} (${selectedExam.year})\n`;  // Add quiz titles like 1.1.1, etc.
 
         quizList += `\nYou can play the quiz now by clicking on the link below:\n`;
         const quizLink = `${baseUrl}${encodeURIComponent(selectedExam.title)}&metaId=${selectedExam.metaId}`;
