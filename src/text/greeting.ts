@@ -3,6 +3,22 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
 
+// Helper function to calculate the remaining time
+const calculateTimeLeft = (examDate: Date) => {
+  const currentDate = new Date();
+  const timeDiff = examDate.getTime() - currentDate.getTime();
+
+  if (timeDiff <= 0) {
+    return "Your exam has already passed.";
+  }
+
+  const daysLeft = Math.floor(timeDiff / (1000 * 3600 * 24));
+  const hoursLeft = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600));
+  const minutesLeft = Math.floor((timeDiff % (1000 * 3600)) / (1000 * 60));
+
+  return `Your exam is in ${daysLeft} days, ${hoursLeft} hours, and ${minutesLeft} minutes.`;
+};
+
 // Main greeting function
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
@@ -47,6 +63,16 @@ const greeting = () => async (ctx: Context) => {
         const currentDate = new Date();
         const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
         await ctx.reply(`Today's date is ${formattedDate}, ${userName}!`);
+      } else if (userMessage.includes('exam time left') || userMessage.includes('when is my exam')) {
+        // Prompt the user for the exam date
+        await ctx.reply(`Please send me your exam date in dd/mm/yyyy format (e.g., 25/12/2025).`);
+      } else if (userMessage.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+        // Check if the user sent an exam date in dd/mm/yyyy format
+        const [day, month, year] = userMessage.split('/');
+        const examDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+        
+        const timeLeftMessage = calculateTimeLeft(examDate);
+        await ctx.reply(timeLeftMessage);
       } else {
         await ctx.reply(`I don't understand. Please check the command /list for available options.`);
       }
