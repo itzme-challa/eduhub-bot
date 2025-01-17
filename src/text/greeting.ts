@@ -85,7 +85,7 @@ const greeting = () => async (ctx: Context) => {
         // Find quizzes related to the selected exam group
         const quizzesInGroup = quizData.filter(quiz => quiz.papers[0].examGroup === selectedGroup);
 
-        // Pagination: Function to handle quiz display by page
+        // Function to handle sending quizzes with pagination
         const sendQuizzesPage = async (page: number) => {
           let quizList = `You selected the ${selectedGroup} exam group. Here are the available quizzes (Page ${page}):\n\n`;
 
