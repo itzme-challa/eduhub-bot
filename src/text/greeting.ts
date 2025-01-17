@@ -7,7 +7,7 @@ const debug = createDebug('bot:greeting_text');
 let countdownInterval: NodeJS.Timeout | null = null;
 let countdownRunning = false;
 
-// Function to start the countdown and continuously update the message
+// Function to start the countdown automatically after user input
 const startAutoCountdown = (minutes: number, ctx: Context) => {
   let remainingTime = minutes * 60; // Convert minutes to seconds
   
@@ -18,18 +18,13 @@ const startAutoCountdown = (minutes: number, ctx: Context) => {
 
   countdownRunning = true;
 
-  // Send initial message to the user
-  ctx.reply(`Starting countdown for ${minutes} minute(s)...`);
-
   // Start the countdown and send updates every second
   countdownInterval = setInterval(() => {
     const minutesLeft = Math.floor(remainingTime / 60);
     const secondsLeft = remainingTime % 60;
     
-    // Edit the message to update the countdown
-    ctx.reply(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`, { 
-      reply_to_message_id: ctx.message?.message_id 
-    });
+    // Send time update
+    ctx.reply(`Time left: ${minutesLeft} minute(s) and ${secondsLeft} second(s).`);
 
     remainingTime--;
 
