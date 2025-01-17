@@ -72,7 +72,7 @@ const startCountdown = (minutes: number, ctx: Context) => {
       // Save the countdown as finished in the cache or database
       countdownCache[ctx.from.id].finished = true;
     }
-  }, 60000); // Send an update every minute (60000 ms)
+  }, 1000); // Send an update every second (1000 ms)
 
   // Return the cache status (optional, for debugging or persistence)
   return countdownCache;
