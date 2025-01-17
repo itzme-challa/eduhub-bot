@@ -48,6 +48,7 @@ const quizData = [
   }
   // Add more quiz objects following this format
 ];
+
 const ITEMS_PER_PAGE = 10;  // Items per page
 
 const greeting = () => async (ctx: Context) => {
@@ -84,7 +85,7 @@ const greeting = () => async (ctx: Context) => {
         // Find quizzes related to the selected exam group
         const quizzesInGroup = quizData.filter(quiz => quiz.papers[0].examGroup === selectedGroup);
 
-        // Pagination
+        // Pagination: Function to handle quiz display by page
         const sendQuizzesPage = async (page: number) => {
           let quizList = `You selected the ${selectedGroup} exam group. Here are the available quizzes (Page ${page}):\n\n`;
 
