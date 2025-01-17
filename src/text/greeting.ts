@@ -6,17 +6,29 @@ const debug = createDebug('bot:greeting_text');
 // Base URL for quizzes
 const baseUrl = 'https://quizes.pages.dev/play?title=';
 
-// Array of quiz data (title and metaId)
+// Array of quiz data (title, metaId, and exam)
 const quizData = [
   {
     title: 'NEET 2023 Manipur',
     metaId: '3c48616f-298a-5f69-91d2-bcd59444c455',
+    exam: 'NEET',
   },
   {
     title: 'NEET 2023',
     metaId: 'cbfbed57-d7d8-5a07-9957-478e4cb62f17',
+    exam: 'NEET',
   },
-  // Add more quiz objects here with title and metaId
+  // You can add more quiz objects here with title, metaId, and exam
+  {
+    title: 'JEE 2023',
+    metaId: 'a1b2c3d4-e5f6-7890-gh1jklmn234',
+    exam: 'JEE',
+  },
+  {
+    title: 'AIIMS 2023',
+    metaId: 'z9y8x7w6-v5u4t3s2-r1q0p9o8m7n6',
+    exam: 'AIIMS',
+  },
 ];
 
 const greeting = () => async (ctx: Context) => {
@@ -31,7 +43,7 @@ const greeting = () => async (ctx: Context) => {
     if (userMessage === '/start') {
       let quizList = 'Please select the quiz you want to play:\n\n';
       quizData.forEach((quiz, index) => {
-        quizList += `${index + 1}. ${quiz.title}\n`;  // Display quizzes as 1, 2, 3, etc.
+        quizList += `${index + 1}. ${quiz.exam} - ${quiz.title}\n`;  // Display quizzes with exam name and title
       });
 
       quizList += '\nPlease reply with the number of the quiz you want to play (e.g., 1, 2, etc.).';
@@ -50,7 +62,7 @@ const greeting = () => async (ctx: Context) => {
         const quizLink = `${baseUrl}${encodeURIComponent(quiz.title)}&metaId=${quiz.metaId}`;
 
         // Send a clickable message with the quiz link
-        await ctx.reply(`Hey ${userName}, play the following quiz: [${quiz.title}](${quizLink})`);
+        await ctx.reply(`Hey ${userName}, play the following quiz: [${quiz.exam} - ${quiz.title}](${quizLink})`);
 
         // Send the bot share button using reply with inline keyboard
         await ctx.reply('Share the bot with your friends:', {
