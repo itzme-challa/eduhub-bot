@@ -1,4 +1,4 @@
-import { Telegraf, Context } from 'telegraf';
+import { Context } from 'telegraf';
 import createDebug from 'debug';
 
 const debug = createDebug('bot:countdown');
@@ -61,10 +61,4 @@ const countdown = () => async (ctx: Context) => {
   }
 };
 
-const bot = new Telegraf('YOUR_BOT_TOKEN');
-
-// Listen for any new messages and trigger the countdown function
-bot.on('message', countdown());
-
-// Start the bot
-bot.launch();
+export { countdown };
