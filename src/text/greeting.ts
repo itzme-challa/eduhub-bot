@@ -26,4 +26,4 @@ const countdownTimer = () => async (ctx: Context) => {
   }
 };
 
-export { countdownTimer };
+export { greeting };
