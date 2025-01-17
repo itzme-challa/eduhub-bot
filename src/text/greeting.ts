@@ -48,7 +48,6 @@ const quizData = [
   }
   // Add more quiz objects following this format
 ];
-
 const ITEMS_PER_PAGE = 10;  // Items per page
 
 const greeting = () => async (ctx: Context) => {
