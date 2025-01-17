@@ -14,18 +14,18 @@ const parseDuration = (input: string): number | null => {
   switch (unit) {
     case 'second':
     case 'seconds':
-      return value * 1000;
+      return value * 1000; // Convert seconds to milliseconds
     case 'minute':
     case 'minutes':
-      return value * 60 * 1000;
+      return value * 60 * 1000; // Convert minutes to milliseconds
     case 'hour':
     case 'hours':
-      return value * 60 * 60 * 1000;
+      return value * 60 * 60 * 1000; // Convert hours to milliseconds
     case 'day':
     case 'days':
-      return value * 24 * 60 * 60 * 1000;
+      return value * 24 * 60 * 60 * 1000; // Convert days to milliseconds
     default:
-      return null;
+      return null; // Return null if the unit is unrecognized
   }
 };
 
@@ -58,6 +58,8 @@ const countdown = () => async (ctx: Context) => {
     } else {
       await ctx.reply(`I can only respond to text messages. Please send a text command.`);
     }
+  } else {
+    await ctx.reply(`I couldn't process your message. Please try again.`);
   }
 };
 
