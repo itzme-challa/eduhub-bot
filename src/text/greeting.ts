@@ -240,7 +240,7 @@ const quizData = [
                 "title": "JEE Main 2023 (Online) 8th April Morning Shift",
                 "year": 2023
             },
-            ]
+            ],
         "yearwise": null
     },
     {
@@ -467,7 +467,13 @@ const quizData = [
                     "hi",
                     "bn"
                 ]
-            },
+            }
+            ],
+        "yearwise": null
+    },
+    {
+        "title": "jee-advanced",
+        "papers": [
             {
                 "exam": "jee-main3",
                 "examGroup": "jee",
@@ -677,6 +683,12 @@ const quizData = [
                 "title": "JEE Main 2021 (Online) 31st August Morning Shift",
                 "year": 2021
             },
+            ]
+        "yearwise": null
+    },
+    {
+        "title": "jee-advanced",
+        "papers": [
             {
                 "metaId": "740d2f62-bb70-574b-84ac-334e1d5ccfec",
                 "exam": "jee-main4",
