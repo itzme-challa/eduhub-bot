@@ -1,53 +1,4 @@
-import { Context } from 'telegraf';
-import createDebug from 'debug';
-
-const debug = createDebug('bot:greeting_text');
-
-// Base URL for quizzes
-const baseUrl = 'https://quizes.pages.dev/play?title=';
-
-// Array of quiz data with the specified format
-const quizData = [
-  {
-    title: 'jee-main-misc',
-    papers: [
-      {
-        exam: 'jee-main',
-        examGroup: 'jee',
-        metaId: 'emb-ait1',
-        title: 'JEE Main 2024 Misc Paper 1',
-        year: 2024
-      },
-      {
-        exam: 'jee-main',
-        examGroup: 'jee',
-        metaId: 'emb-ait2',
-        title: 'JEE Main 2024 Misc Paper 2',
-        year: 2024
-      }
-    ]
-  },
-  {
-    title: 'neet-misc',
-    papers: [
-      {
-        exam: 'neet',
-        examGroup: 'medical',
-        metaId: 'emb-nat1',
-        title: 'NEET 2024 Misc Paper 1',
-        year: 2024
-      },
-      {
-        exam: 'neet',
-        examGroup: 'medical',
-        metaId: 'emb-nat2',
-        title: 'NEET 2024 Misc Paper 2',
-        year: 2024
-      }
-    ]
-  }
-  // Add more quiz objects following this format
-];
+const ITEMS_PER_PAGE = 10;  // Items per page
 
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
@@ -83,25 +34,63 @@ const greeting = () => async (ctx: Context) => {
         // Find quizzes related to the selected exam group
         const quizzesInGroup = quizData.filter(quiz => quiz.papers[0].examGroup === selectedGroup);
 
-        let quizList = `You selected the ${selectedGroup} exam group. Here are the available quizzes:\n\n`;
-        quizzesInGroup.forEach((quiz, index) => {
-          quizList += `${index + 1}. ${quiz.title.replace('-', ' ').toUpperCase()}\n`;  // Display quiz titles
-          quiz.papers.forEach((paper, paperIndex) => {
-            quizList += `  ${index + 1}.${paperIndex + 1}. ${paper.title} (${paper.year})\n`; // Display papers under each quiz
+        // Pagination
+        const sendQuizzesPage = async (page: number) => {
+          let quizList = `You selected the ${selectedGroup} exam group. Here are the available quizzes (Page ${page}):\n\n`;
+
+          const start = (page - 1) * ITEMS_PER_PAGE;
+          const end = Math.min(start + ITEMS_PER_PAGE, quizzesInGroup.length);
+
+          quizzesInGroup.slice(start, end).forEach((quiz, index) => {
+            quizList += `${start + index + 1}. ${quiz.title.replace('-', ' ').toUpperCase()}\n`;  // Display quiz titles
+            quiz.papers.forEach((paper, paperIndex) => {
+              quizList += `  ${start + index + 1}.${paperIndex + 1}. ${paper.title} (${paper.year})\n`; // Display papers under each quiz
+            });
           });
-        });
 
-        quizList += '\nPlease reply with the number of the quiz you want to play (e.g., 1, 1.1, etc.).';
+          quizList += '\nPlease reply with the number of the quiz you want to play (e.g., 1, 1.1, etc.).\n';
+          
+          const buttons = [];
+          if (start > 0) {
+            buttons.push({
+              text: 'Previous Page',
+              callback_data: `page_${page - 1}`,
+            });
+          }
+          if (end < quizzesInGroup.length) {
+            buttons.push({
+              text: 'Next Page',
+              callback_data: `page_${page + 1}`,
+            });
+          }
 
-        // Send the list of quizzes for the selected exam group
-        await ctx.reply(quizList);
+          // Send the quiz list and the navigation buttons
+          await ctx.reply(quizList, {
+            reply_markup: {
+              inline_keyboard: buttons.length ? [buttons] : [],
+            },
+          });
+        };
+
+        // Send the first page of quizzes
+        await sendQuizzesPage(1);
       } else {
         // If the exam group number is not valid
         await ctx.reply('Invalid option. Please choose a valid exam group number (e.g., 1, 2, etc.).');
       }
     }
 
-    // If the user selects a quiz/paper
+    // Handle pagination callback queries (Next/Previous)
+    else if (userMessage.startsWith('page_')) {
+      const pageNumber = parseInt(userMessage.split('_')[1], 10);
+      const examGroups = Array.from(new Set(quizData.map(quiz => quiz.papers[0].examGroup)));
+      const selectedGroup = examGroups[0];  // assuming the group is already selected
+      const quizzesInGroup = quizData.filter(quiz => quiz.papers[0].examGroup === selectedGroup);
+
+      await sendQuizzesPage(pageNumber);
+    }
+
+    // Handle other user input (quiz selection)
     else if (/^\d+(\.\d+)?$/.test(userMessage)) {
       const parts = userMessage.split('.');
       const quizNumber = parseInt(parts[0], 10);
