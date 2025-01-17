@@ -1,3 +1,54 @@
+import { Context } from 'telegraf';
+import createDebug from 'debug';
+
+const debug = createDebug('bot:greeting_text');
+
+// Base URL for quizzes
+const baseUrl = 'https://quizes.pages.dev/play?title=';
+
+// Array of quiz data with the specified format
+const quizData = [
+  {
+    title: 'jee-main-misc',
+    papers: [
+      {
+        exam: 'jee-main',
+        examGroup: 'jee',
+        metaId: 'emb-ait1',
+        title: 'JEE Main 2024 Misc Paper 1',
+        year: 2024
+      },
+      {
+        exam: 'jee-main',
+        examGroup: 'jee',
+        metaId: 'emb-ait2',
+        title: 'JEE Main 2024 Misc Paper 2',
+        year: 2024
+      }
+    ]
+  },
+  {
+    title: 'neet-misc',
+    papers: [
+      {
+        exam: 'neet',
+        examGroup: 'medical',
+        metaId: 'emb-nat1',
+        title: 'NEET 2024 Misc Paper 1',
+        year: 2024
+      },
+      {
+        exam: 'neet',
+        examGroup: 'medical',
+        metaId: 'emb-nat2',
+        title: 'NEET 2024 Misc Paper 2',
+        year: 2024
+      }
+    ]
+  }
+  // Add more quiz objects following this format
+];
+
 const ITEMS_PER_PAGE = 10;  // Items per page
 
 const greeting = () => async (ctx: Context) => {
