@@ -37,14 +37,19 @@ const greeting = () => async (ctx: Context) => {
       // Send a clickable message with the quiz link
       await ctx.reply(`Hey ${userName}, play the following quiz: [${quizTitle}](${quizLink})`);
 
-      // Send the bot share button
-      await ctx.replyWithInlineKeyboard(
-        [[{
-          text: 'Share with friends',
-          url: 'https://t.me/IndianChatgpt_bot'
-        }]],
-        { reply_markup: { inline_keyboard: [[{ text: 'Share the bot @IndianChatgpt_bot', url: 'https://t.me/IndianChatgpt_bot' }]] } }
-      );
+      // Send the bot share button using reply with inline keyboard
+      await ctx.reply('Share the bot with your friends:', {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: 'Share with friends',
+                url: 'https://t.me/IndianChatgpt_bot',
+              },
+            ],
+          ],
+        },
+      });
     } else {
       await ctx.reply('Please enter a valid number (e.g., 1, 2, etc.) to get the quiz link.');
     }
