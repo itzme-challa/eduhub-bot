@@ -3,37 +3,22 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
 
-// Helper function to calculate the remaining time
-const calculateTimeLeft = (examDate: Date) => {
+// Helper function to format the current date as dd/mm/yyyy
+const getCurrentDate = (): string => {
   const currentDate = new Date();
-  const timeDiff = examDate.getTime() - currentDate.getTime();
-
-  if (timeDiff <= 0) {
-    return "Your exam has already passed.";
-  }
-
-  const daysLeft = Math.floor(timeDiff / (1000 * 3600 * 24));
-  const hoursLeft = Math.floor((timeDiff % (1000 * 3600 * 24)) / (1000 * 3600));
-  const minutesLeft = Math.floor((timeDiff % (1000 * 3600)) / (1000 * 60));
-
-  return `Your exam is in ${daysLeft} days, ${hoursLeft} hours, and ${minutesLeft} minutes.`;
+  return `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
 };
 
 // Helper function to evaluate math expressions
 const evaluateMathExpression = (expression: string): string => {
   try {
-    // Replace various synonyms and symbols with standard operators
     const sanitizedExpression = expression
       .replace(/plus|add|addition|\+/gi, '+')
       .replace(/minus|subtract|subtracted by|-/gi, '-')
       .replace(/times|multiply|multiplication|×|\*/gi, '*')
       .replace(/divide by|divide|÷|\/|divided by/gi, '/');
-
-    // Remove any invalid characters to prevent injection
     const cleanExpression = sanitizedExpression.replace(/[^0-9+\-*/().]/g, '');
-
-    // Evaluate the sanitized expression
-    const result = eval(cleanExpression); // Safe for simple math expressions due to sanitization
+    const result = eval(cleanExpression);
     return `The result of "${expression.trim()}" is ${result}.`;
   } catch {
     return "I couldn't calculate that. Please provide a valid mathematical expression.";
@@ -47,7 +32,6 @@ const greeting = () => async (ctx: Context) => {
   const messageId = ctx.message?.message_id;
   const userName = `${ctx.message?.from.first_name}`;
 
-  // Get the message text or handle non-text messages
   const userMessage = ctx.message && 'text' in ctx.message ? ctx.message.text.toLowerCase() : null;
 
   if (messageId) {
@@ -62,13 +46,11 @@ const greeting = () => async (ctx: Context) => {
         await ctx.reply(`You're welcome, ${userName}! Let me know if you need further assistance.`);
       } else if (userMessage.includes('how are you') || userMessage.includes('how are you doing')) {
         await ctx.reply(`I'm doing great, ${userName}! How can I assist you today?`);
-      } else if (userMessage.includes('exam time left') || userMessage.includes('when is my exam')) {
-        await ctx.reply(`Please send me your exam date in dd/mm/yyyy format (e.g., 25/12/2025).`);
-      } else if (userMessage.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
-        const [day, month, year] = userMessage.split('/');
-        const examDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-        const timeLeftMessage = calculateTimeLeft(examDate);
-        await ctx.reply(timeLeftMessage);
+      } else if (userMessage.includes('date')) {
+        const currentDate = getCurrentDate();
+        await ctx.reply(`Today's date is ${currentDate}, ${userName}!`);
+      } else if (userMessage.includes('quiz') || userMessage.includes('quizes') || userMessage.includes('question')) {
+        await ctx.reply(`/quizes`);
       } else if (/\d+(\s*plus\s*|\s*\+\s*|\s*add\s*|\s*addition\s*|\s*minus\s*|\s*\-\s*|\s*subtract\s*|\s*subtracted by\s*|\s*times\s*|\s*multiply\s*|\s*\*\s*|\s*×\s*|\s*divide\s*|\s*÷\s*|\s*\/\s*|\s*divided by\s*)\d+/i.test(userMessage)) {
         const result = evaluateMathExpression(userMessage);
         await ctx.reply(result);
