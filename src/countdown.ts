@@ -1,4 +1,4 @@
-import { Context } from 'telegraf';
+import { Telegraf, Context } from 'telegraf';
 import createDebug from 'debug';
 
 const debug = createDebug('bot:countdown');
@@ -6,14 +6,7 @@ const debug = createDebug('bot:countdown');
 // Helper function to parse the countdown duration
 const parseDuration = (input: string): number | null => {
   const durationMatch = input.match(/(\d+)\s*(seconds?|minutes?|hours?|days?)/i);
-  if (!durationMatch) {
-    // If no unit is provided, assume 'minutes' as default
-    const value = parseInt(input, 10);
-    if (!isNaN(value)) {
-      return value * 60 * 1000; // Default to minutes
-    }
-    return null;
-  }
+  if (!durationMatch) return null;
 
   const value = parseInt(durationMatch[1], 10);
   const unit = durationMatch[2].toLowerCase();
@@ -68,4 +61,10 @@ const countdown = () => async (ctx: Context) => {
   }
 };
 
-export { countdown };
+const bot = new Telegraf('YOUR_BOT_TOKEN');
+
+// Listen for any new messages and trigger the countdown function
+bot.on('message', countdown());
+
+// Start the bot
+bot.launch();
