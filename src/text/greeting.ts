@@ -1945,7 +1945,7 @@ const greeting = () => async (ctx: Context) => {
 
     // If the user sends /start, prompt them to select an exam group
     if (userMessage === '/start') {
-      const examGroups = Array.from(new Set(quizData.map(quiz => quiz.papers[0].examGroup)));  // Extract unique exam groups
+      const examGroups = Array.from(new Set(quizData.map(quiz => quiz.papers[0].exam)));  // Extract unique exam groups
       let examGroupList = 'Please select an exam group:\n\n';
 
       examGroups.forEach((group, index) => {
@@ -1961,13 +1961,13 @@ const greeting = () => async (ctx: Context) => {
     // If the user selects an exam group
     else if (/^\d+$/.test(userMessage)) {
       const examGroupNumber = parseInt(userMessage, 10);
-      const examGroups = Array.from(new Set(quizData.map(quiz => quiz.papers[0].examGroup)));
+      const examGroups = Array.from(new Set(quizData.map(quiz => quiz.papers[0].exam)));
 
       if (examGroupNumber > 0 && examGroupNumber <= examGroups.length) {
         const selectedGroup = examGroups[examGroupNumber - 1];  // Get selected exam group
 
         // Find quizzes related to the selected exam group
-        const quizzesInGroup = quizData.filter(quiz => quiz.papers[0].examGroup === selectedGroup);
+        const quizzesInGroup = quizData.filter(quiz => quiz.papers[0].exam === selectedGroup);
 
         let quizList = `You selected the ${selectedGroup} exam group. Here are the available quizzes:\n\n`;
         quizzesInGroup.forEach((quiz, index) => {
