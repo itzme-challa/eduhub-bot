@@ -3,13 +3,21 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
 
-// Global variable to track the countdown state
+// Global variable to track countdown
 let countdownInterval: NodeJS.Timeout | null = null;
+let countdownRunning = false;
 
-// Function to start the countdown automatically
+// Function to start the countdown automatically after user input
 const startAutoCountdown = (minutes: number, ctx: Context) => {
   let remainingTime = minutes * 60; // Convert minutes to seconds
   
+  if (countdownRunning) {
+    // Prevent starting another countdown if one is already running
+    return;
+  }
+
+  countdownRunning = true;
+
   // Start the countdown and send updates every second
   countdownInterval = setInterval(() => {
     const minutesLeft = Math.floor(remainingTime / 60);
@@ -23,6 +31,7 @@ const startAutoCountdown = (minutes: number, ctx: Context) => {
     // If time is up, stop the countdown and notify the user
     if (remainingTime < 0) {
       clearInterval(countdownInterval!);
+      countdownRunning = false;
       ctx.reply('Countdown finished!');
     }
   }, 1000); // Update every second
