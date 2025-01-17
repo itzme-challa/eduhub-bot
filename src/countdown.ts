@@ -1,3 +1,23 @@
+import { Context } from 'telegraf';
+import createDebug from 'debug';
+
+const debug = createDebug('bot:countdown');
+
+// Helper function to calculate the remaining days until May 4, 2025
+const calculateDaysRemaining = (targetDate: string): string => {
+  const target = new Date(targetDate);
+  const current = new Date();
+  const timeDifference = target.getTime() - current.getTime();
+
+  if (timeDifference <= 0) {
+    return `The target date has already passed!`;
+  }
+
+  const daysLeft = Math.floor(timeDifference / (1000 * 3600 * 24)); // Calculate days remaining
+  return daysLeft;
+};
+
+// Main countdown function
 const countdown = () => async (ctx: Context) => {
   debug('Triggered "countdown" text command');
 
@@ -8,18 +28,27 @@ const countdown = () => async (ctx: Context) => {
 
   if (messageId) {
     if (userMessage) {
+      // Handling the case for /start
       if (userMessage === '/start') {
         await ctx.reply(`Hey ${userName}, how may I help you?`);
-      } else if (userMessage.includes('countdown') || userMessage.includes('timer')) {
-        const commandParts = userMessage.split(' ');
-        const targetDate = commandParts[1]; // Assuming the target date is given after the command, e.g., /countdown 2025-01-01
+      } 
+      
+      // Checking if the message contains "examneet"
+      else if (userMessage.includes('examneet')) {
+        const targetDate = '2025-05-04'; // Set the fixed target date for the exam (May 4, 2025)
+        const daysRemaining = calculateDaysRemaining(targetDate);
 
-        if (targetDate) {
-          const countdownResult = calculateCountdown(targetDate);
-          await ctx.reply(countdownResult);
-        } else {
-          await ctx.reply(`Please provide a target date in the format YYYY-MM-DD. Example: /countdown 2025-01-01`);
-        }
+        // Send a well-designed response
+        const response = `
+        🌟 **Days Left for NEET Exam** 🌟
+
+        🗓️ **Target Date**: May 4, 2025
+        ⏳ **Days Remaining**: ${daysRemaining} days
+
+        Keep going strong, you got this! 💪
+        `;
+        await ctx.reply(response, { parse_mode: 'Markdown' });  // Using Markdown for better formatting
+
       } else {
         await ctx.reply(`I don't understand. Please check the command /list for available options.`);
       }
@@ -28,3 +57,5 @@ const countdown = () => async (ctx: Context) => {
     }
   }
 };
+
+export { countdown };
