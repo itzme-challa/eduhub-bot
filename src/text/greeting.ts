@@ -1,4 +1,4 @@
- import { Context } from 'telegraf';
+import { Context } from 'telegraf';
 import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
@@ -7,6 +7,22 @@ const debug = createDebug('bot:greeting_text');
 const getCurrentDate = (): string => {
   const currentDate = new Date();
   return `${currentDate.getDate().toString().padStart(2, '0')}/${(currentDate.getMonth() + 1).toString().padStart(2, '0')}/${currentDate.getFullYear()}`;
+};
+
+// Helper function to calculate the number of days remaining until the NEET exam (May 4th)
+const getDaysUntilNeetExam = (): string => {
+  const today = new Date();
+  const neetExamDate = new Date(today.getFullYear(), 4, 4); // May 4th of the current year
+  
+  // If today is past May 4th, use the next year's date
+  if (today > neetExamDate) {
+    neetExamDate.setFullYear(today.getFullYear() + 1);
+  }
+
+  const timeDifference = neetExamDate.getTime() - today.getTime();
+  const daysLeft = Math.ceil(timeDifference / (1000 * 3600 * 24));
+  
+  return `There are ${daysLeft} days left until the NEET exam on May 4th.`;
 };
 
 // Helper function to evaluate math expressions
@@ -49,6 +65,9 @@ const greeting = () => async (ctx: Context) => {
       } else if (userMessage.includes('date')) {
         const currentDate = getCurrentDate();
         await ctx.reply(`Today's date is ${currentDate}, ${userName}!`);
+      } else if (userMessage.includes('neetexam')) {
+        const daysUntilNeetExam = getDaysUntilNeetExam();
+        await ctx.reply(daysUntilNeetExam);
       } else if (userMessage.includes('quiz') || userMessage.includes('quizes') || userMessage.includes('question')) {
         await ctx.reply(`/quizes`);
       } else if (/\d+(\s*plus\s*|\s*\+\s*|\s*add\s*|\s*addition\s*|\s*minus\s*|\s*\-\s*|\s*subtract\s*|\s*subtracted by\s*|\s*times\s*|\s*multiply\s*|\s*\*\s*|\s*×\s*|\s*divide\s*|\s*÷\s*|\s*\/\s*|\s*divided by\s*)\d+/i.test(userMessage)) {
