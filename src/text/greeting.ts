@@ -24,11 +24,10 @@ const evaluateMathExpression = (expression: string): string => {
   try {
     // Replace various synonyms and symbols with standard operators
     const sanitizedExpression = expression
-      .replace(/plus|add|addition|additon|\+/gi, '+')
+      .replace(/plus|add|addition|\+/gi, '+')
       .replace(/minus|subtract|subtracted by|-/gi, '-')
       .replace(/times|multiply|multiplication|×|\*/gi, '*')
-      .replace(/divide by|divide|÷|\/|divided by/gi, '/')
-      .replace(/root|√/gi, '**0.5'); // Handle square roots
+      .replace(/divide by|divide|÷|\/|divided by/gi, '/');
 
     // Remove any invalid characters to prevent injection
     const cleanExpression = sanitizedExpression.replace(/[^0-9+\-*/().]/g, '');
@@ -70,7 +69,7 @@ const greeting = () => async (ctx: Context) => {
         const examDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
         const timeLeftMessage = calculateTimeLeft(examDate);
         await ctx.reply(timeLeftMessage);
-      } else if (/\d+(\s*plus\s*|\s*\+\s*|\s*add\s*|\s*addition\s*|\s*minus\s*|\s*\-\s*|\s*subtract\s*|\s*subtracted by\s*|\s*times\s*|\s*multiply\s*|\s*\*\s*|\s*×\s*|\s*divide\s*|\s*÷\s*|\s*\/\s*|\s*divided by\s*|\s*root\s*|\s*√\s*)\d+/i.test(userMessage)) {
+      } else if (/\d+(\s*plus\s*|\s*\+\s*|\s*add\s*|\s*addition\s*|\s*minus\s*|\s*\-\s*|\s*subtract\s*|\s*subtracted by\s*|\s*times\s*|\s*multiply\s*|\s*\*\s*|\s*×\s*|\s*divide\s*|\s*÷\s*|\s*\/\s*|\s*divided by\s*)\d+/i.test(userMessage)) {
         const result = evaluateMathExpression(userMessage);
         await ctx.reply(result);
       } else {
