@@ -9,10 +9,10 @@ const baseUrl = 'https://quizes.pages.dev/play?title=';
 // Array of quiz data with the specified format
 const quizData = [
   {
-    examGroup: 'jee',
+    examGroup: 'jee',  // Exam group, such as 'jee', 'neet', etc.
     exams: [
       {
-        exam: 'jee-main',
+        exam: 'jee-main',  // Specific exam, such as 'jee-main', 'neet', etc.
         metaId: 'emb-ait1',
         title: 'JEE Main 2024 Misc Paper 1',
         year: 2024
@@ -22,11 +22,17 @@ const quizData = [
         metaId: 'emb-ait2',
         title: 'JEE Main 2024 Misc Paper 2',
         year: 2024
+      },
+      {
+        exam: 'jee-advanced',
+        metaId: 'emb-ait3',
+        title: 'JEE Advanced 2024 Paper 1',
+        year: 2024
       }
     ]
   },
   {
-    examGroup: 'neet',
+    examGroup: 'neet',  // Exam group, such as 'neet'
     exams: [
       {
         exam: 'neet',
@@ -67,7 +73,7 @@ const greeting = () => async (ctx: Context) => {
       await ctx.reply(examGroupList);
     }
 
-    // Step 2: User selects an exam group
+    // Step 2: User selects an exam group (e.g., 1 for NEET, 2 for JEE)
     else if (/^\d+$/.test(userMessage)) {
       const examGroupNumber = parseInt(userMessage, 10);
       const examGroups = quizData.map(quiz => quiz.examGroup);
@@ -92,22 +98,23 @@ const greeting = () => async (ctx: Context) => {
       }
     }
 
-    // Step 3: User selects an exam
+    // Step 3: User selects an exam (e.g., 1 for NEET 2024)
     else if (/^\d+$/.test(userMessage)) {
       const selectedExamNumber = parseInt(userMessage, 10);
-      const selectedExam = quizData[selectedExamNumber - 1];
+      const selectedExamGroup = quizData.find(group => group.exams.some(exam => exam.metaId === userMessage)); // Find selected exam group
 
-      if (selectedExam) {
-        const quizzesInExam = selectedExam.exams;
-        let quizList = `You selected the exam: ${selectedExam.examGroup.toUpperCase()} - Here are the available quizzes:\n\n`;
+      if (selectedExamGroup) {
+        const selectedExam = selectedExamGroup.exams[selectedExamNumber - 1];  // Get selected exam
+        let quizList = `You selected the exam: ${selectedExamGroup.examGroup.toUpperCase()} - Here are the available quizzes:\n\n`;
 
-        quizzesInExam.forEach((quiz, index) => {
-          quizList += `${index + 1}. ${quiz.title} (${quiz.year})\n`;  // Display quiz titles
-        });
+        // Display quiz titles for selected exam
+        quizList += `${selectedExam.title} (${selectedExam.year})\n`;
 
-        quizList += '\nPlease reply with the number of the quiz you want to play (e.g., 1, 2, etc.).';
+        quizList += `\nYou can play the quiz now by clicking on the link below:\n`;
+        const quizLink = `${baseUrl}${encodeURIComponent(selectedExam.title)}&metaId=${selectedExam.metaId}`;
+        quizList += `[${selectedExam.title}](${quizLink})`;
 
-        // Send the list of available quizzes for the selected exam
+        // Send the quiz link
         await ctx.reply(quizList);
       }
     }
