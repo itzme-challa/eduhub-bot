@@ -84,10 +84,11 @@ const greeting = () => async (ctx: Context) => {
         const quizzesInExam = quizData.filter(quiz => quiz.papers[0].exam === selectedExam);
 
         let quizList = `You selected the ${selectedExam} exam. Here are the available quizzes:\n\n`;
-        quizzesInExam.forEach((quiz, index) => {
-          quizList += `${index + 1}. ${quiz.title.replace('-', ' ').toUpperCase()}\n`;  // Display quiz titles
+        quizzesInExam.forEach((quiz, quizIndex) => {
+          quizList += `${quizIndex + 1}. ${quiz.title.replace('-', ' ').toUpperCase()}\n`;  // Display quiz titles
           quiz.papers.forEach((paper, paperIndex) => {
-            quizList += `  ${index + 1}.${paperIndex + 1}. ${paper.title} (${paper.year})\n`; // Display papers under each quiz
+            const paperNumber = `${quizIndex + 1}.${paperIndex + 1}`;  // Create the correct numbering for the paper
+            quizList += `  ${paperNumber}. ${paper.title} (${paper.year})\n`; // Display papers under each quiz
           });
         });
 
