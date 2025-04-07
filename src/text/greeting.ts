@@ -1,7 +1,6 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
-// If using Node 18+, fetch is globally available. Otherwise, install node-fetch and uncomment below:
-// import fetch from 'node-fetch';
+// import fetch from 'node-fetch'; // Uncomment if not using Node 18+
 
 const debug = createDebug('bot:greeting_text');
 
@@ -13,15 +12,15 @@ const replyToMessage = (ctx: Context, messageId: number, text: string) =>
 const greeting = () => async (ctx: Context) => {
   debug('Triggered "greeting" text command');
 
-  const messageId = ctx.message?.message_id;
-  const text = 'text' in ctx.message ? ctx.message.text.trim() : '';
-  const userName = `${ctx.message?.from.first_name ?? ''} ${ctx.message?.from.last_name ?? ''}`.trim();
+  if (!ctx.message || !('text' in ctx.message)) return;
 
-  if (!messageId || !text) return;
+  const messageId = ctx.message.message_id;
+  const text = ctx.message.text.trim();
+  const userName = `${ctx.message.from.first_name ?? ''} ${ctx.message.from.last_name ?? ''}`.trim();
 
   if (text === '1') {
     try {
-      const response = await fetch('https://raw.githubusercontent.com/itzfew/telegram-bot-vercel-boilerplate/refs/heads/master/quiz.json');
+      const response = await fetch('https://raw.githubusercontent.com/itzme-challa/eduhub-bot/refs/heads/master/quiz.json');
       const questions = await response.json();
 
       const firstQuestion = questions[0];
