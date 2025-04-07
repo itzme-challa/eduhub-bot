@@ -28,7 +28,7 @@ bot.command('study', study());
 bot.command('neet', neet());
 bot.command('jee', jee());
 bot.command('groups', groups());
-const ADMIN_ID = 123456789; // Replace this with YOUR Telegram numeric ID
+const ADMIN_ID = 6930703214; // Replace this with YOUR Telegram numeric ID
 
 bot.command('broadcast', async (ctx) => {
   if (ctx.from?.id !== ADMIN_ID) {
