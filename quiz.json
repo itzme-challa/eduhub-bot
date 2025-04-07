@@ -1,0 +1,12 @@
+[
+  {
+    "question": "What is the powerhouse of the cell?",
+    "options": {
+      "A": "Nucleus",
+      "B": "Mitochondria",
+      "C": "Ribosome",
+      "D": "Endoplasmic Reticulum"
+    },
+    "correct_option": "B"
+  }
+]
