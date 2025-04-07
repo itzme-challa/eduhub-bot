@@ -8,7 +8,6 @@ import { jee } from './commands/jee';
 import { groups } from './commands/groups';
 import { quizes } from './text';
 import { greeting } from './text';
-import { keywordReply } from './commands/Allen';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { development, production } from './core';
 
@@ -25,7 +24,6 @@ bot.command('jee', jee ());
 bot.command('groups', groups());
 bot.on('message', quizes());
 bot.on('message', greeting());
-bot.on('message', keywordReply());  // Add the keyword reply handler
 
 //prod mode (Vercel)
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
