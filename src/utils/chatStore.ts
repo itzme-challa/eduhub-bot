@@ -1,25 +1,36 @@
 import fs from 'fs';
 import path from 'path';
 
-const filePath = path.join(__dirname, '../../users.json');
+const USERS_FILE = path.resolve(__dirname, '../../data/users.json');
 
-export function saveChatId(chatId: number): boolean {
-  let chatIds: number[] = [];
+export const saveChatId = (chatId: number): boolean => {
+  try {
+    let data: number[] = [];
+    if (fs.existsSync(USERS_FILE)) {
+      const raw = fs.readFileSync(USERS_FILE, 'utf-8');
+      data = JSON.parse(raw);
+    }
 
-  if (fs.existsSync(filePath)) {
-    chatIds = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    if (!data.includes(chatId)) {
+      data.push(chatId);
+      fs.writeFileSync(USERS_FILE, JSON.stringify(data, null, 2));
+      return true; // New ID added
+    }
+
+    return false; // Already exists
+  } catch (err) {
+    console.error('Failed to save chatId:', err);
+    return false;
   }
+};
 
-  if (!chatIds.includes(chatId)) {
-    chatIds.push(chatId);
-    fs.writeFileSync(filePath, JSON.stringify(chatIds, null, 2));
-    return true; // new user added
+export const getAllChatIds = (): number[] => {
+  try {
+    if (!fs.existsSync(USERS_FILE)) return [];
+    const data = fs.readFileSync(USERS_FILE, 'utf-8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.error('Failed to get chat IDs:', err);
+    return [];
   }
-
-  return false; // already exists
-}
-
-export function getAllChatIds(): number[] {
-  if (!fs.existsSync(filePath)) return [];
-  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-}
+};
