@@ -25,14 +25,13 @@ const greeting = () => async (ctx: Context) => {
         firstQuestion.options.D,
       ];
       const correctOptionIndex = ['A', 'B', 'C', 'D'].indexOf(firstQuestion.correct_option);
-
-      await ctx.sendPoll(firstQuestion.question, options, {
-        type: 'quiz',
-        correct_option_id: correctOptionIndex,
-        is_anonymous: false,
-        explanation: firstQuestion.explanation || 'No explanation provided.',
-      });
-
+await ctx.sendPoll(firstQuestion.question, options, {
+  type: 'quiz',
+  correct_option_id: correctOptionIndex,
+  is_anonymous: false,
+  explanation: firstQuestion.explanation || 'No explanation provided.',
+} as any); // <--- This avoids the TS2353 error 
+    
     } catch (err) {
       debug('Error fetching question:', err);
       await ctx.reply('Failed to load question.');
