@@ -8,36 +8,28 @@ const greeting = () => async (ctx: Context) => {
 
   if (!ctx.message || !('text' in ctx.message)) return;
 
-  const messageId = ctx.message.message_id;
-  const text = ctx.message.text.trim();
+  const text = ctx.message.text.trim().toLowerCase();
   const userName = `${ctx.message.from.first_name ?? ''} ${ctx.message.from.last_name ?? ''}`.trim();
 
-  if (text === '1') {
-    try {
-      const response = await fetch('https://raw.githubusercontent.com/itzme-challa/eduhub-bot/master/quiz.json');
-      const questions = await response.json();
+  const greetings = ['hi', 'hello', 'hey', 'hii', 'heyy', 'hola'];
 
-      const firstQuestion = questions[0];
-      const options = [
-        firstQuestion.options.A,
-        firstQuestion.options.B,
-        firstQuestion.options.C,
-        firstQuestion.options.D,
-      ];
-      const correctOptionIndex = ['A', 'B', 'C', 'D'].indexOf(firstQuestion.correct_option);
-await ctx.sendPoll(firstQuestion.question, options, {
-  type: 'quiz',
-  correct_option_id: correctOptionIndex,
-  is_anonymous: false,
-  explanation: firstQuestion.explanation || 'No explanation provided.',
-} as any); // <--- This avoids the TS2353 error 
-    
-    } catch (err) {
-      debug('Error fetching question:', err);
-      await ctx.reply('Failed to load question.');
-    }
+  if (!isNaN(parseInt(text))) {
+    // Ignore numeric input
+    return;
+  }
+
+  if (greetings.includes(text)) {
+    const replies = [
+      `Hey dear ${userName}, how may I help you?`,
+      `Hello ${userName}! What can I do for you today?`,
+      `Hi ${userName}, how can I assist you?`,
+      `Greetings ${userName}! Need any help?`,
+      `Hey ${userName}! I’m here to help.`,
+    ];
+    const reply = replies[Math.floor(Math.random() * replies.length)];
+    await ctx.reply(reply);
   } else {
-    await ctx.reply(`Hello, ${userName}!`);
+    await ctx.reply(`Hey ${userName}, how can I help you?`);
   }
 };
 
