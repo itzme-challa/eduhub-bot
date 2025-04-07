@@ -3,31 +3,26 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:quizes');
 
+const pollTimers = new Map<string, NodeJS.Timeout>();
+const answeredPolls = new Set<string>();
+
 const quizes = () => async (ctx: Context) => {
   debug('Triggered "quizes" handler');
 
   if (!ctx.message || !('text' in ctx.message)) return;
-
   const text = ctx.message.text.trim().toLowerCase();
 
-  // Help message
   if (
     ['quiz', '/quiz', 'quizes', '/quizes', 'random', '/random', 'question', 'questions', '/question', '/questions'].includes(text)
   ) {
     await ctx.reply(
-      `Hey! To get questions, type one of the following:\n\n` +
-      `→ For Biology: "bio 1", "/b1", or "biology 1"\n` +
-      `→ For Physics: "phy 2", "/p2", or "physics 2"\n` +
-      `→ For Chemistry: "chem 3", "/c3", or "chemistry 3"\n\n` +
-      `To get multiple random questions:\n` +
-      `→ "playbio 5" → 5 random bio questions\n` +
-      `→ "playphy 4" → 4 random physics questions\n` +
-      `→ "playchem 6" → 6 random chemistry questions`
+      `Hey! To get questions, type:\n\n` +
+      `→ "bio 1", "/b1" for Biology\n→ "phy 2", "/p2" for Physics\n→ "chem 3", "/c3" for Chemistry\n\n` +
+      `→ "playbio 5" → 5 random bio\n→ "playphy 4"\n→ "playchem 6"`
     );
     return;
   }
 
-  // Match commands like: playbio 5
   const match = text.match(/^\/?(play)?(bio|b|biology|phy|p|physics|chem|c|chemistry)\s*([0-9]+)?$/i);
   if (!match) return;
 
@@ -36,17 +31,10 @@ const quizes = () => async (ctx: Context) => {
   const countOrIndex = match[3] ? parseInt(match[3], 10) : 1;
 
   const subjectMap: Record<string, string> = {
-    bio: 'biology',
-    b: 'biology',
-    biology: 'biology',
-    phy: 'physics',
-    p: 'physics',
-    physics: 'physics',
-    chem: 'chemistry',
-    c: 'chemistry',
-    chemistry: 'chemistry'
+    bio: 'biology', b: 'biology', biology: 'biology',
+    phy: 'physics', p: 'physics', physics: 'physics',
+    chem: 'chemistry', c: 'chemistry', chemistry: 'chemistry'
   };
-
   const subject = subjectMap[rawSubject];
   if (!subject) return;
 
@@ -61,20 +49,9 @@ const quizes = () => async (ctx: Context) => {
       return;
     }
 
-    const questionsToSend = [];
-
-    if (isPlay) {
-      const shuffled = subjectQuestions.sort(() => 0.5 - Math.random());
-      questionsToSend.push(...shuffled.slice(0, Math.min(countOrIndex, subjectQuestions.length)));
-    } else {
-      const index = countOrIndex - 1;
-      if (index >= 0 && index < subjectQuestions.length) {
-        questionsToSend.push(subjectQuestions[index]);
-      } else {
-        await ctx.reply(`Sorry, question ${countOrIndex} is not available in ${subject}.`);
-        return;
-      }
-    }
+    const questionsToSend = isPlay
+      ? subjectQuestions.sort(() => 0.5 - Math.random()).slice(0, countOrIndex)
+      : [subjectQuestions[countOrIndex - 1]];
 
     for (const question of questionsToSend) {
       const options = [
@@ -85,27 +62,72 @@ const quizes = () => async (ctx: Context) => {
       ];
       const correctOptionIndex = ['A', 'B', 'C', 'D'].indexOf(question.correct_option);
 
-      const pollMessage = await ctx.sendPoll(question.question, options, {
+      const poll = await ctx.sendPoll(question.question, options, {
         type: 'quiz',
         correct_option_id: correctOptionIndex,
         is_anonymous: false,
-        explanation: question.explanation || 'No explanation provided.',
-      } as any);
+      });
 
-      // Timer for explanation after 30 seconds
-      setTimeout(async () => {
-        await ctx.reply(
-          `Time's up for: "${question.question}"\n\n` +
-          `Correct Answer: ${question.correct_option}) ${question.options[question.correct_option]}\n\n` +
-          `Explanation: ${question.explanation || 'No explanation provided.'}`
-        );
-      }, 30 * 1000); // 30 seconds
+      const pollId = poll.poll.id;
+
+      // Send countdown message
+      const countdownMsg = await ctx.reply('⏳ 30 seconds remaining...');
+      let timeLeft = 30;
+
+      // Update countdown every second
+      const countdownInterval = setInterval(async () => {
+        timeLeft--;
+        if (timeLeft > 0) {
+          try {
+            await ctx.telegram.editMessageText(
+              countdownMsg.chat.id,
+              countdownMsg.message_id,
+              undefined,
+              `⏳ ${timeLeft} seconds remaining...`
+            );
+          } catch (e) { } // ignore edits to deleted/invalid messages
+        }
+      }, 1000);
+
+      // Timeout after 30s to send explanation
+      const timeout = setTimeout(async () => {
+        clearInterval(countdownInterval);
+        if (!answeredPolls.has(pollId)) {
+          await ctx.telegram.editMessageText(
+            countdownMsg.chat.id,
+            countdownMsg.message_id,
+            undefined,
+            `⏰ Time's up!`
+          );
+
+          await ctx.reply(
+            `Missed!\nCorrect Answer: ${question.correct_option}) ${question.options[question.correct_option]}\n\n` +
+            `Explanation: ${question.explanation || 'No explanation provided.'}`
+          );
+        }
+      }, 30000);
+
+      pollTimers.set(pollId, timeout);
     }
-
   } catch (err) {
     debug('Error fetching questions:', err);
     await ctx.reply('Oops! Failed to load questions.');
   }
 };
 
-export { quizes };
+// Poll answer handler
+const handlePollAnswer = () => async (ctx: Context) => {
+  const pollId = ctx.update.poll_answer?.poll_id;
+  if (!pollId) return;
+
+  if (!answeredPolls.has(pollId)) {
+    answeredPolls.add(pollId);
+    const timeout = pollTimers.get(pollId);
+    if (timeout) clearTimeout(timeout);
+
+    // Optional: Fetch and show explanation early (if you want)
+    // You'll need to map pollId to question to do this
+  }
+};
+
+export { quizes, handlePollAnswer };
