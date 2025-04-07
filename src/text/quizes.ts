@@ -10,7 +10,7 @@ const quizes = () => async (ctx: Context) => {
 
   const text = ctx.message.text.trim().toLowerCase();
 
-  // Help message for generic commands
+  // Help message
   if (
     ['quiz', '/quiz', 'quizes', '/quizes', 'random', '/random', 'question', 'questions', '/question', '/questions'].includes(text)
   ) {
@@ -27,11 +27,11 @@ const quizes = () => async (ctx: Context) => {
     return;
   }
 
-  // Match commands like: playbio 5, bio 1, /bio1, /bio 1, etc.
+  // Match commands like: playbio 5
   const match = text.match(/^\/?(play)?(bio|b|biology|phy|p|physics|chem|c|chemistry)\s*([0-9]+)?$/i);
   if (!match) return;
 
-  const isPlay = !!match[1]; // 'play' present
+  const isPlay = !!match[1];
   const rawSubject = match[2];
   const countOrIndex = match[3] ? parseInt(match[3], 10) : 1;
 
@@ -64,11 +64,9 @@ const quizes = () => async (ctx: Context) => {
     const questionsToSend = [];
 
     if (isPlay) {
-      // Play mode → send random questions
       const shuffled = subjectQuestions.sort(() => 0.5 - Math.random());
       questionsToSend.push(...shuffled.slice(0, Math.min(countOrIndex, subjectQuestions.length)));
     } else {
-      // Specific index requested (1-based index)
       const index = countOrIndex - 1;
       if (index >= 0 && index < subjectQuestions.length) {
         questionsToSend.push(subjectQuestions[index]);
@@ -88,19 +86,20 @@ const quizes = () => async (ctx: Context) => {
       const correctOptionIndex = ['A', 'B', 'C', 'D'].indexOf(question.correct_option);
 
       const pollMessage = await ctx.sendPoll(question.question, options, {
-  type: 'quiz',
-  correct_option_id: correctOptionIndex,
-  is_anonymous: false,
-});
+        type: 'quiz',
+        correct_option_id: correctOptionIndex,
+        is_anonymous: false,
+        explanation: question.explanation || 'No explanation provided.',
+      } as any);
 
-// Send explanation after 30 seconds
-setTimeout(() => {
-  ctx.reply(
-    `**Explanation for:**\n${question.question}\n\n` +
-    `**Answer:** ${question.correct_option}\n` +
-    `**Explanation:** ${question.explanation || 'No explanation provided.'}`
-  );
-}, 30_000); // 30 seconds
+      // Timer for explanation after 30 seconds
+      setTimeout(async () => {
+        await ctx.reply(
+          `Time's up for: "${question.question}"\n\n` +
+          `Correct Answer: ${question.correct_option}) ${question.options[question.correct_option]}\n\n` +
+          `Explanation: ${question.explanation || 'No explanation provided.'}`
+        );
+      }, 30 * 1000); // 30 seconds
     }
 
   } catch (err) {
