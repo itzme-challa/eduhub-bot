@@ -77,24 +77,24 @@ const quizes = () => async (ctx: Context) => {
         chatId: poll.chat.id,
         messageId: poll.message_id,
       });
+// Countdown message
+const countdownMsg = await ctx.reply('⏳ 30 seconds remaining...');
+let timeLeft = 30;
 
-      // Countdown message
-      const countdownMsg = await ctx.reply('⏳ 30 seconds remaining...');
-      let timeLeft = 30;
-
-      const countdownInterval = setInterval(async () => {
-        timeLeft--;
-        if (timeLeft > 0) {
-          try {
-            await ctx.telegram.editMessageText(
-              countdownMsg.chat.id,
-              countdownMsg.message_id,
-              undefined,
-              `⏳ ${timeLeft} seconds remaining...`
-            );
-          } catch (e) {}
-        }
-      }, 1000);
+// Update countdown every second
+const countdownInterval = setInterval(async () => {
+  timeLeft--;
+  if (timeLeft > 0) {
+    try {
+      await ctx.telegram.editMessageText(
+        countdownMsg.chat.id,
+        countdownMsg.message_id,
+        undefined,
+        `⏳ ${timeLeft} seconds remaining...`
+      );
+    } catch (e) {}
+  }
+}, 1000);
       pollCountdowns.set(pollId, countdownInterval);
 
       // Timeout after 30s
