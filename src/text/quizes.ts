@@ -10,46 +10,49 @@ const quizes = () => async (ctx: Context) => {
 
   const text = ctx.message.text.trim().toLowerCase();
 
-  // Ignore if it contains 'q' or looks like question request
+  // Ignore question-style requests
   if (/q\d*|question|questions/.test(text)) return;
 
-  // Show help for generic prompts
+  // Help message for generic commands
   if (
     ['quiz', '/quiz', 'quizes', '/quizes', 'random', '/random'].includes(text)
   ) {
     await ctx.reply(
-      `Hey! To get a question, type one of the following:\n\n` +
+      `Hey! To get questions, type one of the following:\n\n` +
         `→ For Biology: "bio 1", "/b1", or "biology"\n` +
         `→ For Physics: "phy 2", "/p2", or "physics"\n` +
         `→ For Chemistry: "chem 3", "/c3", or "chemistry"\n\n` +
-        `Use any number to get a specific question like "bio 4"`
+        `To get multiple random questions:\n` +
+        `→ "playbio 5" → 5 random bio questions\n` +
+        `→ "playphy 4" → 4 random physics questions\n` +
+        `→ "playchem 6" → 6 random chemistry questions`
     );
     return;
   }
 
-  // Match commands like "/bio 1", "b1", "physics 3"
+  // Match commands like: playbio 5, bio 1, physics 2, etc.
   const match = text.match(
-  /^\/?(biology|bio|b|playbio|physics|phy|p|playphy|chemistry|chem|c|playchem)\s*([0-9]+)?$/i
-);
+    /^\/?(biology|bio|b|playbio|physics|phy|p|playphy|chemistry|chem|c|playchem)\s*([0-9]+)?$/i
+  );
   if (!match) return;
 
   const subjectRaw = match[1];
   const count = match[2] ? parseInt(match[2], 10) : 1;
 
   const subjectMap: Record<string, string> = {
-  biology: 'biology',
-  bio: 'biology',
-  b: 'biology',
-  playbio: 'biology',
-  physics: 'physics',
-  phy: 'physics',
-  p: 'physics',
-  playphy: 'physics',
-  chemistry: 'chemistry',
-  chem: 'chemistry',
-  c: 'chemistry',
-  playchem: 'chemistry',
-};
+    biology: 'biology',
+    bio: 'biology',
+    b: 'biology',
+    playbio: 'biology',
+    physics: 'physics',
+    phy: 'physics',
+    p: 'physics',
+    playphy: 'physics',
+    chemistry: 'chemistry',
+    chem: 'chemistry',
+    c: 'chemistry',
+    playchem: 'chemistry',
+  };
 
   const subject = subjectMap[subjectRaw];
   if (!subject) return;
@@ -99,6 +102,6 @@ const quizes = () => async (ctx: Context) => {
     debug('Error fetching questions:', err);
     await ctx.reply('Oops! Failed to load questions.');
   }
-}; 
-export { quizes };
+};
 
+export { quizes };
