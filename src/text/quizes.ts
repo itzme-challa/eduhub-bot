@@ -32,7 +32,10 @@ if (questionIndex > questions.length) {
 
 } // ignore non-numeric inputs silently };
 
-function stripHtmlTags(html: string): string { return html .replace(/<[^>]+>/g, '') .replace(/$$([^$]+)$$/g, (, math) => math) // for mathjax-like blocks .replace(/$(.*?)$/g, (, math) => math); // for inline math }
-
+function stripHtmlTags(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, '') // remove all HTML tags
+    .replace(/\$\$([^$]+)\$\$/g, (_, math) => math); // remove $$ delimiters for MathJax
+} 
 export { quizes };
 
