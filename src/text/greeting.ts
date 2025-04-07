@@ -14,7 +14,7 @@ const greeting = () => async (ctx: Context) => {
 
   if (text === '1') {
     try {
-      const response = await fetch('https://raw.githubusercontent.com/itzme-challa/eduhub-bot/refs/heads/master/quiz.json');
+      const response = await fetch('https://raw.githubusercontent.com/itzme-challa/eduhub-bot/master/quiz.json');
       const questions = await response.json();
 
       const firstQuestion = questions[0];
