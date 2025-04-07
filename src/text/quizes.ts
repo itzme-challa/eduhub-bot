@@ -10,12 +10,12 @@ const quizes = () => async (ctx: Context) => {
 
   const text = ctx.message.text.trim().toLowerCase();
 
-  // Match commands like: /biology 2, chemistry 1, PHYSICS 4
-  const match = text.match(/^\/?(physics|chemistry|biology)(?:\s+(\d+))?$/i);
+  // Match format like: /biology 2, chemistry 1 (number is required)
+  const match = text.match(/^\/?(physics|chemistry|biology)\s+(\d+)$/i);
   if (!match) return;
 
   const subject = match[1].toLowerCase();
-  const index = match[2] ? parseInt(match[2], 10) : null;
+  const index = parseInt(match[2], 10);
 
   try {
     const response = await fetch('https://raw.githubusercontent.com/itzme-challa/eduhub-bot/master/quiz.json');
@@ -25,17 +25,12 @@ const quizes = () => async (ctx: Context) => {
       (q: any) => q.subject?.toLowerCase() === subject
     );
 
-    if (!subjectQuestions.length) {
-      await ctx.reply(`No ${subject} questions available.`);
+    if (index < 1 || index > subjectQuestions.length) {
+      await ctx.reply(`Only ${subjectQuestions.length} ${subject} questions available.`);
       return;
     }
 
-    let question;
-    if (index && index > 0 && index <= subjectQuestions.length) {
-      question = subjectQuestions[index - 1]; // 1-based index
-    } else {
-      question = subjectQuestions[Math.floor(Math.random() * subjectQuestions.length)];
-    }
+    const question = subjectQuestions[index - 1];
 
     const options = [
       question.options.A,
