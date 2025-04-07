@@ -6,26 +6,20 @@ import { author, name, version } from '../../package.json';
 const debug = createDebug('bot:about_command');
 
 const about = () => async (ctx: Context) => {
-  const message = `*${name} ${version}*\n\nAuthor: ${author}\n\n` +
-    `This bot is designed to provide helpful resources and tools for students preparing for NEET, JEE, and other competitive exams. ` +
-    `It includes a variety of study materials, practice tests, study groups, and more.\n\n` +
-    `Features include:\n` +
-    `- Access to study materials for NEET and JEE\n` +
-    `- Practice tests for NEET and JEE\n` +
-    `- Links to study groups for peer interaction\n` +
-    `- NCERT solutions and other helpful resources\n\n` +
-    `To get started, use the following commands:\n` +
-    `- /help - Get a list of available commands\n` +
-    `- /list - View available resources\n` +
-    `- /neet - Resources for NEET preparation\n` +
-    `- /jee - Resources for JEE preparation\n` +
-    `- /groups - Join study groups\n` +
-    `- /study - Get study materials for different subjects`;
+  const message = `*${name} ${version}*\n\n` +
+    `Author: ${author}\n\n` +
+    `This bot is built to support students preparing for competitive exams like NEET and JEE\\. It offers a centralized platform for accessing high\\-quality study resources, practice tools, and community interaction\\.\n\n` +
+    `Key features:\n` +
+    `• Curated study materials based on NCERT and trusted sources \PW, Allen, Akash, NEETPrep\\n` +
+    `• Random practice questions and chapter\\-wise tests with explanations\n` +
+    `• Study groups to connect with peers and discuss doubts\n` +
+    `• NCERT\\-based notes, summaries, and PYQs\n` +
+    `• Quick access to important updates and notifications from NTA\n\n` +
+    `Our goal is to make exam prep smarter, more organized, and more accessible—right from your Telegram chat\\.`
 
   debug(`Triggered "about" command with message \n${message}`);
 
-  // Send the message with additional details about the bot
-  await ctx.replyWithMarkdownV2(message, { parse_mode: 'Markdown' });
+  await ctx.replyWithMarkdownV2(message, { parse_mode: 'MarkdownV2' });
 };
 
 export { about };
