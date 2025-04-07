@@ -10,18 +10,12 @@ const quizes = () => async (ctx: Context) => {
 
   const text = ctx.message.text.trim().toLowerCase();
 
-  // Allowed strict commands
-  const triggers: Record<string, string> = {
-    '/physics': 'physics',
-    'physics': 'physics',
-    '/chemistry': 'chemistry',
-    'chemistry': 'chemistry',
-    '/biology': 'biology',
-    'biology': 'biology',
-  };
+  // Match commands like: /biology 2, chemistry 1, PHYSICS 4
+  const match = text.match(/^\/?(physics|chemistry|biology)(?:\s+(\d+))?$/i);
+  if (!match) return;
 
-  const subject = triggers[text];
-  if (!subject) return;
+  const subject = match[1].toLowerCase();
+  const index = match[2] ? parseInt(match[2], 10) : null;
 
   try {
     const response = await fetch('https://raw.githubusercontent.com/itzme-challa/eduhub-bot/master/quiz.json');
@@ -36,8 +30,12 @@ const quizes = () => async (ctx: Context) => {
       return;
     }
 
-    const randomIndex = Math.floor(Math.random() * subjectQuestions.length);
-    const question = subjectQuestions[randomIndex];
+    let question;
+    if (index && index > 0 && index <= subjectQuestions.length) {
+      question = subjectQuestions[index - 1]; // 1-based index
+    } else {
+      question = subjectQuestions[Math.floor(Math.random() * subjectQuestions.length)];
+    }
 
     const options = [
       question.options.A,
