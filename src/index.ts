@@ -29,6 +29,7 @@ bot.command('jee', jee());
 bot.command('groups', groups());
 
 // Combined message handler to allow both quizes and greeting
+bot.on('poll_answer', handlePollAnswer());
 bot.on('message', async (ctx) => {
   try {
     await Promise.all([
