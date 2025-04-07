@@ -14,7 +14,6 @@ import { development, production } from './core';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
-const ADMIN_ID = 6930703214; // Replace with your Telegram ID
 
 if (!BOT_TOKEN) {
   throw new Error('BOT_TOKEN not provided!');
@@ -22,7 +21,9 @@ if (!BOT_TOKEN) {
 
 const bot = new Telegraf(BOT_TOKEN);
 
-// Commands
+const ADMIN_ID = 6930703214; // Your Telegram numeric ID
+
+// Command-based handlers
 bot.command('about', about());
 bot.command('help', help());
 bot.command('study', study());
@@ -30,7 +31,6 @@ bot.command('neet', neet());
 bot.command('jee', jee());
 bot.command('groups', groups());
 
-// Broadcast Command
 bot.command('broadcast', async (ctx) => {
   if (ctx.from?.id !== ADMIN_ID) {
     await ctx.reply('You are not authorized to use this command.');
@@ -57,23 +57,14 @@ bot.command('broadcast', async (ctx) => {
   await ctx.reply(`Broadcast sent to ${success} users.`);
 });
 
-// Save & notify new users
-bot.start(async (ctx) => {
-  const isNew = saveChatId(ctx.chat.id);
-  if (isNew) {
-    await ctx.telegram.sendMessage(ADMIN_ID, `New user started: ${ctx.chat.id}`);
-  }
-  await ctx.reply('Welcome to the NEET Bot!');
-});
-
-bot.on('poll_answer', handlePollAnswer());
-
-// Save chat ID on any message
+// Notify and save new user
 bot.on('message', async (ctx) => {
   try {
-    const isNew = saveChatId(ctx.chat.id);
-    if (isNew) {
-      await ctx.telegram.sendMessage(ADMIN_ID, `New user messaged: ${ctx.chat.id}`);
+    if (ctx.chat?.id) {
+      const isNew = saveChatId(ctx.chat.id);
+      if (isNew) {
+        await ctx.telegram.sendMessage(ADMIN_ID, `New user started bot:\nChat ID: ${ctx.chat.id}`);
+      }
     }
 
     await Promise.all([
@@ -85,12 +76,14 @@ bot.on('message', async (ctx) => {
   }
 });
 
-// For Vercel
+bot.on('poll_answer', handlePollAnswer());
+
+// Vercel setup
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
   await production(req, res, bot);
 };
 
-// For Local Dev
+// Local development
 if (ENVIRONMENT !== 'production') {
   development(bot);
 }
