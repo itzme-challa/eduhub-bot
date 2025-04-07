@@ -3,83 +3,43 @@ import createDebug from 'debug';
 
 const debug = createDebug('bot:greeting_text');
 
-let lastQuestion: any = null;
-
-const replyToMessage = (ctx: Context, messageId: number, text: string) =>
-  ctx.replyWithMarkdownV2(text, {
-    reply_parameters: { message_id: messageId },
-  });
-
 const greeting = () => async (ctx: Context) => {
-  debug('Triggered greeting text command');
+  debug('Triggered "greeting" text command');
 
-  const msg = ctx.message;
-  if (!msg || !('text' in msg)) {
-    debug('No text message received');
-    return;
-  }
+  if (!ctx.message || !('text' in ctx.message)) return;
 
-  const messageId = msg.message_id;
-  const text = msg.text.trim().toUpperCase();
+  const messageId = ctx.message.message_id;
+  const text = ctx.message.text.trim();
+  const userName = `${ctx.message.from.first_name ?? ''} ${ctx.message.from.last_name ?? ''}`.trim();
 
   if (text === '1') {
     try {
-      debug('Fetching question...');
       const response = await fetch('https://raw.githubusercontent.com/itzme-challa/eduhub-bot/refs/heads/master/quiz.json');
       const questions = await response.json();
 
-      if (!Array.isArray(questions) || questions.length === 0) {
-        await replyToMessage(ctx, messageId, 'No questions found in quiz.json');
-        return;
-      }
+      const firstQuestion = questions[0];
+      const options = [
+        firstQuestion.options.A,
+        firstQuestion.options.B,
+        firstQuestion.options.C,
+        firstQuestion.options.D,
+      ];
+      const correctOptionIndex = ['A', 'B', 'C', 'D'].indexOf(firstQuestion.correct_option);
 
-      const q = questions[Math.floor(Math.random() * questions.length)];
-      lastQuestion = q;
+      await ctx.sendPoll(firstQuestion.question, options, {
+        type: 'quiz',
+        correct_option_id: correctOptionIndex,
+        is_anonymous: false,
+        explanation: firstQuestion.explanation || 'No explanation provided.',
+      });
 
-      const questionText = `*NEET Quiz*\n\n*Q.* ${escape(q.question)}
-
-*Subject:* ${escape(q.subject || 'N/A')}  
-*Chapter:* ${escape(q.chapter || 'N/A')}
-
-A. ${escape(q.options.A)}  
-B. ${escape(q.options.B)}  
-C. ${escape(q.options.C)}  
-D. ${escape(q.options.D)}  
-
-_Reply with A, B, C or D_`;
-
-      await replyToMessage(ctx, messageId, questionText);
     } catch (err) {
-      debug('Fetch failed:', err);
-      await replyToMessage(ctx, messageId, 'Error loading quiz question.');
+      debug('Error fetching question:', err);
+      await ctx.reply('Failed to load question.');
     }
-  } else if (['A', 'B', 'C', 'D'].includes(text)) {
-    if (!lastQuestion) {
-      await replyToMessage(ctx, messageId, 'Send `1` first to get a question.');
-      return;
-    }
-
-    const correct = lastQuestion.correct_option?.toUpperCase();
-    const isCorrect = text === correct;
-
-    const feedback = isCorrect
-      ? '✅ *Correct!*'
-      : `❌ *Wrong!* Correct answer is *${correct}*`;
-
-    await replyToMessage(
-      ctx,
-      messageId,
-      `${feedback}\n\n_Explanation:_ ${escape(lastQuestion.explanation || 'Not available.')}`
-    );
-
-    lastQuestion = null;
   } else {
-    await replyToMessage(ctx, messageId, 'Hello! Send `1` to get a NEET quiz question.');
+    await ctx.reply(`Hello, ${userName}!`);
   }
 };
-
-function escape(text: string): string {
-  return text.replace(/[_*[\]()~`>#+=|{}.!\\-]/g, '\\$&');
-}
 
 export { greeting };
