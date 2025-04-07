@@ -87,12 +87,20 @@ const quizes = () => async (ctx: Context) => {
       ];
       const correctOptionIndex = ['A', 'B', 'C', 'D'].indexOf(question.correct_option);
 
-      await ctx.sendPoll(question.question, options, {
-        type: 'quiz',
-        correct_option_id: correctOptionIndex,
-        is_anonymous: false,
-        explanation: question.explanation || 'No explanation provided.',
-      } as any);
+      const pollMessage = await ctx.sendPoll(question.question, options, {
+  type: 'quiz',
+  correct_option_id: correctOptionIndex,
+  is_anonymous: false,
+});
+
+// Send explanation after 30 seconds
+setTimeout(() => {
+  ctx.reply(
+    `**Explanation for:**\n${question.question}\n\n` +
+    `**Answer:** ${question.correct_option}\n` +
+    `**Explanation:** ${question.explanation || 'No explanation provided.'}`
+  );
+}, 30_000); // 30 seconds
     }
 
   } catch (err) {
