@@ -1,28 +1,28 @@
 import { Context } from 'telegraf';
 import createDebug from 'debug';
-import { escapeMarkdownV2 } from '@grammyjs/parse-mode'; // For safe Telegram message formatting
-
 import { author, name, version } from '../../package.json';
 
 const debug = createDebug('bot:about_command');
 
+// Escape MarkdownV2 characters
+const escapeMarkdownV2 = (text: string) =>
+  text.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, '\\$&');
+
 const about = () => async (ctx: Context) => {
-  const message = `*${name} ${version}*\n\n` +
-    `Author: ${author}\n\n` +
-    `This bot is built to support students preparing for competitive exams like NEET and JEE. It offers a centralized platform for accessing high-quality study resources, practice tools, and community interaction.\n\n` +
-    `Key features:\n` +
-    `• Curated study materials based on NCERT and trusted sources (PW, Allen, Akash, NEETPrep)\n` +
-    `• Random practice questions and chapter-wise tests with explanations\n` +
-    `• Study groups to connect with peers and discuss doubts\n` +
-    `• NCERT-based notes, summaries, and PYQs\n` +
-    `• Quick access to important updates and notifications from NTA\n\n` +
-    `Our goal is to make exam prep smarter, more organized, and more accessible—right from your Telegram chat.`;
+  const message = `*${escapeMarkdownV2(name)} ${escapeMarkdownV2(version)}*\n\n` +
+    `Author: ${escapeMarkdownV2(author)}\n\n` +
+    `This bot is designed to provide helpful resources and tools for students preparing for NEET, JEE, and other competitive exams\\. ` +
+    `It includes a variety of study materials, practice tests, study groups, and more\\.\n\n` +
+    `Features include:\n` +
+    `- Access to curated NEET and JEE study resources\n` +
+    `- Chapter\\-wise and random practice tests with detailed explanations\n` +
+    `- NCERT\\-based notes and PYQs\n` +
+    `- Community interaction through study groups and doubt discussion\n\n` +
+    `About the developer: A passionate NEET aspirant and self\\-taught developer, dedicated to making exam preparation simpler and more accessible for all students\\. This bot is built with the goal of combining quality education with the power of open\\-source tools\\.`
 
-  const safeMessage = escapeMarkdownV2(message);
+  debug(`Triggered "about" command with message \n${message}`);
 
-  debug(`Triggered "about" command with message \n${safeMessage}`);
-
-  await ctx.reply(safeMessage, { parse_mode: 'MarkdownV2' });
+  await ctx.replyWithMarkdownV2(message);
 };
 
 export { about };
