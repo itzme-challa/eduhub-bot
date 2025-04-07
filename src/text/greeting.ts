@@ -12,9 +12,10 @@ const greeting = () => async (ctx: Context) => {
   const userName = `${ctx.message.from.first_name ?? ''} ${ctx.message.from.last_name ?? ''}`.trim();
 
   const greetings = ['hi', 'hello', 'hey', 'hii', 'heyy', 'hola'];
+  const quizTriggers = ['quiz', '/quiz'];
 
-  if (!isNaN(parseInt(text))) {
-    // Ignore numeric input
+  // Skip quiz commands like p1, c2, qr, q3, etc.
+  if (/^[pbcq][0-9]+$/i.test(text) || /^[pbcq]r$/i.test(text)) {
     return;
   }
 
@@ -27,7 +28,11 @@ const greeting = () => async (ctx: Context) => {
       `Hey ${userName}! I’m here to help.`,
     ];
     const reply = replies[Math.floor(Math.random() * replies.length)];
+
     await ctx.reply(reply);
+    await ctx.reply(`For practice questions, just type *quiz* or */quiz*`);
+  } else if (quizTriggers.includes(text)) {
+    await ctx.replyWithMarkdownV2(`Dear *${userName}*,\n\nTo get questions, type:\n\n- *p1, p2, p3...* → for Physics\n- *c1, c2, c3...* → for Chemistry\n- *b1, b2, b3...* → for Biology\n\nTo get a *random* question, type:\n- *pr* → Physics\n- *cr* → Chemistry\n- *br* → Biology\n- *qr* → Any subject`);
   } else {
     await ctx.reply(`Hey ${userName}, how can I help you?`);
   }
