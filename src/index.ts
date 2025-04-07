@@ -1,4 +1,5 @@
-import { saveChatId, getAllChatIds } from './utils/chatStore';
+import { getAllChatIds } from './utils/chatStore';
+import { saveToSheet } from './utils/saveToSheet';
 import { Telegraf } from 'telegraf';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { handlePollAnswer } from './text/quizes';
@@ -61,9 +62,13 @@ bot.command('broadcast', async (ctx) => {
 bot.on('message', async (ctx) => {
   try {
     if (ctx.chat?.id) {
-      const isNew = saveChatId(ctx.chat.id);
-      if (isNew) {
-        await ctx.telegram.sendMessage(ADMIN_ID, `New user started bot:\nChat ID: ${ctx.chat.id}`);
+      await saveToSheet(ctx.chat);
+
+      if (ctx.chat.id !== ADMIN_ID) {
+        await ctx.telegram.sendMessage(
+          ADMIN_ID,
+          `New user started the bot!\n\nName: ${ctx.chat.first_name || ''}\nUsername: @${ctx.chat.username || 'N/A'}\nChat ID: ${ctx.chat.id}`
+        );
       }
     }
 
