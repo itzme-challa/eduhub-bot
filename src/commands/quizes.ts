@@ -4,12 +4,11 @@ import createDebug from 'debug';
 const debug = createDebug('bot:quizes');
 
 const quizes = () => async (ctx: Context) => {
-  debug('Triggered "quizes" text command');
+  debug('Triggered "quizes" command');
 
   if (!ctx.message || !('text' in ctx.message)) return;
 
   const text = ctx.message.text.trim();
-  const userName = `${ctx.message.from.first_name ?? ''} ${ctx.message.from.last_name ?? ''}`.trim();
 
   if (text === '1') {
     try {
@@ -30,15 +29,15 @@ const quizes = () => async (ctx: Context) => {
         correct_option_id: correctOptionIndex,
         is_anonymous: false,
         explanation: firstQuestion.explanation || 'No explanation provided.',
-      } as any); // Avoids TS2353 typing error
+      } as any); // avoids TS2353 typing error
 
     } catch (err) {
       debug('Error fetching question:', err);
       await ctx.reply('Failed to load question.');
     }
-  } else {
-    await ctx.reply(`Hello, ${userName}!`);
   }
+
+  // All other messages are ignored silently
 };
 
 export { quizes };
