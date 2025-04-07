@@ -1,3 +1,4 @@
+import { saveChatId, getAllChatIds } from './utils/chatStore';
 import { Telegraf } from 'telegraf';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { handlePollAnswer } from './text/quizes';
@@ -27,11 +28,41 @@ bot.command('study', study());
 bot.command('neet', neet());
 bot.command('jee', jee());
 bot.command('groups', groups());
+const ADMIN_ID = 123456789; // Replace this with YOUR Telegram numeric ID
 
+bot.command('broadcast', async (ctx) => {
+  if (ctx.from?.id !== ADMIN_ID) {
+    await ctx.reply('You are not authorized to use this command.');
+    return;
+  }
+
+  const msg = ctx.message.text?.split(' ').slice(1).join(' ');
+  if (!msg) {
+    return ctx.reply('Usage:\n/broadcast Your message here');
+  }
+
+  const chatIds = getAllChatIds();
+  let success = 0;
+
+  for (const id of chatIds) {
+    try {
+      await ctx.telegram.sendMessage(id, msg);
+      success++;
+    } catch (e) {
+      console.log(`Failed to send to ${id}`);
+    }
+  }
+
+  await ctx.reply(`Broadcast sent to ${success} users.`);
+}); 
 // Combined message handler to allow both quizes and greeting
 bot.on('poll_answer', handlePollAnswer());
 bot.on('message', async (ctx) => {
   try {
+    if (ctx.chat?.id) {
+      saveChatId(ctx.chat.id);
+    }
+
     await Promise.all([
       quizes()(ctx),
       greeting()(ctx),
@@ -40,7 +71,6 @@ bot.on('message', async (ctx) => {
     console.error('Error handling message:', err);
   }
 });
-
 // For Vercel production deployment
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
   await production(req, res, bot);
