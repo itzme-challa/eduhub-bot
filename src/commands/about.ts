@@ -13,14 +13,7 @@ const about = () => async (ctx: Context) => {
     `- Access to study materials for NEET and JEE\n` +
     `- Practice tests for NEET and JEE\n` +
     `- Links to study groups for peer interaction\n` +
-    `- NCERT solutions and other helpful resources\n\n` +
-    `To get started, use the following commands:\n` +
-    `- /help - Get a list of available commands\n` +
-    `- /list - View available resources\n` +
-    `- /neet - Resources for NEET preparation\n` +
-    `- /jee - Resources for JEE preparation\n` +
-    `- /groups - Join study groups\n` +
-    `- /study - Get study materials for different subjects`;
+    `- NCERT solutions and other helpful resources`;
 
   debug(`Triggered "about" command with message \n${message}`);
 
