@@ -14,6 +14,7 @@ import { development, production } from './core';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const ENVIRONMENT = process.env.NODE_ENV || '';
+const ADMIN_ID = 6930703214; // Replace with your Telegram ID
 
 if (!BOT_TOKEN) {
   throw new Error('BOT_TOKEN not provided!');
@@ -21,15 +22,15 @@ if (!BOT_TOKEN) {
 
 const bot = new Telegraf(BOT_TOKEN);
 
-// Command-based handlers
+// Commands
 bot.command('about', about());
 bot.command('help', help());
 bot.command('study', study());
 bot.command('neet', neet());
 bot.command('jee', jee());
 bot.command('groups', groups());
-const ADMIN_ID = 6930703214; // Replace this with YOUR Telegram numeric ID
 
+// Broadcast Command
 bot.command('broadcast', async (ctx) => {
   if (ctx.from?.id !== ADMIN_ID) {
     await ctx.reply('You are not authorized to use this command.');
@@ -54,13 +55,25 @@ bot.command('broadcast', async (ctx) => {
   }
 
   await ctx.reply(`Broadcast sent to ${success} users.`);
-}); 
-// Combined message handler to allow both quizes and greeting
+});
+
+// Save & notify new users
+bot.start(async (ctx) => {
+  const isNew = saveChatId(ctx.chat.id);
+  if (isNew) {
+    await ctx.telegram.sendMessage(ADMIN_ID, `New user started: ${ctx.chat.id}`);
+  }
+  await ctx.reply('Welcome to the NEET Bot!');
+});
+
 bot.on('poll_answer', handlePollAnswer());
+
+// Save chat ID on any message
 bot.on('message', async (ctx) => {
   try {
-    if (ctx.chat?.id) {
-      saveChatId(ctx.chat.id);
+    const isNew = saveChatId(ctx.chat.id);
+    if (isNew) {
+      await ctx.telegram.sendMessage(ADMIN_ID, `New user messaged: ${ctx.chat.id}`);
     }
 
     await Promise.all([
@@ -71,12 +84,13 @@ bot.on('message', async (ctx) => {
     console.error('Error handling message:', err);
   }
 });
-// For Vercel production deployment
+
+// For Vercel
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
   await production(req, res, bot);
 };
 
-// For local development
+// For Local Dev
 if (ENVIRONMENT !== 'production') {
   development(bot);
 }
