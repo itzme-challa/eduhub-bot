@@ -1,12 +1,13 @@
-[
-  {
-    "question": "What is the powerhouse of the cell?",
-    "options": {
-      "A": "Nucleus",
-      "B": "Mitochondria",
-      "C": "Ribosome",
-      "D": "Endoplasmic Reticulum"
-    },
-    "correct_option": "B"
-  }
-]
+{
+  "question": "Which of the following is not a function of the liver?",
+  "options": {
+    "A": "Bile secretion",
+    "B": "Urea formation",
+    "C": "Detoxification",
+    "D": "Production of insulin"
+  },
+  "correct_option": "D",
+  "subject": "Biology",
+  "chapter": "Digestion and Absorption",
+  "explanation": "Insulin is produced by the pancreas, not the liver."
+}
