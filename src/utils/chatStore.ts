@@ -1,5 +1,3 @@
-// src/utils/chatStore.ts
-
 let chatIds: number[] = [];
 
 export const saveChatId = (id: number) => {
