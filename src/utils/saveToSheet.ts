@@ -1,7 +1,5 @@
 export const saveToSheet = async (chat: any) => {
   try {
-    console.log('Sending to Google Sheet:', chat);
-
     await fetch('https://script.google.com/macros/s/AKfycbxFk1mggU9fBqodGwkQutQm1Sg1aoAT-H_FQEzXFlnItruNLCLbY9lh9Z_A3LpGW2nd/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
