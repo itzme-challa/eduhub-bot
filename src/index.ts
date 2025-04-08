@@ -1,4 +1,4 @@
-import { getAllChatIds } from './utils/chatStore';
+import { getAllChatIds, saveChatId } from './utils/chatStore';
 import { saveToSheet } from './utils/saveToSheet';
 import { Telegraf } from 'telegraf';
 import { VercelRequest, VercelResponse } from '@vercel/node';
@@ -21,10 +21,9 @@ if (!BOT_TOKEN) {
 }
 
 const bot = new Telegraf(BOT_TOKEN);
+const ADMIN_ID = 6930703214;
 
-const ADMIN_ID = 6930703214; // Your Telegram numeric ID
-
-// Command-based handlers
+// Commands
 bot.command('about', about());
 bot.command('help', help());
 bot.command('study', study());
@@ -32,10 +31,10 @@ bot.command('neet', neet());
 bot.command('jee', jee());
 bot.command('groups', groups());
 
+// Broadcast command
 bot.command('broadcast', async (ctx) => {
   if (ctx.from?.id !== ADMIN_ID) {
-    await ctx.reply('You are not authorized to use this command.');
-    return;
+    return ctx.reply('You are not authorized to use this command.');
   }
 
   const msg = ctx.message.text?.split(' ').slice(1).join(' ');
@@ -58,20 +57,27 @@ bot.command('broadcast', async (ctx) => {
   await ctx.reply(`Broadcast sent to ${success} users.`);
 });
 
-// Notify and save new user
+// Handle messages
 bot.on('message', async (ctx) => {
   try {
-    if (ctx.chat?.id) {
-      await saveToSheet(ctx.chat);
+    const chat = ctx.chat;
+    if (chat?.id) {
+      // Save to memory for broadcast
+      saveChatId(chat.id);
 
-      if (ctx.chat.id !== ADMIN_ID) {
+      // Save to Google Sheet
+      await saveToSheet(chat);
+
+      // Notify admin
+      if (chat.id !== ADMIN_ID) {
         await ctx.telegram.sendMessage(
           ADMIN_ID,
-          `New user started the bot!\n\nName: ${ctx.chat.first_name || ''}\nUsername: @${ctx.chat.username || 'N/A'}\nChat ID: ${ctx.chat.id}`
+          `New user started the bot!\n\nName: ${chat.first_name || ''}\nUsername: @${chat.username || 'N/A'}\nChat ID: ${chat.id}`
         );
       }
     }
 
+    // Show intro message + quiz
     await Promise.all([
       quizes()(ctx),
       greeting()(ctx),
@@ -81,14 +87,15 @@ bot.on('message', async (ctx) => {
   }
 });
 
+// Handle quiz poll answers
 bot.on('poll_answer', handlePollAnswer());
 
-// Vercel setup
+// Vercel webhook
 export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
   await production(req, res, bot);
 };
 
-// Local development
+// Local run
 if (ENVIRONMENT !== 'production') {
   development(bot);
-}
+};
