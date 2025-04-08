@@ -1,27 +1,15 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
-import creds from '../../credentials.json'; // adjust path if needed
-
-const SHEET_ID = '1BB4PfC4rL9Py5D9zyj0N15EZ2TiYKfuozw44NHqdvsk';
-
-const doc = new GoogleSpreadsheet(SHEET_ID);
-
 export const saveToSheet = async (chat: any) => {
   try {
-    await doc.useServiceAccountAuth(creds);
-    await doc.loadInfo();
-    const sheet = doc.sheetsByIndex[0];
-
-    const existing = await sheet.getRows();
-    const alreadySaved = existing.some(row => row['Chat ID'] === String(chat.id));
-    if (alreadySaved) return;
-
-    await sheet.addRow({
-      'Chat ID': chat.id,
-      'Username': chat.username || '',
-      'First Name': chat.first_name || '',
-      'Date': new Date().toLocaleString()
+    await fetch('https://script.google.com/macros/s/AKfycbxPSovbzjZv7RSgIkQKc7C9f3UTY2G2i2HvNevLt9OPxVEYaOr3S-BrCZr3lRC_zbRn/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: chat.id,
+        username: chat.username || '',
+        first_name: chat.first_name || '',
+      }),
     });
-  } catch (err) {
-    console.error('Sheet save failed:', err);
+  } catch (e) {
+    console.error('Google Sheet Save Failed:', e);
   }
 };
