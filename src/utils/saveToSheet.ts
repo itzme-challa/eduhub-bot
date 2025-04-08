@@ -1,6 +1,8 @@
 export const saveToSheet = async (chat: any) => {
   try {
-    await fetch('https://script.google.com/macros/s/AKfycbxPSovbzjZv7RSgIkQKc7C9f3UTY2G2i2HvNevLt9OPxVEYaOr3S-BrCZr3lRC_zbRn/exec', {
+    console.log('Sending to Google Sheet:', chat);
+
+    await fetch('https://script.google.com/macros/s/AKfycbxFk1mggU9fBqodGwkQutQm1Sg1aoAT-H_FQEzXFlnItruNLCLbY9lh9Z_A3LpGW2nd/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -9,7 +11,7 @@ export const saveToSheet = async (chat: any) => {
         first_name: chat.first_name || '',
       }),
     });
-  } catch (e) {
-    console.error('Google Sheet Save Failed:', e);
+  } catch (error) {
+    console.error('Failed to send to Google Sheet:', error);
   }
 };
