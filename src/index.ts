@@ -1,16 +1,16 @@
-import { getAllChatIds, saveChatId } from './utils/chatStore';
-import { saveToSheet } from './utils/saveToSheet';
 import { Telegraf } from 'telegraf';
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { handlePollAnswer } from './text/quizes';
-import { about } from './commands';
-import { help } from './commands';
+import { getAllChatIds, saveChatId } from './utils/chatStore';
+import { saveToSheet } from './utils/saveToSheet';
+import { handlePollAnswer } from './commands/quizes'; // updated path
+import { about } from './commands/about';
+import { help } from './commands/help';
 import { study } from './commands/study';
 import { neet } from './commands/neet';
 import { jee } from './commands/jee';
 import { groups } from './commands/groups';
-import { quizes } from './text';
-import { greeting } from './text';
+import { quizes } from './commands/quizes'; // updated path
+import { greeting } from './text/greeting'; // more specific path for greeting
 import { development, production } from './core';
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
@@ -21,7 +21,7 @@ if (!BOT_TOKEN) throw new Error('BOT_TOKEN not provided!');
 
 const bot = new Telegraf(BOT_TOKEN);
 
-// Commands
+// Register commands
 bot.command('about', about());
 bot.command('help', help());
 bot.command('study', study());
@@ -51,17 +51,15 @@ bot.command('broadcast', async (ctx) => {
 
 const notifiedUsers = new Set<number>();
 
-// On any message
+// Handle all messages
 bot.on('message', async (ctx) => {
   const chat = ctx.chat;
   const msg = ctx.message;
 
   if (chat?.id) {
-    // Save to sheet and memory
     saveChatId(chat.id);
     await saveToSheet(chat);
 
-    // Notify admin only once
     if (chat.id !== ADMIN_ID && !notifiedUsers.has(chat.id)) {
       notifiedUsers.add(chat.id);
       await ctx.telegram.sendMessage(
@@ -71,10 +69,8 @@ bot.on('message', async (ctx) => {
       );
     }
 
-    // Handle /contact
     if (msg.text?.startsWith('/contact')) {
       const userMessage = msg.text.replace('/contact', '').trim() || msg.reply_to_message?.text;
-
       if (userMessage) {
         await ctx.telegram.sendMessage(
           ADMIN_ID,
@@ -86,12 +82,10 @@ bot.on('message', async (ctx) => {
         await ctx.reply('Please provide a message or reply to a message using /contact.');
       }
     } else {
-      // Greet and quiz
       await Promise.all([quizes()(ctx), greeting()(ctx)]);
     }
   }
 
-  // Admin reply to user
   if (ctx.chat.id === ADMIN_ID && ctx.message?.reply_to_message) {
     const match = ctx.message.reply_to_message.text?.match(/Chat ID: `(\d+)`/);
     if (match) {
@@ -105,7 +99,7 @@ bot.on('message', async (ctx) => {
   }
 });
 
-// Poll responses
+// Handle quiz poll responses
 bot.on('poll_answer', handlePollAnswer());
 
 // Webhook for Vercel
@@ -113,7 +107,7 @@ export const startVercel = async (req: VercelRequest, res: VercelResponse) => {
   await production(req, res, bot);
 };
 
-// Local dev mode
+// Local development
 if (ENVIRONMENT !== 'production') {
   development(bot);
 }
